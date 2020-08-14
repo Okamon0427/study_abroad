@@ -12,4 +12,8 @@ router.post('/', schoolController.createSchool);
 
 router.get('/:schoolId', schoolController.getSchool);
 
+router.get('/:schoolId/edit', schoolController.editSchool);
+
+router.put('/:schoolId', schoolController.updateSchool);
+
 module.exports = router;
