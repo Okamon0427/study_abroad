@@ -68,3 +68,19 @@ exports.updateSchool = async (req, res, next) => {
     res.status(400).json({ success: false });
   }
 };
+
+exports.deleteSchool = async (req, res, next) => {
+  try {
+    const school = await School.findById(req.params.schoolId);
+    
+    if (!school) {
+      return res.status(404).json({ success: false, message: 'School not found' });
+    }
+
+    await School.findByIdAndDelete(req.params.schoolId);
+
+    res.status(200).json({ success: true, message: 'School deleted' });
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
+};
