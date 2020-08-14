@@ -10,4 +10,6 @@ router.get('/new', schoolController.newSchool);
 
 router.post('/', schoolController.createSchool);
 
+router.get('/:schoolId', schoolController.getSchool);
+
 module.exports = router;
