@@ -1,5 +1,14 @@
 const School = require('../models/School');
 
+exports.getSchools = async (req, res, next) => {
+  try {
+    const schools = await School.find();
+    res.status(200).json({ success: true, data: schools });
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
+};
+
 exports.newSchool = (req, res, next) => {
   res.status(200).json({ success: true, message: 'create new school page' });
 };  
