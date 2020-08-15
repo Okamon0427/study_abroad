@@ -4,7 +4,11 @@ const CustomError = require('../utils/CustomError');
 exports.getSchools = async (req, res, next) => {
   try {
     const schools = await School.find();
-    res.render('schools/schools', { schools });
+    res.render('schools/schools', {
+      schools,
+      title: 'Schools',
+      page: 'schools'
+    });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -12,7 +16,7 @@ exports.getSchools = async (req, res, next) => {
 };
 
 exports.newSchool = (req, res, next) => {
-  res.render('schools/new');
+  res.render('schools/new', { title: 'Add New School'});
 };
 
 exports.createSchool = async (req, res, next) => {
@@ -34,7 +38,7 @@ exports.getSchool = async (req, res, next) => {
       return next(error);
     }
 
-    res.render('schools/show', { school });
+    res.render('schools/show', { school, title: school.name });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -50,7 +54,7 @@ exports.editSchool = async (req, res, next) => {
       return next(error);
     }
 
-    res.render('schools/edit', { school });
+    res.render('schools/edit', { school, title: 'Edit school' });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
