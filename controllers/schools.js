@@ -22,6 +22,7 @@ exports.newSchool = (req, res, next) => {
 exports.createSchool = async (req, res, next) => {
   try {
     await School.create(req.body);
+    req.flash('success', 'Created new school!');
     res.redirect('/schools');
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
@@ -70,11 +71,12 @@ exports.updateSchool = async (req, res, next) => {
       return next(error);
     }
 
-    const updatedSchool = await School.findByIdAndUpdate(req.params.schoolId, req.body, {
+    await School.findByIdAndUpdate(req.params.schoolId, req.body, {
       new: true,
       runValidators: true
     });
 
+    req.flash('success', 'Editted product!');
     res.redirect('/schools');
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
@@ -93,6 +95,7 @@ exports.deleteSchool = async (req, res, next) => {
 
     await School.findByIdAndDelete(req.params.schoolId);
 
+    req.flash('success', 'Deleted product!');
     res.redirect('/schools');
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);

@@ -16,6 +16,7 @@ exports.signup = async (req, res, next) => {
     if (existingUser) {
       return res.status(401).render('users/signup', {
         title: 'Signup',
+        error: 'This email has already been registered',
         name,
         email,
         password
@@ -25,6 +26,7 @@ exports.signup = async (req, res, next) => {
     if (password !== confirmPassword) {
       return res.status(401).render('users/signup', {
         title: 'Signup',
+        error: 'Confirm password failed',
         name,
         email,
         password
@@ -39,7 +41,8 @@ exports.signup = async (req, res, next) => {
     });
     await newUser.save();
 
-    res.redirect('/schools');
+    req.flash('success', 'Successfully registererd!');
+    res.redirect('/login');
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -54,12 +57,15 @@ exports.login = (req, res, next) => {
   passport.authenticate('local',
     {
       successRedirect: '/schools',
-      failureRedirect: '/login'
+      failureRedirect: '/login',
+      successFlash: 'Welcome!',
+      failureFlash: 'Invalid username or password.'
     }
   )(req, res, next);
 };
 
 exports.logout = (req, res, next) => {
   req.logout();
+  req.flash('success', 'You are logged out');
   res.redirect('/schools');
 };

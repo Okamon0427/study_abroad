@@ -5,6 +5,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const flash = require('connect-flash');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
@@ -57,6 +58,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.use(flash());
 
 app.use(session({
   secret: 'ramen is the most favorite food',
@@ -68,6 +70,8 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
   next();
 });
 
