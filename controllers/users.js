@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const CustomError = require('../utils/CustomError');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 exports.signupPage = (req, res, next) => {
   res.render('users/signup', { title: 'Signup' });
@@ -43,4 +44,22 @@ exports.signup = async (req, res, next) => {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
   }
+};
+
+exports.loginPage = (req, res, next) => {
+  res.render('users/login', { title: 'Login' });
+};
+
+exports.login = (req, res, next) => {
+  passport.authenticate('local',
+    {
+      successRedirect: '/schools',
+      failureRedirect: '/login'
+    }
+  )(req, res, next);
+};
+
+exports.logout = (req, res, next) => {
+  req.logout();
+  res.redirect('/schools');
 };
