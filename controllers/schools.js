@@ -34,7 +34,7 @@ exports.getSchool = async (req, res, next) => {
       return next(error);
     }
 
-    res.status(200).json({ success: true, data: school });
+    res.render('schools/show', { school });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);

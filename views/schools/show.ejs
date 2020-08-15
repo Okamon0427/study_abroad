@@ -1,0 +1,18 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+  <div style="width: 50%; margin: 0 auto;">
+    <h3 style="text-align: center;">School</h3>
+
+    <div class="card text-center">
+      <div class="card-body">
+        <p class="h4">Name: <%= school.name %></p>
+        <p class="h4">Country: <%= school.country %></p>
+        <p class="h4">Tuition: $<%= school.tuition %></p>
+        <p class="h4">Description: <%= school.description %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include("../partials/footer") %>
