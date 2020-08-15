@@ -1,11 +1,13 @@
 const School = require('../models/School');
+const CustomError = require('../utils/CustomError');
 
 exports.getSchools = async (req, res, next) => {
   try {
     const schools = await School.find();
     res.status(200).json({ success: true, data: schools });
   } catch (err) {
-    res.status(400).json({ success: false });
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
   }
 };
 
@@ -18,7 +20,8 @@ exports.createSchool = async (req, res, next) => {
     const createdSchool = await School.create(req.body);
     res.status(201).json({ success: true, data: createdSchool });
   } catch (err) {
-    res.status(400).json({ success: false });
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
   }
 };
 
@@ -27,12 +30,14 @@ exports.getSchool = async (req, res, next) => {
     const school = await School.findById(req.params.schoolId);
 
     if (!school) {
-      return res.status(404).json({ success: false, message: 'School not found' });
+      const error = new CustomError('School not found', 404);
+      return next(error);
     }
 
     res.status(200).json({ success: true, data: school });
   } catch (err) {
-    res.status(400).json({ success: false });
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
   }
 };
 
@@ -41,12 +46,14 @@ exports.editSchool = async (req, res, next) => {
     const school = await School.findById(req.params.schoolId);
     
     if (!school) {
-      return res.status(404).json({ success: false, message: 'School not found' });
+      const error = new CustomError('School not found', 404);
+      return next(error);
     }
 
     res.status(200).json({ success: true, data: school });
   } catch (err) {
-    res.status(400).json({ success: false });
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
   }
 };
 
@@ -55,7 +62,8 @@ exports.updateSchool = async (req, res, next) => {
     const school = await School.findById(req.params.schoolId);
     
     if (!school) {
-      return res.status(404).json({ success: false, message: 'School not found' });
+      const error = new CustomError('School not found', 404);
+      return next(error);
     }
 
     const updatedSchool = await School.findByIdAndUpdate(req.params.schoolId, req.body, {
@@ -65,7 +73,8 @@ exports.updateSchool = async (req, res, next) => {
 
     res.status(200).json({ success: true, data: updatedSchool });
   } catch (err) {
-    res.status(400).json({ success: false });
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
   }
 };
 
@@ -74,13 +83,15 @@ exports.deleteSchool = async (req, res, next) => {
     const school = await School.findById(req.params.schoolId);
     
     if (!school) {
-      return res.status(404).json({ success: false, message: 'School not found' });
+      const error = new CustomError('School not found', 404);
+      return next(error);
     }
 
     await School.findByIdAndDelete(req.params.schoolId);
 
     res.status(200).json({ success: true, message: 'School deleted' });
   } catch (err) {
-    res.status(400).json({ success: false });
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
   }
 };

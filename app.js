@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const schoolRoutes = require('./routes/schools');
+const CustomError = require('./utils/CustomError');
 
 const mongooseConfig = {
   useNewUrlParser: true,
@@ -20,6 +21,16 @@ const app = express();
 app.use(express.json());
 
 app.use('/schools', schoolRoutes);
+
+app.use((req, res, next) => {
+  const error = new CustomError('Could not find this route.', 404);
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.statusCode || 500);
+  res.json({ message: error.message || 'Something went wrong' });
+});
 
 app.listen(3000, () => {
   console.log('Server has started');
