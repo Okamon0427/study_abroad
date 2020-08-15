@@ -4,7 +4,7 @@ const CustomError = require('../utils/CustomError');
 exports.getSchools = async (req, res, next) => {
   try {
     const schools = await School.find();
-    res.status(200).json({ success: true, data: schools });
+    res.render('schools/schools', { schools });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);

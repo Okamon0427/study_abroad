@@ -1,0 +1,27 @@
+<%- include("../partials/header") %>
+
+<div class="jumbotron">
+  <h1 class="display-4">All Schools</h1>
+</div>
+
+<div class="row">
+  <% if (schools && schools.length > 0) { %>
+    <% schools.forEach(school => { %>
+      <div class="col-md-3 col-sm-6">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title"><%= school.name %></h5>
+            <p class="card-text"><%= school.description %></p>
+            <a href="/schools/<%= school._id %>" class="card-link">More Info</a>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <div class="container">
+      <p class="h3">School not found</p>
+    </div>
+  <% } %>
+</div>
+
+<%- include("../partials/footer") %>
