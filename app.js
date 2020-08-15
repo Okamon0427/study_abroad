@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 const schoolRoutes = require('./routes/schools');
-const userRoutes = require('./routes/users');
+const authRoutes = require('./routes/auth');
 const User = require('./models/User');
 const CustomError = require('./utils/CustomError');
 
@@ -76,7 +76,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/schools', schoolRoutes);
-app.use(userRoutes);
+app.use(authRoutes);
 
 app.use((req, res, next) => {
   const error = new CustomError('Could not find this route.', 404);
