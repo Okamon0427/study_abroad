@@ -12,13 +12,13 @@ exports.getSchools = async (req, res, next) => {
 };
 
 exports.newSchool = (req, res, next) => {
-  res.status(200).json({ success: true, message: 'create new school page' });
+  res.render('schools/new');
 };
 
 exports.createSchool = async (req, res, next) => {
   try {
-    const createdSchool = await School.create(req.body);
-    res.status(201).json({ success: true, data: createdSchool });
+    await School.create(req.body);
+    res.redirect('/schools');
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);

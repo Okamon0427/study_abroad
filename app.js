@@ -18,8 +18,7 @@ mongoose.connect(process.env.MONGODB_URI, mongooseConfig)
 
 const app = express();
 app.set('view engine', 'ejs');
-// app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/schools', schoolRoutes);
 
