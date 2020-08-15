@@ -1,22 +1,30 @@
 const express = require('express');
 
-const schoolController = require('../controllers/schools');
-const authMiddleware = require('../middleware/auth');
+const {
+  getSchools,
+  newSchool,
+  createSchool,
+  getSchool,
+  editSchool,
+  updateSchool,
+  deleteSchool
+} = require('../controllers/schools');
+const { isLoggedIn, isSchoolAuthorized } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/', schoolController.getSchools);
+router.get('/', getSchools);
 
-router.get('/new', authMiddleware.isLoggedIn, schoolController.newSchool);
+router.get('/new', isLoggedIn, newSchool);
 
-router.post('/', authMiddleware.isLoggedIn, schoolController.createSchool);
+router.post('/', isLoggedIn, createSchool);
 
-router.get('/:schoolId', schoolController.getSchool);
+router.get('/:schoolId', getSchool);
 
-router.get('/:schoolId/edit', authMiddleware.isLoggedIn, authMiddleware.isSchoolAuthorized, schoolController.editSchool);
+router.get('/:schoolId/edit', isLoggedIn, isSchoolAuthorized, editSchool);
 
-router.put('/:schoolId', authMiddleware.isLoggedIn, authMiddleware.isSchoolAuthorized, schoolController.updateSchool);
+router.put('/:schoolId', isLoggedIn, isSchoolAuthorized, updateSchool);
 
-router.delete('/:schoolId', authMiddleware.isLoggedIn, authMiddleware.isSchoolAuthorized, schoolController.deleteSchool);
+router.delete('/:schoolId', isLoggedIn, isSchoolAuthorized, deleteSchool);
 
 module.exports = router;
