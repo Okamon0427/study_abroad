@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 require('dotenv').config();
 
 const schoolRoutes = require('./routes/schools');
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGODB_URI, mongooseConfig)
 const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 app.use('/schools', schoolRoutes);
 

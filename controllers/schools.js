@@ -50,7 +50,7 @@ exports.editSchool = async (req, res, next) => {
       return next(error);
     }
 
-    res.status(200).json({ success: true, data: school });
+    res.render('schools/edit', { school });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -71,7 +71,7 @@ exports.updateSchool = async (req, res, next) => {
       runValidators: true
     });
 
-    res.status(200).json({ success: true, data: updatedSchool });
+    res.redirect('/schools');
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -89,7 +89,7 @@ exports.deleteSchool = async (req, res, next) => {
 
     await School.findByIdAndDelete(req.params.schoolId);
 
-    res.status(200).json({ success: true, message: 'School deleted' });
+    res.redirect('/schools');
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);

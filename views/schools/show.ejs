@@ -9,8 +9,14 @@
       <p class="h4">Country: <%= school.country %></p>
       <p class="h4">Tuition: $<%= school.tuition %></p>
       <p class="h4">Description: <%= school.description %></p>
+      <a class="btn btn-warning" href="/schools/<%= school._id %>/edit" role="button">EDIT</a>
+      <form action="/schools/<%= school._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">DELETE</button>
+      </form>
     </div>
   </div>
+
+  <a href="/schools">Go back</a>
 </div>
 
 <%- include("../partials/footer") %>
