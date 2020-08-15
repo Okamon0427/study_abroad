@@ -6,19 +6,46 @@
   <form action="/schools/<%= school._id %>?_method=PUT" method="POST">
     <div class="form-group">
       <label for="name">School Name</label>
-      <input type="text" class="form-control" id="name" name="name" value="<%= school.name %>" placeholder="Harvard University">
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="Harvard University"
+        value="<%= typeof school != 'undefined' ? school.name : '' %>"
+      >
     </div>
     <div class="form-group">
       <label for="country">Country</label>
-      <input type="text" class="form-control" id="country" name="country" value="<%= school.country %>" placeholder="United States of America">
+      <input
+        type="text"
+        class="form-control"
+        id="country"
+        name="country"
+        placeholder="United States of America"
+        value="<%= typeof school != 'undefined' ? school.country : '' %>"
+      >
     </div>
     <div class="form-group">
       <label for="tuition">Tuition</label>
-      <input type="number" class="form-control" id="tuition" name="tuition" value="<%= school.tuition %>" placeholder="50,000">
+      <input
+        type="number"
+        class="form-control"
+        id="tuition"
+        name="tuition"
+        placeholder="50,000"
+        value="<%= typeof school != 'undefined' ? school.tuition : '' %>"
+      >
     </div>
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea class="form-control" id="description" rows="5" name="description" placeholder="Anything"><%= school.description %></textarea>
+      <textarea
+        class="form-control"
+        id="description"
+        rows="5"
+        name="description"
+        placeholder="Anything"
+      ><%= typeof school != 'undefined' ? school.description : '' %></textarea>
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>

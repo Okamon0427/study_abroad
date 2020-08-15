@@ -1,7 +1,9 @@
-const User = require('../models/User');
-const CustomError = require('../utils/CustomError');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const { validationResult } = require('express-validator');
+
+const User = require('../models/User');
+const CustomError = require('../utils/CustomError');
 
 exports.signupPage = (req, res, next) => {
   res.render('users/signup', { title: 'Signup' });
@@ -9,6 +11,17 @@ exports.signupPage = (req, res, next) => {
 
 exports.signup = async (req, res, next) => {
   const { name, email, password, confirmPassword } = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render('users/signup', {
+      title: 'Signup',
+      error: errors.array()[0].msg,
+      name,
+      email,
+      password
+    });
+  }
 
   try {
     const existingUser = await User.findOne({ email });
@@ -54,6 +67,18 @@ exports.loginPage = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
+  const { email, password } = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render('users/login', {
+      title: 'Login',
+      error: errors.array()[0].msg,
+      email,
+      password
+    });
+  }
+
   passport.authenticate('local',
     {
       successRedirect: '/schools',

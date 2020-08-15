@@ -1,5 +1,7 @@
 const School = require("../models/School");
 
+const CustomError = require('../utils/CustomError');
+
 exports.isLoggedIn = (req, res, next) => {
 	if (req.isAuthenticated()) {
 		return next();

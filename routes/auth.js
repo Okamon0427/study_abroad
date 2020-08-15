@@ -1,17 +1,51 @@
 const express = require('express');
+const { check } = require('express-validator');
 
-const authController = require('../controllers/auth');
+const {
+  signupPage,
+  signup,
+  loginPage,
+  login,
+  logout
+} = require('../controllers/auth');
 
 const router = express.Router();
 
-router.get('/signup', authController.signupPage);
+router.get('/signup', signupPage);
 
-router.post('/signup', authController.signup);
+router.post('/signup',
+  [
+    check('name')
+      .not()
+      .isEmpty()
+      .withMessage('Name should not be empty'),
+    check('email')
+      .normalizeEmail()
+      .isEmail()
+      .withMessage('invalid email address'),
+    check('password')
+      .isLength({ min: 5 })
+      .withMessage('Password must be at least 5 chars long')
+  ],
+  signup
+);
 
-router.get('/login', authController.loginPage);
+router.get('/login', loginPage);
 
-router.post('/login', authController.login);
+router.post(
+  '/login',
+  [
+    check('email')
+      .normalizeEmail()
+      .isEmail()
+      .withMessage('invalid email address'),
+    check('password')
+      .isLength({ min: 5 })
+      .withMessage('Password must be at least 5 chars long')
+  ],
+  login
+);
 
-router.get('/logout', authController.logout);
+router.get('/logout', logout);
 
 module.exports = router;
