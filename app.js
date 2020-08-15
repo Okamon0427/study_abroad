@@ -5,6 +5,7 @@ const methodOverride = require('method-override');
 require('dotenv').config();
 
 const schoolRoutes = require('./routes/schools');
+const userRoutes = require('./routes/users');
 const CustomError = require('./utils/CustomError');
 
 const mongooseConfig = {
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 app.use('/schools', schoolRoutes);
+app.use(userRoutes);
 
 app.use((req, res, next) => {
   const error = new CustomError('Could not find this route.', 404);

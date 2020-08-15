@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     retuired: true
   },
   password: {
-    type: Number,
+    type: String,
     required: true
   },
 });
