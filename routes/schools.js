@@ -13,10 +13,10 @@ router.post('/', authMiddleware.isLoggedIn, schoolController.createSchool);
 
 router.get('/:schoolId', schoolController.getSchool);
 
-router.get('/:schoolId/edit', authMiddleware.isLoggedIn, schoolController.editSchool);
+router.get('/:schoolId/edit', authMiddleware.isLoggedIn, authMiddleware.isSchoolAuthorized, schoolController.editSchool);
 
-router.put('/:schoolId', authMiddleware.isLoggedIn, schoolController.updateSchool);
+router.put('/:schoolId', authMiddleware.isLoggedIn, authMiddleware.isSchoolAuthorized, schoolController.updateSchool);
 
-router.delete('/:schoolId', authMiddleware.isLoggedIn, schoolController.deleteSchool);
+router.delete('/:schoolId', authMiddleware.isLoggedIn, authMiddleware.isSchoolAuthorized, schoolController.deleteSchool);
 
 module.exports = router;

@@ -17,6 +17,11 @@ const SchoolSchema = new mongoose.Schema({
   description: {
     type: String,
     maxlength: 500
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true
   }
 });
 

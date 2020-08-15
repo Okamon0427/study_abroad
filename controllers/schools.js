@@ -20,6 +20,7 @@ exports.newSchool = (req, res, next) => {
 };
 
 exports.createSchool = async (req, res, next) => {
+  req.body.user = req.user.id;
   try {
     await School.create(req.body);
     req.flash('success', 'Created new school!');
