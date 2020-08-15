@@ -32,7 +32,8 @@ app.use((req, res, next) => {
 
 app.use((error, req, res, next) => {
   res.status(error.statusCode || 500);
-  res.json({ message: error.message || 'Something went wrong' });
+  const message = error.message || 'Something went wrong';
+  res.render('error', { title: 'Error', message });
 });
 
 app.listen(3000, () => {
