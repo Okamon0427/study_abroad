@@ -1,0 +1,35 @@
+<%- include("../partials/header") %>
+
+<div class="row">
+  <div class="col-md-4 col-sm-12">
+    <div class="card text-center">
+      <img src="/picture" class="card-img-top" alt="No Picture">
+      <div class="card-body">
+        <h5 class="card-title">Name</h5>
+        <p class="card-text">Introduction</p>
+        <% if (mypage) { %>
+        <a href="#" class="btn btn-primary">Edit</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8 col-sm-12">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Favorite School</h5>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Review</h5>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Follow User</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include("../partials/footer") %>

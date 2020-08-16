@@ -6,7 +6,7 @@ const User = require('../models/User');
 const CustomError = require('../utils/CustomError');
 
 exports.signupPage = (req, res, next) => {
-  res.render('users/signup', { title: 'Signup' });
+  res.render('auth/signup', { title: 'Signup' });
 };
 
 exports.signup = async (req, res, next) => {
@@ -14,7 +14,7 @@ exports.signup = async (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(422).render('users/signup', {
+    return res.status(422).render('auth/signup', {
       title: 'Signup',
       error: errors.array()[0].msg,
       name,
@@ -27,7 +27,7 @@ exports.signup = async (req, res, next) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.status(401).render('users/signup', {
+      return res.status(401).render('auth/signup', {
         title: 'Signup',
         error: 'This email has already been registered',
         name,
@@ -37,7 +37,7 @@ exports.signup = async (req, res, next) => {
     }
 
     if (password !== confirmPassword) {
-      return res.status(401).render('users/signup', {
+      return res.status(401).render('auth/signup', {
         title: 'Signup',
         error: 'Confirm password failed',
         name,
@@ -63,7 +63,7 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.loginPage = (req, res, next) => {
-  res.render('users/login', { title: 'Login' });
+  res.render('auth/login', { title: 'Login' });
 };
 
 exports.login = (req, res, next) => {
@@ -71,7 +71,7 @@ exports.login = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(422).render('users/login', {
+    return res.status(422).render('auth/login', {
       title: 'Login',
       error: errors.array()[0].msg,
       email,

@@ -8,8 +8,7 @@ exports.getSchools = async (req, res, next) => {
     const schools = await School.find();
     res.render('schools/schools', {
       schools,
-      title: 'Schools',
-      page: 'schools'
+      title: 'Schools'
     });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
