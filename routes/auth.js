@@ -13,7 +13,8 @@ const router = express.Router();
 
 router.get('/signup', signupPage);
 
-router.post('/signup',
+router.post(
+  '/signup',
   [
     check('name')
       .not()
