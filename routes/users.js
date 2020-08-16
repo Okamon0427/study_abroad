@@ -6,28 +6,18 @@ const {
   editUser,
   updateUser
 } = require('../controllers/users');
-const { isLoggedIn } = require('../middleware/auth');
+const { isLoggedIn, isUserAuthorized } = require('../middleware/auth');
 
 const router = express.Router();
 
 router.get('/:userId', isLoggedIn, getUser);
 
-router.get('/:userId/edit', isLoggedIn, editUser);
+router.get('/:userId/edit', isLoggedIn, isUserAuthorized, editUser);
 
-// router.put(
-//   '/:userId',
-//   isLoggedIn,
-//   [
-//     check('name')
-//       .not()
-//       .isEmpty()
-//       .withMessage('Name should not be empty')
-//   ],
-//   updateUser
-// );
 router.put(
   '/:userId',
   isLoggedIn,
+  isUserAuthorized,
   oneOf([
     check('name')
       .exists()

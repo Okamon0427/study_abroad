@@ -56,15 +56,17 @@ exports.updateUser = async (req, res, next) => {
       return next(error);
     }
 
-    const errors = validationResult(req);
     let updatedObject;
+    const errors = validationResult(req);
 
     if (req.body.content === 'profile') {
       if (!errors.isEmpty()) {
         const targetError = errors.array()[0].nestedErrors.find(
           content => content.param === 'name'
-          );
+        );
+    
         const user = { ...req.body };
+    
         return res.status(422).render('users/edit', {
           title: 'My Page',
           error: targetError.msg,
@@ -72,7 +74,6 @@ exports.updateUser = async (req, res, next) => {
           user
         });
       }
-
       delete req.body.content;
       updatedObject = { ...req.body };
     }
@@ -138,7 +139,7 @@ exports.updateUser = async (req, res, next) => {
       }
 
       const hashedPassword = await bcrypt.hash(newPassword, 12);
-      updatedObject = { $set: { password: hashedPassword } };
+      updatedObject = { password: hashedPassword };
     }
 
     await User.findByIdAndUpdate(req.user.id, updatedObject, {

@@ -1,4 +1,5 @@
 const School = require("../models/School");
+const User = require('../models/User');
 
 const CustomError = require('../utils/CustomError');
 
@@ -29,4 +30,25 @@ exports.isSchoolAuthorized = async (req, res, next) => {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
   }
-};  
+};
+
+exports.isUserAuthorized = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userId);
+
+    if (!user) {
+      const error = new CustomError('User not found', 404);
+      return next(error);
+    }
+
+    if (user._id.toString() !== req.user._id.toString()) {
+      req.flash('error', 'You are not authorized to do that');
+      return res.redirect(`/users/${user._id}`);
+    }
+
+    next();
+  } catch (err) {
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
+  }
+};
