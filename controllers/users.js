@@ -18,7 +18,9 @@ exports.getUser = async (req, res, next) => {
     res.render('users/user', {
       title,
       user,
-      mypage
+      mypage,
+      modal: 'userDelete',
+      modalMessage: 'Do you really want to delete this account?'
     });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);

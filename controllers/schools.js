@@ -53,7 +53,12 @@ exports.getSchool = async (req, res, next) => {
       return next(error);
     }
 
-    res.render('schools/show', { school, title: school.name });
+    res.render('schools/show', {
+      school,
+      title: school.name,
+      modal: 'schoolDelete',
+      modalMessage: 'Do you really want to delete this school?'
+    });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -121,7 +126,7 @@ exports.deleteSchool = async (req, res, next) => {
 
     await School.findByIdAndDelete(req.params.schoolId);
 
-    req.flash('success', 'Deleted product!');
+    req.flash('success', 'Deleted school!');
     res.redirect('/schools');
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);

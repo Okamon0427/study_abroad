@@ -22,36 +22,7 @@
         <p class="card-text">
           <a href="/users/<%= currentUser.id %>/edit?content=password" class="card-link">Password</a>
         </p>
-        <!-- Button trigger modal -->
-        <p class="card-text">
-          <a href="#" class="card-link" data-toggle="modal" data-target="#exampleModalCenter">
-            Delete this account
-          </a>
-        </p>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Warning!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Do you really want to delete your account?
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form action="/users/<%= currentUser.id %>?_method=DELETE" method="POST">
-                  <button class="btn btn-danger">Delete</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <%- include("../partials/modal") %>
       </div>
     </div>
     <% } %>
