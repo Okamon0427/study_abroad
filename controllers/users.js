@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 
 const User = require("../models/User");
-const School = require('../models/School');
 const CustomError = require('../utils/CustomError');
 
 exports.getUser = async (req, res, next) => {
@@ -59,22 +58,32 @@ exports.updateUser = async (req, res, next) => {
 
     let updatedObject;
     const errors = validationResult(req);
-
+    
     if (req.body.content === 'profile') {
       if (!errors.isEmpty()) {
         const targetError = errors.array()[0].nestedErrors.find(
           content => content.param === 'name' || content.param === 'introduction'
         );
     
-        const user = { ...req.body };
-    
         return res.status(422).render('users/edit', {
           title: 'My Page',
           error: targetError.msg,
           editContent: 'profile',
-          user
+          user: { ...req.body }
         });
       }
+
+      const existingUser = await User.findOne({ name: req.body.name });
+
+      if (existingUser) {
+        return res.status(401).render('users/edit', {
+          title: 'My Page',
+          error: 'This username has already been registered',
+          editContent: 'profile',
+          user: { ...req.body }
+        });
+      }
+
       delete req.body.content;
       updatedObject = { ...req.body };
     }
@@ -84,28 +93,26 @@ exports.updateUser = async (req, res, next) => {
         const targetError = errors.array()[0].nestedErrors.find(
           content => content.param === 'newEmail'
           );
-        const user = { ...req.body }
         return res.status(422).render('users/edit', {
           title: 'My Page',
           error: targetError.msg,
           editContent: 'email',
-          user
+          user: { ...req.body }
         });
       }
 
-      const { newEmail } = req.body;
-      const existingUser = await User.findOne({ email: newEmail });
+      const existingUser = await User.findOne({ email: req.body.newEmail });
 
       if (existingUser) {
         return res.status(401).render('users/edit', {
           title: 'My Page',
           error: 'This email has already been registered',
           editContent: 'email',
-          user
+          user: { ...req.body }
         });
       }
 
-      updatedObject = { email: newEmail };
+      updatedObject = { email: req.body.newEmail };
     }
 
     if (req.body.content === 'password') {

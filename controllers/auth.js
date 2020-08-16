@@ -24,9 +24,20 @@ exports.signup = async (req, res, next) => {
   }
 
   try {
-    const existingUser = await User.findOne({ email });
+    const existingUserName = await User.findOne({ name });
+    const existingUserEmail = await User.findOne({ email });
 
-    if (existingUser) {
+    if (existingUserName) {
+      return res.status(401).render('auth/signup', {
+        title: 'Signup',
+        error: 'This username has already been registered',
+        name,
+        email,
+        password
+      });
+    }
+
+    if (existingUserEmail) {
       return res.status(401).render('auth/signup', {
         title: 'Signup',
         error: 'This email has already been registered',
