@@ -62,7 +62,7 @@ exports.updateUser = async (req, res, next) => {
     if (req.body.content === 'profile') {
       if (!errors.isEmpty()) {
         const targetError = errors.array()[0].nestedErrors.find(
-          content => content.param === 'name'
+          content => content.param === 'name' || content.param === 'introduction'
         );
     
         const user = { ...req.body };

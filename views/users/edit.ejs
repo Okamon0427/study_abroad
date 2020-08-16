@@ -24,6 +24,7 @@
         id="introduction"
         name="introduction"
         placeholder="Hi there!"
+        value="<%= typeof user != 'undefined' ? user.introduction : '' %>"
       >
     </div>
     <% } else if (editContent === 'email') { %>

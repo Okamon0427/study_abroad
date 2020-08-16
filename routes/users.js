@@ -19,11 +19,17 @@ router.put(
   isLoggedIn,
   isUserAuthorized,
   oneOf([
-    check('name')
-      .exists()
-      .not()
-      .isEmpty()
-      .withMessage('Name should not be empty'),
+    [
+      check('name')
+        .exists()
+        .not()
+        .isEmpty()
+        .withMessage('Name should not be empty'),
+      check('introduction')
+        .exists()
+        .isLength({ max: 5 })
+        .withMessage('Introduction should be within 500 chars long')
+    ],
     check('newEmail')
       .exists()
       .normalizeEmail()
