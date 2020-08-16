@@ -1,0 +1,92 @@
+<%- include("../partials/header") %>
+
+<div style="width: 50%; margin: 0 auto;">
+  <h3 style="text-align: center;">Edit Your <%= editContent.toUpperCase() %></h3>
+
+  <form action="/users/<%= currentUser.id %>?_method=PUT" method="POST">
+    <% if (editContent === 'profile') { %>
+    <div class="form-group">
+      <label for="name">Your Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="Micheal Jackson"
+        value="<%= typeof user != 'undefined' ? user.name : '' %>"
+      >
+    </div>
+    <div class="form-group">
+      <label for="introduction">Introduction</label>
+      <input
+        type="text"
+        class="form-control"
+        id="introduction"
+        name="introduction"
+        placeholder="Hi there!"
+      >
+    </div>
+    <% } else if (editContent === 'email') { %>
+    <div class="form-group">
+      <label for="currentEmail">Current Email</label>
+      <input
+        type="text"
+        class="form-control"
+        id="currentEmail"
+        name="currentEmail"
+        placeholder="test@test.com"
+        value="<%= typeof user != 'undefined' ? user.email : '' %>"
+        disabled
+      >
+    </div>
+    <div class="form-group">
+      <label for="newEmail">New Email</label>
+      <input
+        type="text"
+        class="form-control"
+        id="newEmail"
+        name="newEmail"
+        placeholder="test@test.com"
+      >
+    </div>
+    <% } else if (editContent === 'password') { %>
+    <div class="form-group">
+      <label for="currentPassword">Current Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="currentPassword"
+        name="currentPassword"
+        placeholder="at least 5 letters or numbers"
+      >
+    </div>
+    <div class="form-group">
+      <label for="newPassword">New Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="newPassword"
+        name="newPassword"
+        placeholder="at least 5 letters or numbers"
+      >
+    </div>
+    <div class="form-group">
+      <label for="confirmNewPassword">Confirm New Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="confirmNewPassword"
+        name="confirmNewPassword"
+        placeholder="at least 5 letters or numbers"
+      >
+    </div>
+    <% } %>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
+    </div>
+  </form>
+
+  <a href="/users/<%= currentUser.id %>">Go back to My Page</a>
+</div>
+
+<%- include("../partials/footer") %>

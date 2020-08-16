@@ -5,13 +5,29 @@
     <div class="card text-center">
       <img src="/picture" class="card-img-top" alt="No Picture">
       <div class="card-body">
-        <h5 class="card-title">Name</h5>
+        <h5 class="card-title"><%= user.name %></h5>
         <p class="card-text">Introduction</p>
-        <% if (mypage) { %>
-        <a href="#" class="btn btn-primary">Edit</a>
-        <% } %>
       </div>
     </div>
+    <% if (mypage) { %>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Edit Your Account</h5>
+        <p class="card-text">
+          <a href="/users/<%= currentUser.id %>/edit?content=profile" class="card-link">Profile</a>
+        </p>
+        <p class="card-text">
+          <a href="/users/<%= currentUser.id %>/edit?content=email" class="card-link">Email</a>
+        </p>
+        <p class="card-text">
+          <a href="/users/<%= currentUser.id %>/edit?content=password" class="card-link">Password</a>
+        </p>
+        <p class="card-text">
+          <a href="#" class="card-link">Delete this Account</a>
+        </p>
+      </div>
+    </div>
+    <% } %>
   </div>
   <div class="col-md-8 col-sm-12">
     <div class="card text-center">
