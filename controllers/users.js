@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 
 const User = require("../models/User");
+const School = require('../models/School');
 const CustomError = require('../utils/CustomError');
 
 exports.getUser = async (req, res, next) => {
@@ -154,3 +155,22 @@ exports.updateUser = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      const error = new CustomError('User not found', 404);
+      return next(error);
+    }
+
+    await User.findByIdAndDelete(req.user.id);
+
+    req.flash('success', 'Deleted your account!');
+    res.redirect(`/schools`);
+  } catch (err) {
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
+  }
+}

@@ -4,7 +4,8 @@ const { check, oneOf } = require('express-validator');
 const {
   getUser,
   editUser,
-  updateUser
+  updateUser,
+  deleteUser
 } = require('../controllers/users');
 const { isLoggedIn, isUserAuthorized } = require('../middleware/auth');
 
@@ -42,5 +43,7 @@ router.put(
   ]),
   updateUser
 );
+
+router.delete('/:userId', isLoggedIn, isUserAuthorized, deleteUser);
 
 module.exports = router;
