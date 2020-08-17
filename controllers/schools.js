@@ -24,9 +24,10 @@ exports.newSchool = (req, res, next) => {
 };
 
 exports.createSchool = async (req, res, next) => {
-  const _id = req.params.schoolId
-  const school = { ...req.body, _id }
+  const school = req.body
   const errors = validationResult(req);
+
+  console.log(req.file)
 
   if (!errors.isEmpty()) {
     return res.status(422).render('schools/new', {
@@ -37,7 +38,23 @@ exports.createSchool = async (req, res, next) => {
     });
   }
 
+  const existingSchool = await School.findOne({ name: req.body.name });
+
+  if (existingSchool) {
+    return res.status(401).render('schools/new', {
+      title: 'Add New School',
+      error: 'This school has already been registered',
+      formContent: 'addSchool',
+      school
+    });
+  }
+
   req.body.user = req.user.id;
+
+  if (req.file) {
+    req.body.image = req.file.path;
+  }
+
   try {
     await School.create(req.body);
     req.flash('success', 'Created new school!');

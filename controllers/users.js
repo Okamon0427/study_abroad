@@ -77,7 +77,7 @@ exports.updateUser = async (req, res, next) => {
 
       const existingUser = await User.findOne({ name: req.body.name });
 
-      if (existingUser) {
+      if (existingUser && existingUser._id.toString() !== req.user.id.toString()) {
         return res.status(401).render('users/edit', {
           title: 'My Page',
           error: 'This username has already been registered',

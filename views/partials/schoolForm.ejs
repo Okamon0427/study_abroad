@@ -6,14 +6,14 @@
       <h1 style="text-align: center;">
         Add School
       </h1>
-      <form action="/schools" method="POST">
+      <form action="/schools" method="POST" enctype="multipart/form-data">
       <% } %>
 
       <% if (formContent === 'editSchool') { %> 
       <h1 style="text-align: center;">
         Edit School
       </h1>
-      <form action="/schools/<%= school._id %>?_method=PUT" method="POST">
+      <form action="/schools/<%= school._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
       <% } %>
 
         <div class="form-group">
@@ -49,6 +49,16 @@
             name="tuition"
             placeholder="50,000"
             value="<%= typeof school != 'undefined' ? school.tuition : '' %>"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label for="image">Image</label>
+          <input
+            type="file"
+            class="form-control"
+            id="image"
+            name="image"
           >
         </div>
 

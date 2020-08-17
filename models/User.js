@@ -19,7 +19,11 @@ const UserSchema = new mongoose.Schema({
   introduction: {
     type: String,
     maxlength: 500
-  }
+  },
+  photo: {
+    type: String,
+    default: 'no-photo.jpg'
+  },
 });
 
 module.exports = mongoose.model('User', UserSchema);

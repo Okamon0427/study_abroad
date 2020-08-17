@@ -7,6 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const flash = require('connect-flash');
 const bcrypt = require('bcryptjs');
+const multer = require('multer');
 require('dotenv').config();
 
 const schoolRoutes = require('./routes/schools');
@@ -54,12 +55,22 @@ passport.deserializeUser((id, done) => {
   });
 });
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/uploads');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(flash());
+app.use(multer({ storage: storage }).single('image'));
 
 app.use(session({
   secret: 'ramen is the most favorite food',

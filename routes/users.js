@@ -28,7 +28,7 @@ router.put(
         .withMessage('Name should not be empty'),
       check('introduction')
         .exists()
-        .isLength({ max: 5 })
+        .isLength({ max: 500 })
         .withMessage('Introduction should be within 500 chars long')
     ],
     check('newEmail')
