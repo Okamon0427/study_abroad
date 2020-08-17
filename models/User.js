@@ -20,9 +20,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     maxlength: 500
   },
-  photo: {
+  image: {
     type: String,
-    default: 'no-photo.jpg'
+    default: 'uploads\\no-photo.jpg'
   },
 });
 

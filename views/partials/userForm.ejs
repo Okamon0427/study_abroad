@@ -20,7 +20,7 @@
       <h1 style="text-align: center;">
         Edit Your <%= formContent.toUpperCase() %>
       </h1>
-      <form action="/users/<%= currentUser.id %>?_method=PUT" method="POST">
+      <form action="/users/<%= currentUser.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
       <% } %>
 
         <% if (formContent === 'signup') { %>
@@ -122,6 +122,16 @@
             value="<%= typeof user != 'undefined' ? user.introduction : '' %>"
           >
         </div>
+
+        <div class="form-group">
+          <label for="image">Image</label>
+          <input
+            type="file"
+            class="form-control"
+            id="image"
+            name="image"
+            >
+          </div>
 
         <% } else if (formContent === 'email') { %>
         <div class="form-group">

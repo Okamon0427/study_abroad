@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 
 const User = require("../models/User");
 const CustomError = require('../utils/CustomError');
+const { deleteFile } = require('../utils/deleteFile');
 
 exports.getUser = async (req, res, next) => {
   try {
@@ -60,7 +61,7 @@ exports.updateUser = async (req, res, next) => {
 
     let updatedObject;
     const errors = validationResult(req);
-    
+
     if (req.body.content === 'profile') {
       if (!errors.isEmpty()) {
         const targetError = errors.array()[0].nestedErrors.find(
@@ -84,6 +85,13 @@ exports.updateUser = async (req, res, next) => {
           formContent: 'profile',
           user: { ...req.body }
         });
+      }
+
+      if (req.file) {
+        if (user.image !== 'uploads\\no-photo.jpg') {
+          deleteFile(user.image);
+        }
+        req.body.image = req.file.path;
       }
 
       delete req.body.content;
@@ -172,6 +180,10 @@ exports.deleteUser = async (req, res, next) => {
     if (!user) {
       const error = new CustomError('User not found', 404);
       return next(error);
+    }
+
+    if (user.image !== 'uploads\\no-photo.jpg') {
+      deleteFile(user.image);
     }
 
     await User.findByIdAndDelete(req.user.id);

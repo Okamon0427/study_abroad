@@ -119,7 +119,6 @@ exports.updateSchool = async (req, res, next) => {
       formContent: 'editSchool'
     });
   }
-
   
   try {
     school = await School.findById(req.params.schoolId);
