@@ -1,21 +1,46 @@
 <%- include("../partials/header") %>
 
-<div style="width: 50%; margin: 0 auto;">
-  <h3 style="text-align: center;">School</h3>
-
-  <div class="card text-center">
-    <div class="card-body">
-      <img class="card-img-top" src="/<%= school.image %>" alt="No Image">
-      <p class="h4">Name: <%= school.name %></p>
-      <p class="h4">Country: <%= school.country %></p>
-      <p class="h4">Tuition: $<%= school.tuition %></p>
-      <p class="h4">Description: <%= school.description %></p>
-      <% if (currentUser && currentUser._id.equals(school.user)) { %>
-      <a class="btn btn-warning" href="/schools/<%= school._id %>/edit" role="button">EDIT</a>
-      <%- include("../partials/modal") %>
-      <% } %>
+<div class="row">
+  <div class="col-md-8 col-sm-12">
+    <div class="card">
+      <h3 style="text-align: center;">School</h3>
+      <div class="card-body">
+        <img class="card-img-top" src="/<%= school.image %>" alt="No Image">
+        <p class="h4"><%= school.name %></p>
+        <p class="h4"><%= school.country %></p>
+        <p class="h4">City</p>
+        <p class="h4">Map</p>
+        <p class="h4">$<%= school.tuition %></p>
+        <p class="h4"><%= school.description %></p>
+        <p class="h4">Favorite</p>
+        <p class="h4">Rating</p>
+        <p class="h4">Review</p>
+        <% if (currentUser && currentUser._id.equals(school.user)) { %>
+        <a class="btn btn-warning" href="/schools/<%= school._id %>/edit" role="button">EDIT</a>
+        <%- include("../partials/modal") %>
+        <% } %>
+      </div>
     </div>
   </div>
+
+  <div class="col-md-4 col-sm-12">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Popular Schools</h5>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">New Schools</h5>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Schools in the same country</h5>
+      </div>
+    </div>
+  </div>
+</div>
 
   <a href="/schools">Go back</a>
 </div>

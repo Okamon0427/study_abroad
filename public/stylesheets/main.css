@@ -1,8 +1,9 @@
-/* for fixed-top navbar */
 body {
-  padding-top: 84px;
+  padding-top: 84px; /* for fixed-top navbar */
+  background: #f5f5f5;
 }
 
 footer {
+  margin-top: 28px;
   background: #f5f5f5;
 }

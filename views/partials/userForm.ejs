@@ -136,6 +136,31 @@
             >
           </div>
 
+          <div class="form-group">
+            <label for="studentType">Type</label>
+            <select name="studentType" id="studentType" class="custom-select">
+              <option selected>Open this select menu</option>
+              <option value="highSchool">High School Student</option>
+              <option value="college">College Student</option>
+              <option value="university">University Student</option>
+              <option value="graduate">Graduate School Student</option>
+              <option value="worker">Worker</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="english">English (current level or target)</label>
+            <input
+              type="text"
+              class="form-control"
+              id="english"
+              name="english"
+              placeholder="I wanna get 6.5 point in IELTS exam!"
+              value="<%= typeof user != 'undefined' ? user.english : '' %>"
+            >
+          </div>
+
         <% } else if (formContent === 'email') { %>
         <div class="form-group">
           <label for="currentEmail">Current Email</label>

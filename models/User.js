@@ -24,6 +24,21 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: 'uploads\\no-photo.jpg'
   },
+  english: {
+    type: String,
+    maxlength: 100
+  },
+  studentType: {
+    type: String,
+    enum: [
+      'highSchool',
+      'college',
+      'university',
+      'graduate',
+      'worker',
+      'other'
+    ]
+  }
 });
 
 module.exports = mongoose.model('User', UserSchema);

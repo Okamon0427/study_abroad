@@ -11,21 +11,21 @@
     </div>
 
     <% if (mypage) { %>
-      <div class="card text-center">
-        <div class="card-body">
-          <h5 class="card-title">Edit Your Account</h5>
-          <p class="card-text">
-            <a href="/users/<%= currentUser.id %>/edit?content=profile" class="card-link">Profile</a>
-          </p>
-          <p class="card-text">
-            <a href="/users/<%= currentUser.id %>/edit?content=email" class="card-link">Email</a>
-          </p>
-          <p class="card-text">
-            <a href="/users/<%= currentUser.id %>/edit?content=password" class="card-link">Password</a>
-          </p>
-          <%- include("../partials/modal") %>
-        </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Edit Your Account</h5>
+        <p class="card-text">
+          <a href="/users/<%= currentUser.id %>/edit?content=profile" class="card-link">Profile</a>
+        </p>
+        <p class="card-text">
+          <a href="/users/<%= currentUser.id %>/edit?content=email" class="card-link">Email</a>
+        </p>
+        <p class="card-text">
+          <a href="/users/<%= currentUser.id %>/edit?content=password" class="card-link">Password</a>
+        </p>
+        <%- include("../partials/modal") %>
       </div>
+    </div>
     <% } %>
 
   </div>

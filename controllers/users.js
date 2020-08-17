@@ -103,6 +103,8 @@ exports.updateUser = async (req, res, next) => {
         req.body.image = req.file.path;
       }
 
+      console.log(req.body)
+
       delete req.body.content;
       updatedObject = { ...req.body };
     }
