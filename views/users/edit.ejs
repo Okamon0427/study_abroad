@@ -1,5 +1,39 @@
 <%- include("../partials/header") %>
 
-<%- include("../partials/userForm") %>
+<div class="row">
+  <div class="col-md-4 col-sm-12">
+    <div class="card text-center">
+      <div class="card-body">
+        <img class="card-img-top" src="/<%= user.image %>" alt="No Image">
+        <h5 class="card-title"><%= user.name %></h5>
+        <p class="card-text"><%= user.introduction %></p>
+      </div>
+    </div>
+
+    <% if (mypage) { %>
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Edit Your Account</h5>
+          <p class="card-text">
+            <a href="/users/<%= currentUser.id %>/edit?content=profile" class="card-link">Profile</a>
+          </p>
+          <p class="card-text">
+            <a href="/users/<%= currentUser.id %>/edit?content=email" class="card-link">Email</a>
+          </p>
+          <p class="card-text">
+            <a href="/users/<%= currentUser.id %>/edit?content=password" class="card-link">Password</a>
+          </p>
+          <%- include("../partials/modal") %>
+        </div>
+      </div>
+    <% } %>
+
+  </div>
+
+  <div class="col-md-8 col-sm-12">  
+  <%- include("../partials/userForm") %>
+  </div>
+</div>
+
 
 <%- include("../partials/footer") %>

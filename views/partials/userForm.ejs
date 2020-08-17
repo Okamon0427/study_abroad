@@ -1,4 +1,7 @@
-<div class="col-md-6 m-auto">
+<% if (formContent === 'signup' || formContent === 'login') { %>
+  <div class="col-md-6 m-auto">
+<% } %>
+
   <div class="card bg-white p-4 mb-4">
     <div class="card-body">
       
@@ -206,10 +209,9 @@
       <p>	Forgot Password? <a href="#">Reset Password</a></p>
       <% } %>
 
-      <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password' ) { %> 
-      <a href="/users/<%= currentUser.id %>">Go back to My Page</a>
-      <% } %>
-
     </div>
   </div>
-</div>
+
+<% if (formContent === 'signup' || formContent === 'login') { %>
+  </div>
+<% } %>

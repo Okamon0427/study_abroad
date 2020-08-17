@@ -41,7 +41,10 @@ exports.editUser = async (req, res, next) => {
     res.render('users/edit', {
       title: 'My Page',
       formContent: req.query.content,
-      user
+      user,
+      mypage: true,
+      modal: 'userDelete',
+      modalMessage: 'Do you really want to delete this account?'
     });
     
   } catch (err) {
@@ -72,7 +75,10 @@ exports.updateUser = async (req, res, next) => {
           title: 'My Page',
           error: targetError.msg,
           formContent: 'profile',
-          user: { ...req.body }
+          user: { ...req.body },
+          mypage: true,
+          modal: 'userDelete',
+          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -83,7 +89,10 @@ exports.updateUser = async (req, res, next) => {
           title: 'My Page',
           error: 'This username has already been registered',
           formContent: 'profile',
-          user: { ...req.body }
+          user: { ...req.body },
+          mypage: true,
+          modal: 'userDelete',
+          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -107,7 +116,10 @@ exports.updateUser = async (req, res, next) => {
           title: 'My Page',
           error: targetError.msg,
           formContent: 'email',
-          user: { ...req.body }
+          user: { ...req.body },
+          mypage: true,
+          modal: 'userDelete',
+          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -118,7 +130,10 @@ exports.updateUser = async (req, res, next) => {
           title: 'My Page',
           error: 'This email has already been registered',
           formContent: 'email',
-          user: { ...req.body }
+          user: { ...req.body },
+          mypage: true,
+          modal: 'userDelete',
+          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -134,6 +149,9 @@ exports.updateUser = async (req, res, next) => {
           title: 'My Page',
           error: targetError.msg,
           formContent: 'password',
+          mypage: true,
+          modal: 'userDelete',
+          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -145,6 +163,9 @@ exports.updateUser = async (req, res, next) => {
           title: 'My Page',
           error: 'incorrect current password',
           formContent: 'password',
+          mypage: true,
+          modal: 'userDelete',
+          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -153,6 +174,9 @@ exports.updateUser = async (req, res, next) => {
           title: 'My Page',
           error: 'Confirm password failed',
           formContent: 'password',
+          mypage: true,
+          modal: 'userDelete',
+          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
