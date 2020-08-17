@@ -39,7 +39,7 @@ exports.editUser = async (req, res, next) => {
 
     res.render('users/edit', {
       title: 'My Page',
-      editContent: req.query.content,
+      formContent: req.query.content,
       user
     });
     
@@ -70,7 +70,7 @@ exports.updateUser = async (req, res, next) => {
         return res.status(422).render('users/edit', {
           title: 'My Page',
           error: targetError.msg,
-          editContent: 'profile',
+          formContent: 'profile',
           user: { ...req.body }
         });
       }
@@ -81,7 +81,7 @@ exports.updateUser = async (req, res, next) => {
         return res.status(401).render('users/edit', {
           title: 'My Page',
           error: 'This username has already been registered',
-          editContent: 'profile',
+          formContent: 'profile',
           user: { ...req.body }
         });
       }
@@ -98,7 +98,7 @@ exports.updateUser = async (req, res, next) => {
         return res.status(422).render('users/edit', {
           title: 'My Page',
           error: targetError.msg,
-          editContent: 'email',
+          formContent: 'email',
           user: { ...req.body }
         });
       }
@@ -109,7 +109,7 @@ exports.updateUser = async (req, res, next) => {
         return res.status(401).render('users/edit', {
           title: 'My Page',
           error: 'This email has already been registered',
-          editContent: 'email',
+          formContent: 'email',
           user: { ...req.body }
         });
       }
@@ -125,7 +125,7 @@ exports.updateUser = async (req, res, next) => {
         return res.status(422).render('users/edit', {
           title: 'My Page',
           error: targetError.msg,
-          editContent: 'password',
+          formContent: 'password',
         });
       }
 
@@ -136,7 +136,7 @@ exports.updateUser = async (req, res, next) => {
         return res.status(401).render('users/edit', {
           title: 'My Page',
           error: 'incorrect current password',
-          editContent: 'password',
+          formContent: 'password',
         });
       }
 
@@ -144,7 +144,7 @@ exports.updateUser = async (req, res, next) => {
         return res.status(401).render('users/edit', {
           title: 'My Page',
           error: 'Confirm password failed',
-          editContent: 'password',
+          formContent: 'password',
         });
       }
 

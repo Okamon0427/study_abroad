@@ -6,7 +6,10 @@ const User = require('../models/User');
 const CustomError = require('../utils/CustomError');
 
 exports.signupPage = (req, res, next) => {
-  res.render('auth/signup', { title: 'Signup' });
+  res.render('auth/signup', {
+    title: 'Signup',
+    formContent: 'signup'
+  });
 };
 
 exports.signup = async (req, res, next) => {
@@ -19,7 +22,8 @@ exports.signup = async (req, res, next) => {
       error: errors.array()[0].msg,
       name,
       email,
-      password
+      password,
+      formContent: 'signup'
     });
   }
 
@@ -33,7 +37,8 @@ exports.signup = async (req, res, next) => {
         error: 'This username has already been registered',
         name,
         email,
-        password
+        password,
+        formContent: 'signup'
       });
     }
 
@@ -43,7 +48,8 @@ exports.signup = async (req, res, next) => {
         error: 'This email has already been registered',
         name,
         email,
-        password
+        password,
+        formContent: 'signup'
       });
     }
 
@@ -53,7 +59,8 @@ exports.signup = async (req, res, next) => {
         error: 'Confirm password failed',
         name,
         email,
-        password
+        password,
+        formContent: 'signup'
       });
     }
 
@@ -74,7 +81,10 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.loginPage = (req, res, next) => {
-  res.render('auth/login', { title: 'Login' });
+  res.render('auth/login', {
+    title: 'Login',
+    formContent: 'login'
+  });
 };
 
 exports.login = (req, res, next) => {
@@ -86,7 +96,8 @@ exports.login = (req, res, next) => {
       title: 'Login',
       error: errors.array()[0].msg,
       email,
-      password
+      password,
+      formContent: 'login'
     });
   }
 

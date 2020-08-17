@@ -17,7 +17,10 @@ exports.getSchools = async (req, res, next) => {
 };
 
 exports.newSchool = (req, res, next) => {
-  res.render('schools/new', { title: 'Add New School'});
+  res.render('schools/new', {
+    title: 'Add New School',
+    formContent: 'addSchool'
+  });
 };
 
 exports.createSchool = async (req, res, next) => {
@@ -29,7 +32,8 @@ exports.createSchool = async (req, res, next) => {
     return res.status(422).render('schools/new', {
       title: 'Add New School',
       error: errors.array()[0].msg,
-      school
+      school,
+      formContent: 'addSchool'
     });
   }
 
@@ -74,7 +78,11 @@ exports.editSchool = async (req, res, next) => {
       return next(error);
     }
 
-    res.render('schools/edit', { school, title: 'Edit school' });
+    res.render('schools/edit', {
+      school,
+      title: 'Edit school',
+      formContent: 'editSchool'
+    });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -90,7 +98,8 @@ exports.updateSchool = async (req, res, next) => {
     return res.status(422).render('schools/edit', {
       title: 'Edit School',
       error: errors.array()[0].msg,
-      school
+      school,
+      formContent: 'editSchool'
     });
   }
 
