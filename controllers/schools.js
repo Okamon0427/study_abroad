@@ -2,13 +2,15 @@ const { validationResult } = require('express-validator');
 
 const School = require('../models/School');
 const CustomError = require('../utils/CustomError');
+const { deleteFile } = require('../utils/deleteFile');
 
 exports.getSchools = async (req, res, next) => {
   try {
     const schools = await School.find();
+
     res.render('schools/schools', {
       schools,
-      title: 'Schools'
+      title: 'Schools',
     });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
@@ -26,8 +28,6 @@ exports.newSchool = (req, res, next) => {
 exports.createSchool = async (req, res, next) => {
   const school = req.body
   const errors = validationResult(req);
-
-  console.log(req.file)
 
   if (!errors.isEmpty()) {
     return res.status(422).render('schools/new', {
@@ -120,12 +120,20 @@ exports.updateSchool = async (req, res, next) => {
     });
   }
 
+  
   try {
     school = await School.findById(req.params.schoolId);
     
     if (!school) {
       const error = new CustomError('School not found', 404);
       return next(error);
+    }
+    
+    if (req.file) {
+      if (school.image !== 'uploads\\no-photo.jpg') {
+        deleteFile(school.image);
+      }
+      req.body.image = req.file.path;
     }
 
     await School.findByIdAndUpdate(req.params.schoolId, req.body, {
@@ -148,6 +156,10 @@ exports.deleteSchool = async (req, res, next) => {
     if (!school) {
       const error = new CustomError('School not found', 404);
       return next(error);
+    }
+
+    if (school.image !== 'uploads\\no-photo.jpg') {
+      deleteFile(school.image);
     }
 
     await School.findByIdAndDelete(req.params.schoolId);

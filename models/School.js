@@ -24,7 +24,8 @@ const SchoolSchema = new mongoose.Schema({
     required: true
   },
   image: {
-    type: String
+    type: String,
+    default: 'uploads\\no-photo.jpg'
   }
 });
 

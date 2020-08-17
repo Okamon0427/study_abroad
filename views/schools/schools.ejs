@@ -9,6 +9,7 @@
     <% schools.forEach(school => { %>
       <div class="col-md-3 col-sm-6">
         <div class="card text-center">
+          <img class="card-img-top" src="<%= school.image %>" alt="No Image">
           <div class="card-body">
             <h5 class="card-title"><%= school.name %></h5>
             <p class="card-text"><%= school.description %></p>
