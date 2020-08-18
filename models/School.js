@@ -10,14 +10,6 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     retuired: true
   },
-  tuition: {
-    type: Number,
-    required: true
-  },
-  description: {
-    type: String,
-    maxlength: 500
-  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
@@ -26,6 +18,22 @@ const SchoolSchema = new mongoose.Schema({
   image: {
     type: String,
     default: 'uploads\\no-photo.jpg'
+  },
+  schoolType: {
+    type: String,
+    enum: [
+      'College',
+      'University',
+      'Language School',
+      'Other',
+    ]
+  },
+  website: {
+    type: String
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 

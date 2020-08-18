@@ -110,7 +110,7 @@ exports.updateSchool = async (req, res, next) => {
   const _id = req.params.schoolId
   let school = { ...req.body, _id }
   const errors = validationResult(req);
-
+  
   if (!errors.isEmpty()) {
     return res.status(422).render('schools/edit', {
       title: 'Edit School',
@@ -122,7 +122,7 @@ exports.updateSchool = async (req, res, next) => {
   
   try {
     school = await School.findById(req.params.schoolId);
-    
+
     if (!school) {
       const error = new CustomError('School not found', 404);
       return next(error);

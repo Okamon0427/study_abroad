@@ -29,7 +29,11 @@ router.put(
       check('introduction')
         .exists()
         .isLength({ max: 500 })
-        .withMessage('Introduction should be within 500 chars long')
+        .withMessage('Introduction should be within 500 chars long'),
+      check('english')
+        .exists()
+        .isLength({ max: 100 })
+        .withMessage('English (current level or target) should be within 100 chars long')
     ],
     check('newEmail')
       .exists()

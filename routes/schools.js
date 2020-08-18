@@ -30,13 +30,6 @@ router.post(
       .not()
       .isEmpty()
       .withMessage('Country should not be empty'),
-    check('tuition')
-      .not()
-      .isEmpty()
-      .withMessage('Tuition should not be empty'),
-    check('description')
-      .isLength({ max: 500 })
-      .withMessage('Description must be within 500 chars long')
   ],
   createSchool
 );
@@ -58,13 +51,6 @@ router.put(
       .not()
       .isEmpty()
       .withMessage('Country should not be empty'),
-    check('tuition')
-      .not()
-      .isEmpty()
-      .withMessage('Tuition should not be empty'),
-    check('description')
-      .isLength({ max: 500 })
-      .withMessage('Description must be within 500 chars long')
   ],
   updateSchool
 );

@@ -31,12 +31,12 @@ const UserSchema = new mongoose.Schema({
   studentType: {
     type: String,
     enum: [
-      'highSchool',
-      'college',
-      'university',
-      'graduate',
-      'worker',
-      'other'
+      'High School Student',
+      'College Student',
+      'University Student',
+      'Graduate School Student',
+      'Worker',
+      'Other'
     ]
   }
 });
