@@ -39,11 +39,13 @@
         <div class="row row-cols-1 row-cols-md-3">
           <% schools.forEach(school => { %>
           <div class="col mb-4">
-            <a href="/schools/<%= school._id %>">
+            <a href="/schools/<%= school._id %>" class="card-link">
               <div class="card h-100">
                 <img src="/<%= school.image %>" class="card-img-top" alt="No Image">
                 <div class="card-body">
-                  <h5 class="card-title"><%= school.name %></h5>
+                  <h5 class="card-title">
+                    <%= school.name %>
+                  </h5>
                 </div>
               </div>
             </a>
