@@ -17,8 +17,10 @@ exports.getUser = async (req, res, next) => {
       title = 'My Page';
     }
     
-    const schools = await School.find({ likes: { $in: [req.params.userId] } });
-    console.log(schools)
+    const schools = await School.find({
+      likes: { $in: [req.params.userId] }
+    })
+    .limit(3);
 
     res.render('users/user', {
       title,
