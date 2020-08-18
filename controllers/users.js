@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
-const { validationResult } = require('express-validator');
+const { validationResult, check } = require('express-validator');
 
 const User = require("../models/User");
+const School = require('../models/School');
 const CustomError = require('../utils/CustomError');
 const { deleteFile } = require('../utils/deleteFile');
 
@@ -16,9 +17,13 @@ exports.getUser = async (req, res, next) => {
       title = 'My Page';
     }
     
+    const schools = await School.find({ likes: { $in: [req.params.userId] } });
+    console.log(schools)
+
     res.render('users/user', {
       title,
       user,
+      schools,
       mypage,
       modal: 'userDelete',
       modalMessage: 'Do you really want to delete this account?'

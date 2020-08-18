@@ -6,6 +6,7 @@ const {
   newSchool,
   createSchool,
   getSchool,
+  favoriteSchool,
   editSchool,
   updateSchool,
   deleteSchool
@@ -35,6 +36,8 @@ router.post(
 );
 
 router.get('/:schoolId', getSchool);
+
+router.post('/:schoolId/favorite', isLoggedIn, favoriteSchool);
 
 router.get('/:schoolId/edit', isLoggedIn, isSchoolAuthorized, editSchool);
 

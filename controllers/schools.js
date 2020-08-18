@@ -74,12 +74,50 @@ exports.getSchool = async (req, res, next) => {
       return next(error);
     }
 
+    let isFavoriteUser;
+    
+    if (req.user) {
+      isFavoriteUser = school.likes.some(favoriteUser => {
+        return favoriteUser.equals(req.user._id);
+      });
+    } else {
+      isFavoriteUser = false
+    }
+    
     res.render('schools/show', {
       school,
       title: school.name,
       modal: 'schoolDelete',
-      modalMessage: 'Do you really want to delete this school?'
+      modalMessage: 'Do you really want to delete this school?',
+      isFavoriteUser
     });
+  } catch (err) {
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
+  }
+};
+
+exports.favoriteSchool = async (req, res, next) => {
+  try {
+    const school = await School.findById(req.params.schoolId);
+
+    if (!school) {
+      const error = new CustomError('School not found', 404);
+      return next(error);
+    }
+
+    const isFavoriteUser = school.likes.some(user => {
+      return user.equals(req.user._id);
+    });
+
+    if (isFavoriteUser) {
+      school.likes.pull(req.user._id);
+    } else {
+      school.likes.push(req.user);
+    }
+
+    await school.save();
+    return res.redirect(`/schools/${school._id}`);
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -110,7 +148,7 @@ exports.updateSchool = async (req, res, next) => {
   const _id = req.params.schoolId
   let school = { ...req.body, _id }
   const errors = validationResult(req);
-  
+
   if (!errors.isEmpty()) {
     return res.status(422).render('schools/edit', {
       title: 'Edit School',

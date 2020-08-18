@@ -12,7 +12,19 @@
         <p class="h4">Map</p>
         <p class="h4">$<%= school.tuition %></p>
         <p class="h4"><%= school.description %></p>
-        <p class="h4">Favorite</p>
+        
+        <form action="/schools/<%= school._id %>/favorite" method="POST">
+          <% if (currentUser && isFavoriteUser) { %>
+          <button class="btn btn-sm btn-secondary">
+            Liked (<%= school.likes.length %>)
+          </button>
+          <% } else if (currentUser && !isFavoriteUser) { %>
+          <button class="btn btn-sm btn-primary">
+            Like (<%= school.likes.length %>)
+          </button>
+          <% } %>
+        </form>
+
         <p class="h4">Rating</p>
         <p class="h4">Review</p>
         <% if (currentUser && currentUser._id.equals(school.user)) { %>

@@ -31,6 +31,12 @@ const SchoolSchema = new mongoose.Schema({
   website: {
     type: String
   },
+  likes: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "User"
+    }
+  ],
   createdAt: {
     type: Date,
     default: Date.now
