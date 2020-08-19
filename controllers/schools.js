@@ -94,8 +94,8 @@ exports.getSchool = async (req, res, next) => {
     const limitedReviews = await Review.find({ school: req.params.schoolId }).limit(3).populate('user');
 
     res.render('schools/show', {
-      school,
       title: school.name,
+      school,
       modal: 'schoolDelete',
       modalMessage: 'Do you really want to delete this school?',
       isFavoriteUser,
