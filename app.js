@@ -13,6 +13,7 @@ require('dotenv').config();
 
 const schoolRoutes = require('./routes/schools');
 const userRoutes = require('./routes/users');
+const reviewRoutes = require('./routes/reviews');
 const authRoutes = require('./routes/auth');
 const User = require('./models/User');
 const CustomError = require('./utils/CustomError');
@@ -90,6 +91,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/schools', schoolRoutes);
+app.use('/schools', reviewRoutes);
 app.use('/users', userRoutes);
 app.use(authRoutes);
 

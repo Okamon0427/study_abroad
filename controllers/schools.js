@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 
 const School = require('../models/School');
+const Review = require('../models/Review');
 const CustomError = require('../utils/CustomError');
 const { deleteFile } = require('../utils/deleteFile');
 
@@ -18,7 +19,7 @@ exports.getSchools = async (req, res, next) => {
   }
 };
 
-exports.newSchool = (req, res, next) => {
+exports.newSchool = async (req, res, next) => {
   res.render('schools/new', {
     title: 'Add New School',
     formContent: 'addSchool'
@@ -27,8 +28,8 @@ exports.newSchool = (req, res, next) => {
 
 exports.createSchool = async (req, res, next) => {
   const school = req.body
+  
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     return res.status(422).render('schools/new', {
       title: 'Add New School',
@@ -39,7 +40,6 @@ exports.createSchool = async (req, res, next) => {
   }
 
   const existingSchool = await School.findOne({ name: req.body.name });
-
   if (existingSchool) {
     return res.status(401).render('schools/new', {
       title: 'Add New School',
@@ -50,7 +50,6 @@ exports.createSchool = async (req, res, next) => {
   }
 
   req.body.user = req.user.id;
-
   if (req.file) {
     req.body.image = req.file.path;
   }
@@ -68,20 +67,28 @@ exports.createSchool = async (req, res, next) => {
 exports.getSchool = async (req, res, next) => {
   try {
     const school = await School.findById(req.params.schoolId);
-
     if (!school) {
       const error = new CustomError('School not found', 404);
       return next(error);
     }
 
+    // check the user who is logging in has favorite of this school
     let isFavoriteUser;
-    
     if (req.user) {
-      isFavoriteUser = school.likes.some(favoriteUser => {
-        return favoriteUser.equals(req.user._id);
-      });
+      isFavoriteUser = school.likes.some(favoriteUser => 
+        favoriteUser.equals(req.user._id)
+      );
     } else {
       isFavoriteUser = false
+    }
+
+    // Validate in case User who is logging in has already written Review to the School
+    let isUserHasReview = false;
+    if (req.user) {
+      const reviews = await Review.find({ school: req.params.schoolId });
+      isUserHasReview = reviews.some(review => 
+        review.user.toString() === req.user.id.toString()
+      );
     }
     
     res.render('schools/show', {
@@ -89,7 +96,8 @@ exports.getSchool = async (req, res, next) => {
       title: school.name,
       modal: 'schoolDelete',
       modalMessage: 'Do you really want to delete this school?',
-      isFavoriteUser
+      isFavoriteUser,
+      isUserHasReview
     });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
@@ -100,16 +108,15 @@ exports.getSchool = async (req, res, next) => {
 exports.favoriteSchool = async (req, res, next) => {
   try {
     const school = await School.findById(req.params.schoolId);
-
     if (!school) {
       const error = new CustomError('School not found', 404);
       return next(error);
     }
 
+    // change Favorite Button if the user who is logging in has favorite of this school
     const isFavoriteUser = school.likes.some(user => {
       return user.equals(req.user._id);
     });
-
     if (isFavoriteUser) {
       school.likes.pull(req.user._id);
     } else {
