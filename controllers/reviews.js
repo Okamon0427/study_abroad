@@ -7,29 +7,20 @@ const CustomError = require('../utils/CustomError');
 exports.createReview = async (req, res, next) => {
   try {
     const school = await School.findById(req.params.schoolId);
-
-    // check the user who is logging in has favorite of this school
-    let isFavoriteUser;
-    if (req.user) {
-      isFavoriteUser = school.likes.some(favoriteUser => 
-        favoriteUser.equals(req.user._id)
-      );
-    } else {
-      isFavoriteUser = false
-    }
+    const reviews = await Review.find({ school: req.params.schoolId });
 
     // Validate in case User who is logging in has already written Review to the School
-    const reviews = await Review.find({ school: req.params.schoolId });
-    const isUserHasReview = reviews.some(review => 
-      review.user.toString() === req.user.id.toString()
-    );
-    if (reviews && isUserHasReview) {
+    const isUserHasReview = checkIsUserHasReview(req, reviews);
+    if (isUserHasReview) {
       req.flash('error', 'You have already written review to this school');
       return res.redirect(`/schools/${req.params.schoolId}`);
     }
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      // check the user who is logging in has favorite of this school (true or false)
+      const isFavoriteUser = checkIsFavoriteUser(req, school);
+
       const limitedReviews = await Review.find({ school: req.params.schoolId }).limit(3).populate('user');
       return res.status(422).render('schools/show', {
         error: errors.array()[0].msg,
@@ -56,31 +47,18 @@ exports.createReview = async (req, res, next) => {
 exports.updateReview = async (req, res, next) => {
   try {
     const school = await School.findById(req.params.schoolId);
+    const reviews = await Review.find({ school: req.params.schoolId });
     
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
 
-      // check the user who is logging in has favorite of this school
-      let isFavoriteUser;
-      if (req.user) {
-      isFavoriteUser = school.likes.some(favoriteUser => 
-        favoriteUser.equals(req.user._id)
-      );
-      } else {
-        isFavoriteUser = false
-      }
+      // check the user who is logging in has favorite of this school (true or false)
+      const isFavoriteUser = checkIsFavoriteUser(req, school);
 
-      // Validate in case User who is logging in has already written Review to the School
-      let isUserHasReview = false;
-      if (req.user) {
-        const reviews = await Review.find({ school: req.params.schoolId });
-        isUserHasReview = reviews.some(review => 
-          review.user.toString() === req.user.id.toString()
-        );
-      }
+      // check the user who is logging in has already written Review to the School
+      const isUserHasReview = checkIsUserHasReview(req, reviews);
 
       const limitedReviews = await Review.find({ school: req.params.schoolId }).limit(3).populate('user');
-
       return res.status(422).render('schools/show', {
         error: errors.array()[0].msg,
         title: school.name,
@@ -114,4 +92,20 @@ exports.deleteReview = async (req, res, next) => {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
   }
+};
+
+const checkIsFavoriteUser = (req, school) => {
+  if (req.user) {
+    return school.likes.some(favoriteUser => 
+      favoriteUser.equals(req.user._id)
+    );
+  } else {
+    return false;
+  }
+};
+
+const checkIsUserHasReview = (req, reviews) => {
+  return reviews.some(review => 
+    review.user.equals(req.user._id)
+  );
 };

@@ -67,29 +67,18 @@ exports.createSchool = async (req, res, next) => {
 exports.getSchool = async (req, res, next) => {
   try {
     const school = await School.findById(req.params.schoolId);
+    const reviews = await Review.find({ school: req.params.schoolId });
+
     if (!school) {
       const error = new CustomError('School not found', 404);
       return next(error);
     }
 
-    // check the user who is logging in has favorite of this school
-    let isFavoriteUser;
-    if (req.user) {
-      isFavoriteUser = school.likes.some(favoriteUser => 
-        favoriteUser.equals(req.user._id)
-      );
-    } else {
-      isFavoriteUser = false
-    }
+    // check the user who is logging in has favorite of this school (true or false)
+    const isFavoriteUser = checkIsFavoriteUser(req, school);
 
-    // Validate in case User who is logging in has already written Review to the School
-    let isUserHasReview = false;
-    if (req.user) {
-      const reviews = await Review.find({ school: req.params.schoolId });
-      isUserHasReview = reviews.some(review => 
-        review.user.toString() === req.user.id.toString()
-      );
-    }
+    // check the user who is logging in has already written Review to the School
+    const isUserHasReview = checkIsUserHasReview(req, reviews);
 
     const limitedReviews = await Review.find({ school: req.params.schoolId }).limit(3).populate('user');
 
@@ -115,9 +104,7 @@ exports.favoriteSchool = async (req, res, next) => {
     }
 
     // change Favorite Button if the user who is logging in has favorite of this school
-    const isFavoriteUser = school.likes.some(user => {
-      return user.equals(req.user._id);
-    });
+    const isFavoriteUser = checkIsFavoriteUser(req, school);
     if (isFavoriteUser) {
       school.likes.pull(req.user._id);
     } else {
@@ -199,5 +186,25 @@ exports.deleteSchool = async (req, res, next) => {
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
+  }
+};
+
+const checkIsFavoriteUser = (req, school) => {
+  if (req.user) {
+    return school.likes.some(favoriteUser => 
+      favoriteUser.equals(req.user._id)
+    );
+  } else {
+    return false;
+  }
+};
+
+const checkIsUserHasReview = (req, reviews) => {
+  if (req.user) {
+    return reviews.some(review => 
+      review.user.equals(req.user._id)
+    );
+  } else {
+    return false;
   }
 };
