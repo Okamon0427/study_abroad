@@ -32,8 +32,60 @@
 
         <p class="h4">Rating</p>
         <% if (currentUser && currentUser._id.equals(school.user)) { %>
-        <a class="btn btn-warning" href="/schools/<%= school._id %>/edit" role="button">EDIT</a>
-        <%- include("../partials/modal") %>
+        <a
+          class="btn btn-warning"
+          href="/schools/<%= school._id %>/edit"
+          role="button"
+        >
+        EDIT
+        </a>
+
+        <!-- Delete School Modal Trigger -->
+        <a
+        href="#"
+        class="card-link"
+        data-toggle="modal"
+        data-target="#deleteSchool"
+        >
+          <button class="btn btn-danger">
+            DELETE
+          </button>
+        </a>
+        <!-- Delete School Modal Trigger End -->
+  
+        <!-- Delete School Modal -->
+        <div
+          class="modal fade"
+          id="deleteSchool"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="deleteSchool"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Warning!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Do you really want to delete this school?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                  Close
+                </button>
+                <form action="/schools/<%= school._id %>?_method=DELETE" method="POST">
+                  <button class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Delete School Modal End -->
+
         <% } %>
       </div>
     </div>
@@ -145,6 +197,7 @@
                     <img src="/<%= review.user.image %>" class="card-img-top" alt="No Image">
                     <p><%= review.user.name %></p>
                     <% if (currentUser && currentUser._id.equals(review.user._id)) { %>
+
                     <!-- Edit Review Toggle -->
                     <a
                       class="btn btn-warning"
@@ -158,9 +211,52 @@
                     </a>
                     <!-- Edit Review Toggle End -->
 
-                    <!-- Delete Review -->
-                    <%- include("../partials/modal") %>
-                    <!-- Delete Review End -->
+                    <!-- Delete Review Modal Trigger -->
+                    <a
+                    href="#"
+                    class="card-link"
+                    data-toggle="modal"
+                    data-target="#deleteReview"
+                    >
+                      <button class="btn btn-danger">
+                        DELETE
+                      </button>
+                    </a>
+                    <!-- Delete School Modal Trigger End -->
+              
+                    <!-- Delete School Modal -->
+                    <div
+                      class="modal fade"
+                      id="deleteReview"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="deleteReview"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Warning!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            Do you really want to delete this review?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                              Close
+                            </button>
+                            <form action="/schools/<%= school._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                              <button class="btn btn-danger">Delete</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Delete Review Modal End -->
+
                     <% } %>
                   </div>
                   <div class="col-12 col-md-8">

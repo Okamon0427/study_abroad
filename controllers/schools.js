@@ -96,8 +96,6 @@ exports.getSchool = async (req, res, next) => {
     res.render('schools/show', {
       title: school.name,
       school,
-      modal: 'schoolDelete',
-      modalMessage: 'Do you really want to delete this school?',
       isFavoriteUser,
       isUserHasReview,
       reviews: limitedReviews
@@ -137,11 +135,6 @@ exports.favoriteSchool = async (req, res, next) => {
 exports.editSchool = async (req, res, next) => {
   try {
     const school = await School.findById(req.params.schoolId);
-    
-    if (!school) {
-      const error = new CustomError('School not found', 404);
-      return next(error);
-    }
 
     res.render('schools/edit', {
       school,
@@ -170,11 +163,6 @@ exports.updateSchool = async (req, res, next) => {
   
   try {
     school = await School.findById(req.params.schoolId);
-
-    if (!school) {
-      const error = new CustomError('School not found', 404);
-      return next(error);
-    }
     
     if (req.file) {
       if (school.image !== 'uploads\\no-photo.jpg') {
@@ -200,11 +188,6 @@ exports.deleteSchool = async (req, res, next) => {
   try {
     const school = await School.findById(req.params.schoolId);
     
-    if (!school) {
-      const error = new CustomError('School not found', 404);
-      return next(error);
-    }
-
     if (school.image !== 'uploads\\no-photo.jpg') {
       deleteFile(school.image);
     }

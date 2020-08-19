@@ -27,8 +27,6 @@ exports.getUser = async (req, res, next) => {
       user,
       schools,
       mypage,
-      modal: 'userDelete',
-      modalMessage: 'Do you really want to delete this account?'
     });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
@@ -40,18 +38,11 @@ exports.editUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
 
-    if (!user) {
-      const error = new CustomError('User not found', 404);
-      return next(error);
-    }
-
     res.render('users/edit', {
       title: 'My Page',
       formContent: req.query.content,
       user,
       mypage: true,
-      modal: 'userDelete',
-      modalMessage: 'Do you really want to delete this account?'
     });
     
   } catch (err) {
@@ -63,11 +54,6 @@ exports.editUser = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
-
-    if (!user) {
-      const error = new CustomError('User not found', 404);
-      return next(error);
-    }
 
     let updatedObject;
     const errors = validationResult(req);
@@ -84,8 +70,6 @@ exports.updateUser = async (req, res, next) => {
           formContent: 'profile',
           user: { ...req.body },
           mypage: true,
-          modal: 'userDelete',
-          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -98,8 +82,6 @@ exports.updateUser = async (req, res, next) => {
           formContent: 'profile',
           user: { ...req.body },
           mypage: true,
-          modal: 'userDelete',
-          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -127,8 +109,6 @@ exports.updateUser = async (req, res, next) => {
           formContent: 'email',
           user: { ...req.body },
           mypage: true,
-          modal: 'userDelete',
-          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -141,8 +121,6 @@ exports.updateUser = async (req, res, next) => {
           formContent: 'email',
           user: { ...req.body },
           mypage: true,
-          modal: 'userDelete',
-          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -159,8 +137,6 @@ exports.updateUser = async (req, res, next) => {
           error: targetError.msg,
           formContent: 'password',
           mypage: true,
-          modal: 'userDelete',
-          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -173,8 +149,6 @@ exports.updateUser = async (req, res, next) => {
           error: 'incorrect current password',
           formContent: 'password',
           mypage: true,
-          modal: 'userDelete',
-          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -184,8 +158,6 @@ exports.updateUser = async (req, res, next) => {
           error: 'Confirm password failed',
           formContent: 'password',
           mypage: true,
-          modal: 'userDelete',
-          modalMessage: 'Do you really want to delete this account?'
         });
       }
 
@@ -209,11 +181,6 @@ exports.updateUser = async (req, res, next) => {
 exports.deleteUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
-
-    if (!user) {
-      const error = new CustomError('User not found', 404);
-      return next(error);
-    }
 
     if (user.image !== 'uploads\\no-photo.jpg') {
       deleteFile(user.image);

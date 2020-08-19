@@ -3,9 +3,10 @@ const { check } = require('express-validator');
 
 const {
   createReview,
-  updateReview
+  updateReview,
+  deleteReview
 } = require('../controllers/reviews');
-const { isLoggedIn } = require('../middleware/auth');
+const { isLoggedIn, isReviewAuthorized } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -27,6 +28,7 @@ router.post(
 router.put(
   '/:schoolId/reviews/:reviewId',
   isLoggedIn,
+  isReviewAuthorized,
   [
     check('title')
       .not()
@@ -37,6 +39,13 @@ router.put(
       .withMessage('Description should be within 500 chars long'),
   ],
   updateReview
+);
+
+router.delete(
+  '/:schoolId/reviews/:reviewId',
+  isLoggedIn,
+  isReviewAuthorized,
+  deleteReview
 );
 
 module.exports = router;

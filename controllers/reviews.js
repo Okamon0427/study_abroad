@@ -35,8 +35,6 @@ exports.createReview = async (req, res, next) => {
         error: errors.array()[0].msg,
         title: school.name,
         school,
-        modal: 'schoolDelete',
-        modalMessage: 'Do you really want to delete this school?',
         isFavoriteUser,
         isUserHasReview,
         reviews: limitedReviews
@@ -56,10 +54,7 @@ exports.createReview = async (req, res, next) => {
 };
 
 exports.updateReview = async (req, res, next) => {
-  // ミドルウェアでレビューの持ち主か判断
-  
   try {
-    const reviews = await Review.find({ school: req.params.schoolId });
     const school = await School.findById(req.params.schoolId);
     
     const errors = validationResult(req);
@@ -90,8 +85,6 @@ exports.updateReview = async (req, res, next) => {
         error: errors.array()[0].msg,
         title: school.name,
         school,
-        modal: 'schoolDelete',
-        modalMessage: 'Do you really want to delete this school?',
         isFavoriteUser,
         isUserHasReview,
         reviews: limitedReviews
@@ -109,4 +102,16 @@ exports.updateReview = async (req, res, next) => {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
   }
-}
+};
+
+exports.deleteReview = async (req, res, next) => {
+  try {
+    await Review.findByIdAndDelete(req.params.reviewId);
+
+    req.flash('success', 'Deleted review!');
+    res.redirect(`/schools/${req.params.schoolId}`);
+  } catch (err) {
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
+  }
+};
