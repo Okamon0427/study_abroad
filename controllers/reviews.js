@@ -30,6 +30,7 @@ exports.createReview = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
 
+    const limitedReviews = reviews.limit(3);
     return res.status(422).render('schools/show', {
       error: errors.array()[0].msg,
       title: school.name,
@@ -37,7 +38,8 @@ exports.createReview = async (req, res, next) => {
       modal: 'schoolDelete',
       modalMessage: 'Do you really want to delete this school?',
       isFavoriteUser,
-      isUserHasReview
+      isUserHasReview,
+      reviews: limitedReviews
     });
   }
   

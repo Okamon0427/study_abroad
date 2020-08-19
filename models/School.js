@@ -41,6 +41,16 @@ const SchoolSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+SchoolSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'school',
+  justOne: false
 });
 
 module.exports = mongoose.model('School', SchoolSchema);

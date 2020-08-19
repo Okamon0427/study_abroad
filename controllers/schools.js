@@ -7,7 +7,7 @@ const { deleteFile } = require('../utils/deleteFile');
 
 exports.getSchools = async (req, res, next) => {
   try {
-    const schools = await School.find();
+    const schools = await School.find().populate('reviews');
 
     res.render('schools/schools', {
       schools,
@@ -90,14 +90,17 @@ exports.getSchool = async (req, res, next) => {
         review.user.toString() === req.user.id.toString()
       );
     }
-    
+
+    const limitedReviews = await Review.find({ school: req.params.schoolId }).limit(3).populate('user');
+
     res.render('schools/show', {
       school,
       title: school.name,
       modal: 'schoolDelete',
       modalMessage: 'Do you really want to delete this school?',
       isFavoriteUser,
-      isUserHasReview
+      isUserHasReview,
+      reviews: limitedReviews
     });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);

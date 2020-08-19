@@ -1,6 +1,7 @@
 <%- include("../partials/header") %>
 
 <div class="row">
+  <!-- Left Row -->
   <div class="col-md-4 col-sm-12">
     <div class="card text-center">
       <div class="card-body">
@@ -13,6 +14,7 @@
       </div>
     </div>
 
+    <!-- Edit Account -->
     <% if (mypage) { %>
     <div class="card text-center">
       <div class="card-body">
@@ -29,10 +31,14 @@
         <%- include("../partials/modal") %>
       </div>
     </div>
-    <% } %>  
+    <% } %>
+    <!-- Edit Account End -->
   </div>
+  <!-- Left Row End -->
   
+  <!-- Right Row -->
   <div class="col-md-8 col-sm-12">
+    <!-- Favorite School -->
     <div class="card">
       <h3 class="card-title mx-auto" style="width: 300px;">Your Favorite School</h3>
       <div class="card-body">
@@ -54,6 +60,7 @@
         </div>
       </div>
     </div>
+    <!-- Favorite School End -->
 
     <div class="card">
       <h3 class="card-title mx-auto" style="width: 300px;">Favorite School</h3>
@@ -120,6 +127,7 @@
     </div>
 
   </div>
+  <!-- Right Row End -->
 </div>
 
 <%- include("../partials/footer") %>

@@ -137,9 +137,26 @@
         <!-- Exists Reviews -->
         <div class="row">
           <div class="col-md-12">
-            <p>Exists Reviews 1</p>
-            <p>Exists Reviews 2</p>
-            <p>Exists Reviews 3</p>
+            <% reviews.forEach(review => { %>
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6 col-md-4">
+                    <img src="/<%= review.user.image %>" class="card-img-top" alt="No Image">
+                    <p><%= review.user.name %></p>
+                    <% if (currentUser && currentUser._id.equals(review.user._id)) { %>
+                    <a class="btn btn-warning" href="#" role="button">EDIT</a>
+                    <%- include("../partials/modal") %>
+                    <% } %>
+                  </div>
+                  <div class="col-12 col-md-8">
+                    <h3><%= review.title %></h3>
+                    <p><%= review.description %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
             <a href="#">Check All Reviews</a>
           </div>
         </div>
