@@ -41,4 +41,22 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
+UserSchema.pre('remove', async function (next) {
+  // delete School when corresponding school is deleted
+  await this.model('School').deleteMany({ user: this._id });
+
+  // remove user from likes array in School
+  await this.model('School').updateMany(
+    {},
+    {
+      $pull: { likes: { $in: [this._id] } }
+    }
+  );
+
+  // delete Review when corresponding school is deleted
+  await this.model('Review').deleteMany({ user: this._id });
+  console.log('after delete User')
+  next();
+});
+
 module.exports = mongoose.model('User', UserSchema);

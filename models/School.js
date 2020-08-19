@@ -10,11 +10,6 @@ const SchoolSchema = new mongoose.Schema({
     type: String,
     retuired: true
   },
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    required: true
-  },
   image: {
     type: String,
     default: 'uploads\\no-photo.jpg'
@@ -37,6 +32,11 @@ const SchoolSchema = new mongoose.Schema({
       ref: "User"
     }
   ],
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -44,6 +44,12 @@ const SchoolSchema = new mongoose.Schema({
 }, {
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
+});
+
+// delete Review when corresponding school is deleted
+SchoolSchema.pre('remove', async function (next) {
+  await this.model('Review').deleteMany({ school: this._id });
+  next();
 });
 
 SchoolSchema.virtual('reviews', {

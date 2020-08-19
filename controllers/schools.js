@@ -179,7 +179,7 @@ exports.deleteSchool = async (req, res, next) => {
       deleteFile(school.image);
     }
 
-    await School.findByIdAndDelete(req.params.schoolId);
+    await school.remove();
 
     req.flash('success', 'Deleted school!');
     res.redirect('/schools');

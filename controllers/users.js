@@ -184,7 +184,7 @@ exports.deleteUser = async (req, res, next) => {
       deleteFile(user.image);
     }
 
-    await User.findByIdAndDelete(req.user.id);
+    await user.remove();
 
     req.flash('success', 'Deleted your account!');
     res.redirect(`/schools`);
