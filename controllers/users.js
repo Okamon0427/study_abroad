@@ -17,10 +17,10 @@ exports.getUser = async (req, res, next) => {
       title = 'My Page';
     }
     
-    const schools = await School.find({
-      likes: { $in: [req.params.userId] }
-    })
-    .limit(3);
+    const schools =
+      await School
+        .find({ likes: { $in: [req.params.userId] } })
+        .limit(3);
 
     res.render('users/user', {
       title,
@@ -60,9 +60,11 @@ exports.updateUser = async (req, res, next) => {
 
     if (req.body.content === 'profile') {
       if (!errors.isEmpty()) {
-        const targetError = errors.array()[0].nestedErrors.find(
-          content => content.param === 'name' || content.param === 'introduction'
-        );
+        const targetError =
+          errors.array()[0].nestedErrors
+            .find(content =>
+              content.param === 'name' || content.param === 'introduction'
+            );
     
         return res.status(422).render('users/edit', {
           title: 'My Page',
@@ -98,9 +100,11 @@ exports.updateUser = async (req, res, next) => {
 
     if (req.body.content === 'email') {
       if (!errors.isEmpty()) {
-        const targetError = errors.array()[0].nestedErrors.find(
-          content => content.param === 'newEmail'
-          );
+        const targetError =
+          errors.array()[0].nestedErrors
+            .find(content =>
+              content.param === 'newEmail'
+            );
         return res.status(422).render('users/edit', {
           title: 'My Page',
           error: targetError.msg,
@@ -127,9 +131,11 @@ exports.updateUser = async (req, res, next) => {
 
     if (req.body.content === 'password') {
       if (!errors.isEmpty()) {
-        const targetError = errors.array()[0].nestedErrors.find(
-          content => content.param === 'newPassword'
-          );
+        const targetError =
+          errors.array()[0].nestedErrors
+            .find(content =>
+              content.param === 'newPassword'
+            );
         return res.status(422).render('users/edit', {
           title: 'My Page',
           error: targetError.msg,
@@ -163,10 +169,14 @@ exports.updateUser = async (req, res, next) => {
       updatedObject = { password: hashedPassword };
     }
 
-    await User.findByIdAndUpdate(req.user.id, updatedObject, {
-      new: true,
-      runValidators: true
-    });
+    await User.findByIdAndUpdate(
+      req.user.id,
+      updatedObject,
+      {
+        new: true,
+        runValidators: true
+      }
+    );
 
     req.flash('success', 'Editted your account!');
     res.redirect(`/users/${user._id}`);

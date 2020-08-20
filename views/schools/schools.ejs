@@ -19,7 +19,7 @@
               <p>
                 No Rating Yet
               </p>
-              <% } %>
+              <% } else { %>
               <p>
                 <span>
                   <% if (school.averageRating >= 1 &&school.averageRating < 1.5) { %>
@@ -35,6 +35,7 @@
                   <% } %>
                 </span>
               </p>
+              <% } %>
               <span class="badge badge-secondary mb-2">
                 Like: <%= school.likes.length %>
               </span>

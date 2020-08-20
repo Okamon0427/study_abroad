@@ -9,6 +9,7 @@ const LocalStrategy = require('passport-local');
 const flash = require('connect-flash');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
+const moment = require('moment');
 require('dotenv').config();
 
 const schoolRoutes = require('./routes/schools');
@@ -84,6 +85,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
+  res.locals.moment = moment;
   res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');

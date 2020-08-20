@@ -66,7 +66,11 @@ exports.createSchool = async (req, res, next) => {
 
 exports.getSchool = async (req, res, next) => {
   try {
-    const school = await School.findById(req.params.schoolId).populate('reviews');
+    const school =
+      await School
+        .findById(req.params.schoolId)
+        .populate('reviews')
+        .populate('likes');
     const reviews = await Review.find({ school: req.params.schoolId });
 
     if (!school) {
@@ -80,11 +84,31 @@ exports.getSchool = async (req, res, next) => {
     // check the user who is logging in has already written Review to the School
     const isUserHasReview = checkIsUserHasReview(req, reviews);
 
-    const limitedReviews = await Review.find({ school: req.params.schoolId }).limit(3).populate('user');
+    const limitedReviews =
+      await Review
+        .find({ school: req.params.schoolId })
+        .limit(3)
+        .populate('user');
+
+    const popularSchools =
+      await School
+        .find()
+        .sort({ likes: -1 })
+        .populate('reviews')
+        .limit(3);
+
+    const newArrivalSchools =
+      await School
+        .find()
+        .sort({ createdAt: -1 })
+        .populate('reviews')
+        .limit(3);
 
     res.render('schools/show', {
       title: school.name,
       school,
+      popularSchools,
+      newArrivalSchools,
       isFavoriteUser,
       isUserHasReview,
       reviews: limitedReviews
@@ -158,10 +182,14 @@ exports.updateSchool = async (req, res, next) => {
       req.body.image = req.file.path;
     }
 
-    await School.findByIdAndUpdate(req.params.schoolId, req.body, {
-      new: true,
-      runValidators: true
-    });
+    await School.findByIdAndUpdate(
+      req.params.schoolId,
+      req.body,
+      {
+        new: true,
+        runValidators: true
+      }
+    );
 
     req.flash('success', 'Editted product!');
     res.redirect('/schools');

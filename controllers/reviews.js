@@ -21,7 +21,11 @@ exports.createReview = async (req, res, next) => {
       // check the user who is logging in has favorite of this school (true or false)
       const isFavoriteUser = checkIsFavoriteUser(req, school);
 
-      const limitedReviews = await Review.find({ school: req.params.schoolId }).limit(3).populate('user');
+      const limitedReviews =
+        await Review
+          .find({ school: req.params.schoolId })
+          .limit(3)
+          .populate('user');
       return res.status(422).render('schools/show', {
         error: errors.array()[0].msg,
         title: school.name,
@@ -63,7 +67,11 @@ exports.updateReview = async (req, res, next) => {
       // check the user who is logging in has already written Review to the School
       const isUserHasReview = checkIsUserHasReview(req, reviews);
 
-      const limitedReviews = await Review.find({ school: req.params.schoolId }).limit(3).populate('user');
+      const limitedReviews =
+       await Review
+        .find({ school: req.params.schoolId })
+        .limit(3)
+        .populate('user');
       return res.status(422).render('schools/show', {
         error: errors.array()[0].msg,
         title: school.name,
