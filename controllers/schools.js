@@ -66,7 +66,7 @@ exports.createSchool = async (req, res, next) => {
 
 exports.getSchool = async (req, res, next) => {
   try {
-    const school = await School.findById(req.params.schoolId);
+    const school = await School.findById(req.params.schoolId).populate('reviews');
     const reviews = await Review.find({ school: req.params.schoolId });
 
     if (!school) {

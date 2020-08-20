@@ -55,7 +55,7 @@ UserSchema.pre('remove', async function (next) {
 
   // delete Review when corresponding school is deleted
   await this.model('Review').deleteMany({ user: this._id });
-  console.log('after delete User')
+  
   next();
 });
 

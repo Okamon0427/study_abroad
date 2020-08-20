@@ -26,6 +26,11 @@ const SchoolSchema = new mongoose.Schema({
   website: {
     type: String
   },
+  averageRating: {
+    type: Number,
+    min: 1,
+    max: 5
+  },
   likes: [
     {
       type: mongoose.Schema.ObjectId,

@@ -31,11 +31,12 @@ exports.createReview = async (req, res, next) => {
         reviews: limitedReviews
       });
     }
-    
+
     req.body.user = req.user.id;
-    req.body.school = req.params.schoolId 
-  
-    await Review.create(req.body)
+    req.body.school = req.params.schoolId;
+
+    await Review.create(req.body);
+
     req.flash('success', 'Created new review!');
     res.redirect(`/schools/${req.params.schoolId}`);
   } catch (err) {

@@ -28,6 +28,16 @@
           </button>
           <% } %>
         </form>
+
+        <button
+          type="button"
+          class="btn btn-sm btn-primary"
+          data-toggle="modal"
+          data-target="#campgroundLikes">
+          <span>
+            Total likes: <%= school.likes.length %>
+          </span>
+        </button>
         <!-- Favorite Button End -->
 
         <p class="h4">Rating</p>
@@ -37,7 +47,7 @@
           href="/schools/<%= school._id %>/edit"
           role="button"
         >
-        EDIT
+          EDIT
         </a>
 
         <!-- Delete School Modal Trigger -->
@@ -108,7 +118,9 @@
             Add new review
           </a>
           <h4>
-            <strong>Reviews</strong>
+            <strong>
+              Reviews (total: <%= school.reviews.length %>)
+            </strong>
           </h4>
         </div>
         <!-- New Review Toggle End -->
