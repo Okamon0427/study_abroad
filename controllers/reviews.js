@@ -34,8 +34,12 @@ exports.createReview = async (req, res, next) => {
 
     req.body.user = req.user.id;
     req.body.school = req.params.schoolId;
-
     await Review.create(req.body);
+
+    // calculate average rating and save it in School Model
+    const updatedReviews = await Review.find({ school: req.params.schoolId });
+    school.averageRating = getAverageRating(updatedReviews);
+    await school.save();
 
     req.flash('success', 'Created new review!');
     res.redirect(`/schools/${req.params.schoolId}`);
@@ -70,10 +74,19 @@ exports.updateReview = async (req, res, next) => {
       });
     }
 
-    await Review.findByIdAndUpdate(req.params.reviewId, req.body, {
-      new: true,
-      runValidators: true
-    });
+    await Review.findByIdAndUpdate(
+      req.params.reviewId,
+      req.body,
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+
+    // calculate average rating and save it in School Model
+    const updatedReviews = await Review.find({ school: req.params.schoolId });
+    school.averageRating = getAverageRating(updatedReviews);
+    await school.save();
 
     req.flash('success', 'Editted review!');
     res.redirect(`/schools/${req.params.schoolId}`);
@@ -86,6 +99,12 @@ exports.updateReview = async (req, res, next) => {
 exports.deleteReview = async (req, res, next) => {
   try {
     await Review.findByIdAndDelete(req.params.reviewId);
+    const school = await School.findById(req.params.schoolId);
+
+    // calculate average rating and save it in School Model
+    const updatedReviews = await Review.find({ school: req.params.schoolId });
+    school.averageRating = getAverageRating(updatedReviews);
+    await school.save();
 
     req.flash('success', 'Deleted review!');
     res.redirect(`/schools/${req.params.schoolId}`);
@@ -109,4 +128,17 @@ const checkIsUserHasReview = (req, reviews) => {
   return reviews.some(review => 
     review.user.equals(req.user._id)
   );
+};
+
+const getAverageRating = (updatedReviews) => {
+  let reviewsSum = 0;
+  updatedReviews.forEach(review => {
+    reviewsSum += review.rating
+  });
+
+  if (updatedReviews.length === 0) {
+    return undefined;
+  }
+
+  return reviewsSum / updatedReviews.length;
 };

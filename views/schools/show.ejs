@@ -11,9 +11,6 @@
         <img class="card-img-top" src="/<%= school.image %>" alt="No Image">
         <p class="h4"><%= school.name %></p>
         <p class="h4"><%= school.country %></p>
-        <p class="h4">City</p>
-        <p class="h4">Map</p>
-        <p class="h4">$<%= school.tuition %></p>
         <p class="h4"><%= school.description %></p>
         
         <!-- Favorite Button -->
@@ -41,6 +38,29 @@
         <!-- Favorite Button End -->
 
         <p class="h4">Rating</p>
+        <% if (!school.averageRating) { %>
+          <p>
+            No Rating Yet
+          </p>
+        <% } else { %>
+        <p>
+          <span>
+            <% if (school.averageRating >= 1 &&school.averageRating < 1.5) { %>
+              ☆
+            <% } else if (school.averageRating >= 1.5 && school.averageRating < 2.5) { %>
+              ☆☆
+            <% } else if (school.averageRating >= 2.5 && school.averageRating < 3.5) { %>
+              ☆☆☆
+            <% } else if (school.averageRating >= 3.5 && school.averageRating < 4.5) { %>
+              ☆☆☆☆
+            <% } else if (school.averageRating >= 4.5 && school.averageRating <= 5) { %>
+              ☆☆☆☆☆
+            <% } %>
+          </span>
+          (<%= school.averageRating.toFixed(2) %>)
+        </p>
+        <% } %>
+
         <% if (currentUser && currentUser._id.equals(school.user)) { %>
         <a
           class="btn btn-warning"

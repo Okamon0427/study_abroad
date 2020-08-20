@@ -74,11 +74,4 @@ ReviewSchema.statics.getAverageRating = async function(schoolId) {
   }
 };
 
-// calculate average rating after save review
-ReviewSchema.post('save', async function() {
-  console.log(1)
-  await this.constructor.getAverageRating(this.school);
-  console.log('finish!')
-});
-
 module.exports = mongoose.model('Review', ReviewSchema);
