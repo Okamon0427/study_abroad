@@ -1,293 +1,94 @@
-<% if (formContent === 'signup' || formContent === 'login' || formContent === 'forgotPassword' || formContent === 'resetPassword') { %>
-  <div class="col-md-6 m-auto">
-<% } %>
-
-  <div class="card bg-white p-4 mb-4">
-    <div class="card-body">
-      
+<div class="card bg-white p-4 mb-4">
+  <div class="card-body">
+    
+    <h1 style="text-align: center;">
+      <!-- Form Title -->
       <% if (formContent === 'signup') { %> 
-      <h1 style="text-align: center;">
-        <i class="fas fa-user-plus"></i> Signup
-      </h1>
-      <form action="/signup" method="POST">
+      <i class="fas fa-user-plus"></i> Signup
       <% } %>
-
       <% if (formContent === 'login') { %> 
-      <h1 style="text-align: center;">
-        <i class="fas fa-sign-in-alt"></i> Login
-      </h1>
-      <form action="/login" method="POST">
+      <i class="fas fa-sign-in-alt"></i> Login
       <% } %>
-
-      <% if (formContent === 'forgotPassword') { %> 
-      <h1 style="text-align: center;">
-        <i class="fas fa-unlock-alt"></i> Forgot Password
-      </h1>
-      <form action="/forgot" method="POST">
+      <% if (formContent === 'forgotPassword') { %>
+      <i class="fas fa-unlock-alt"></i> Forgot Password
       <% } %>
-
       <% if (formContent === 'resetPassword') { %> 
-      <h1 style="text-align: center;">
-        <i class="fas fa-unlock-alt"></i> Reset Password
-      </h1>
-      <form action="/reset/<%= token %>?_method=PUT" method="POST">
+      <i class="fas fa-unlock-alt"></i> Reset Password
+      <% } %>
+      <% if (formContent === 'profile') { %> 
+      <i class="fas fa-user"></i> Edit Your Profile
+      <% } %>
+      <% if (formContent === 'email') { %> 
+      <i class="fas fa-envelope"></i> Edit Your Email
+      <% } %>
+      <% if (formContent === 'password') { %> 
+      <i class="fas fa-unlock-alt"></i> Edit Your Password
+      <% } %>
+      <!-- Form Title End -->
+    </h1>
+
+    <!-- Form Action -->
+    <% if (formContent === 'signup') { %> 
+    <form action="/signup" method="POST">
+    <% } %>
+    <% if (formContent === 'login') { %> 
+    <form action="/login" method="POST">
+    <% } %>
+    <% if (formContent === 'forgotPassword') { %>
+    <form action="/forgot" method="POST">
+    <% } %>
+    <% if (formContent === 'resetPassword') { %> 
+    <form action="/reset/<%= token %>?_method=PUT" method="POST">
+    <% } %>
+    <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password' ) { %> 
+    <form action="/users/<%= currentUser.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <% } %>
+    <!-- Form Action -->
+
+      <!-- Form Group -->
+      <% if (formContent === 'signup') { %>
+      <%- include("./formParts/email") %>
+      <%- include("./formParts/password") %>
       <% } %>
 
-      <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password' ) { %> 
-      <h1 style="text-align: center;">
-        Edit Your <%= formContent.toUpperCase() %>
-      </h1>
-      <form action="/users/<%= currentUser.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+      <% if (formContent === 'login') { %>
+      <%- include("./formParts/email") %>
+      <%- include("./formParts/password") %>
       <% } %>
 
-        <% if (formContent === 'signup') { %>
-        <div class="form-group">
-          <label for="name">Your Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            placeholder="Micheal Jackson"
-            value="<%= typeof name != 'undefined' ? name : '' %>"
-          >
-        </div>
+      <% if (formContent === 'forgotPassword') { %>
+      <%- include("./formParts/email") %>
+      <% } %>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="text"
-            class="form-control"
-            id="email"
-            name="email"
-            placeholder="test@test.com"
-            value="<%= typeof email != 'undefined' ? email : '' %>"
-          >
-        </div>
+      <% if (formContent === 'resetPassword') { %>
+      <%- include("./formParts/password") %>
+      <% } %>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            placeholder="at least 5 letters or numbers"
-            value="<%= typeof password != 'undefined' ? password : '' %>"
-          >
-        </div>
+      <% if (formContent === 'profile') { %>
+      <%- include("./formParts/profile") %>
+      <% } %>
 
-        <div class="form-group">
-          <label for="comfirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder="at least 5 letters or numbers"
-          >
-        </div>
-        <% } %>
+      <% if (formContent === 'email') { %>
+      <%- include("./formParts/email") %>
+      <% } %>
 
-        <% if (formContent === 'login') { %>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="text"
-            class="form-control"
-            id="email"
-            name="email"
-            placeholder="test@test.com"
-            value="<%= typeof email != 'undefined' ? email : '' %>"
-          >
-        </div>
-        
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            placeholder="at least 5 letters or numbers"
-            value="<%= typeof password != 'undefined' ? password : '' %>"
-          >
-        </div>
-        <% } %>
-
-        <% if (formContent === 'forgotPassword') { %>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="text"
-            class="form-control"
-            id="email"
-            name="email"
-            placeholder="test@test.com"
-            value="<%= typeof email != 'undefined' ? email : '' %>"
-          >
-        </div>
-        <% } %>
-
-        <% if (formContent === 'resetPassword') { %>
-        <div class="form-group">
-          <label for="newPassword">New Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="newPassword"
-            name="newPassword"
-            placeholder="at least 5 letters or numbers"
-          >
-        </div>
-  
-        <div class="form-group">
-          <label for="confirmNewPassword">Confirm New Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="confirmNewPassword"
-            name="confirmNewPassword"
-            placeholder="at least 5 letters or numbers"
-          >
-        </div>
-        <% } %>
-
-        <% if (formContent === 'profile') { %>
-        <div class="form-group">
-          <label for="name">Your Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            placeholder="Micheal Jackson"
-            value="<%= typeof user != 'undefined' ? user.name : '' %>"
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="introduction">Introduction</label>
-          <input
-            type="text"
-            class="form-control"
-            id="introduction"
-            name="introduction"
-            placeholder="Hi there!"
-            value="<%= typeof user != 'undefined' ? user.introduction : '' %>"
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="image">Image</label>
-          <input
-            type="file"
-            class="form-control"
-            id="image"
-            name="image"
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="studentType">Type</label>
-            <select name="studentType" id="studentType" class="custom-select">
-              <option value="High School Student" selected>High School Student</option>
-              <option value="College Student">College Student</option>
-              <option value="University Student">University Student</option>
-              <option value="Graduate School Student">Graduate School Student</option>
-              <option value="Worker">Worker</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="english">English (current level or target)</label>
-            <input
-              type="text"
-              class="form-control"
-              id="english"
-              name="english"
-              placeholder="I wanna get 6.5 point in IELTS exam!"
-              value="<%= typeof user != 'undefined' ? user.english : '' %>"
-            >
-          </div>
-
-        <% } else if (formContent === 'email') { %>
-        <div class="form-group">
-          <label for="currentEmail">Current Email</label>
-          <input
-            type="text"
-            class="form-control"
-            id="currentEmail"
-            name="currentEmail"
-            placeholder="test@test.com"
-            value="<%= typeof user != 'undefined' ? user.email : '' %>"
-            disabled
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="newEmail">New Email</label>
-          <input
-            type="text"
-            class="form-control"
-            id="newEmail"
-            name="newEmail"
-            placeholder="test@test.com"
-          >
-        </div>
-
-        <% } else if (formContent === 'password') { %>
-        <div class="form-group">
-          <label for="currentPassword">Current Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="currentPassword"
-            name="currentPassword"
-            placeholder="at least 5 letters or numbers"
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="newPassword">New Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="newPassword"
-            name="newPassword"
-            placeholder="at least 5 letters or numbers"
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="confirmNewPassword">Confirm New Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="confirmNewPassword"
-            name="confirmNewPassword"
-            placeholder="at least 5 letters or numbers"
-          >
-        </div>
-        <% } %>
-
-        <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password' ) { %> 
-        <input type="hidden" name="content" value="<%= formContent %>">
-        <% } %>
-
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
-        </div>
-      </form>
+      <% if (formContent === 'password') { %>
+      <%- include("./formParts/password") %>
+      <% } %>
       
-      <% if (formContent === 'login') { %> 
-      <p>	Forgot Password? <a href="/forgot">Reset Password</a></p>
+      <% if (formContent === 'profile' || formContent === 'email' || formContent === 'password' ) { %> 
+      <input type="hidden" name="content" value="<%= formContent %>">
       <% } %>
+      <!-- Form Group End -->
+        
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
+      </div>
+    </form>
+    
+    <% if (formContent === 'login') { %> 
+    <p>	Forgot Password? <a href="/forgot">Reset Password</a></p>
+    <% } %>
 
-    </div>
   </div>
-
-<% if (formContent === 'signup' || formContent === 'login' || formContent === 'forgotPassword' || formContent === 'resetPassword') { %>
-  </div>
-<% } %>
+</div>

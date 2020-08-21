@@ -6,7 +6,7 @@ const User = require('../models/User');
 const CustomError = require('../utils/CustomError');
 
 exports.signupPage = (req, res, next) => {
-  res.render('auth/signup', {
+  res.render('auth/auth', {
     title: 'Signup',
     formContent: 'signup'
   });
@@ -14,16 +14,20 @@ exports.signupPage = (req, res, next) => {
 
 exports.signup = async (req, res, next) => {
   const { name, email, password, confirmPassword } = req.body;
-  const errors = validationResult(req);
 
+  const renderObject = {
+    title: 'Signup',
+    formContent: 'signup',
+    name,
+    email,
+    password
+  }
+
+  const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).render('auth/signup', {
-      title: 'Signup',
+    return res.status(422).render('auth/auth', {
+      ...renderObject,
       error: errors.array()[0].msg,
-      name,
-      email,
-      password,
-      formContent: 'signup'
     });
   }
 
@@ -32,35 +36,23 @@ exports.signup = async (req, res, next) => {
     const existingUserEmail = await User.findOne({ email });
 
     if (existingUserName) {
-      return res.status(401).render('auth/signup', {
-        title: 'Signup',
+      return res.status(401).render('auth/auth', {
+        ...renderObject,
         error: 'This username has already been registered',
-        name,
-        email,
-        password,
-        formContent: 'signup'
       });
     }
 
     if (existingUserEmail) {
-      return res.status(401).render('auth/signup', {
-        title: 'Signup',
+      return res.status(401).render('auth/auth', {
+        ...renderObject,
         error: 'This email has already been registered',
-        name,
-        email,
-        password,
-        formContent: 'signup'
       });
     }
 
     if (password !== confirmPassword) {
-      return res.status(401).render('auth/signup', {
-        title: 'Signup',
+      return res.status(401).render('auth/auth', {
+        ...renderObject,
         error: 'Confirm password failed',
-        name,
-        email,
-        password,
-        formContent: 'signup'
       });
     }
 
@@ -81,7 +73,7 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.loginPage = (req, res, next) => {
-  res.render('auth/login', {
+  res.render('auth/auth', {
     title: 'Login',
     formContent: 'login'
   });
@@ -89,15 +81,15 @@ exports.loginPage = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  const errors = validationResult(req);
 
+  const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).render('auth/login', {
-      title: 'Login',
+    return res.status(422).render('auth/auth', {
       error: errors.array()[0].msg,
+      title: 'Login',
+      formContent: 'login',
       email,
-      password,
-      formContent: 'login'
+      password
     });
   }
 
@@ -118,7 +110,7 @@ exports.logout = (req, res, next) => {
 };
 
 exports.getForgotPassword = (req, res, next) => {
-  res.render('auth/forgot', {
+  res.render('auth/auth', {
     title: 'Forget Password',
     formContent: 'forgotPassword'
   });
@@ -126,7 +118,6 @@ exports.getForgotPassword = (req, res, next) => {
 
 exports.postForgotPassword = async (req, res, next) => {
   try {
-    // check user exists
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
       req.flash('error', 'No account with that email address exists.');
@@ -161,7 +152,7 @@ exports.getResetPassword = async (req, res, next) => {
       return res.redirect("/forgot");
     }
 
-    res.render('auth/reset', {
+    res.render('auth/auth', {
       title: 'Change Password',
       formContent: 'resetPassword',
       token: req.params.passwordToken
@@ -174,7 +165,6 @@ exports.getResetPassword = async (req, res, next) => {
 };
 
 exports.putResetPassword = async (req, res, next) => {
-  // check token and expire date
   const user = await User.findOne({
     resetPasswordToken: req.params.passwordToken,
     resetPasswordExpire: { $gt: Date.now() }
@@ -187,22 +177,22 @@ exports.putResetPassword = async (req, res, next) => {
   // check validation
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).render('auth/reset', {
+    return res.status(422).render('auth/auth', {
+      error: errors.array()[0].msg,
       title: 'Change Password',
       formContent: 'resetPassword',
-      token: req.params.passwordToken,
-      error: errors.array()[0].msg,
+      token: req.params.passwordToken
     });
   }
 
   // compare password and confirm password
   const { newPassword, confirmNewPassword } = req.body;
   if (newPassword !== confirmNewPassword) {
-    return res.status(401).render('auth/reset', {
+    return res.status(401).render('auth/auth', {
+      error: 'Confirm password failed',
       title: 'Change Password',
       formContent: 'resetPassword',
       token: req.params.passwordToken,
-      error: 'Confirm password failed',
     });
   }
 
@@ -210,7 +200,7 @@ exports.putResetPassword = async (req, res, next) => {
   user.resetPasswordToken = undefined;
   user.resetPasswordExpire = undefined;
 
-  // hash password
+  // hash password and save it
   const hashedPassword = await bcrypt.hash(newPassword, 12);
   user.password = hashedPassword;
   await user.save();

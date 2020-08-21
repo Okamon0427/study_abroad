@@ -1,0 +1,61 @@
+<% if (formContent === 'profile' || formContent === 'signup') { %>
+<div class="form-group">
+  <label for="name">Your Name</label>
+  <input
+    type="text"
+    class="form-control"
+    id="name"
+    name="name"
+    placeholder="Micheal Jackson"
+    value="<%= typeof user != 'undefined' ? user.name : '' %>"
+  >
+</div>
+<% } %>
+
+<% if (formContent === 'profile') { %>
+<div class="form-group">
+  <label for="introduction">Introduction</label>
+  <input
+    type="text"
+    class="form-control"
+    id="introduction"
+    name="introduction"
+    placeholder="Hi there!"
+    value="<%= typeof user != 'undefined' ? user.introduction : '' %>"
+  >
+</div>
+
+<div class="form-group">
+  <label for="image">Image</label>
+  <input
+    type="file"
+    class="form-control"
+    id="image"
+    name="image"
+    >
+  </div>
+
+<div class="form-group">
+  <label for="studentType">Type</label>
+  <select name="studentType" id="studentType" class="custom-select">
+    <option value="High School Student" selected>High School Student</option>
+    <option value="College Student">College Student</option>
+    <option value="University Student">University Student</option>
+    <option value="Graduate School Student">Graduate School Student</option>
+    <option value="Worker">Worker</option>
+    <option value="Other">Other</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="english">English (current level or target)</label>
+  <input
+    type="text"
+    class="form-control"
+    id="english"
+    name="english"
+    placeholder="I wanna get 6.5 point in IELTS exam!"
+    value="<%= typeof user != 'undefined' ? user.english : '' %>"
+  >
+</div>
+<% } %>
