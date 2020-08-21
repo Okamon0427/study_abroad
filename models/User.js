@@ -38,7 +38,9 @@ const UserSchema = new mongoose.Schema({
       'Worker',
       'Other'
     ]
-  }
+  },
+  resetPasswordToken: String,
+	resetPasswordExpire: Date,
 });
 
 UserSchema.pre('remove', async function (next) {

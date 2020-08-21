@@ -124,19 +124,99 @@ exports.getForgotPassword = (req, res, next) => {
   });
 };
 
-exports.postForgotPassword = (req, res, next) => {
-  req.flash('success', 'Message sent to your email address. Check the email and reset password');
-  res.redirect('/schools');
+exports.postForgotPassword = async (req, res, next) => {
+  try {
+    // check user exists
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      req.flash('error', 'No account with that email address exists.');
+      return res.redirect('/forgot');
+    }
+
+    // produce token and save it
+    const token = bcrypt.hashSync('bacon', 8);
+    user.resetPasswordToken = token;
+    user.resetPasswordExpire = Date.now() + 3600000; // 1 hour
+    user.save();
+
+    // メールを送信する
+
+    req.flash('success', 'Message sent to your email address. Check the email and reset password');
+    res.redirect('/schools');
+  } catch (err) {
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
+  }
 };
 
-exports.getResetPassword = (req, res, next) => {
-  res.render('auth/forgot', {
-    title: 'Reset Password',
-    formContent: 'resetPassword'
+exports.getResetPassword = async (req, res, next) => {
+  try {
+    // check token and expire date
+    const user = await User.findOne({
+      resetPasswordToken: req.params.passwordToken,
+      resetPasswordExpire: { $gt: Date.now() }
+    });
+    if (!user) {
+      req.flash('error', 'Password reset token is invalid or has expired');
+      return res.redirect("/forgot");
+    }
+
+    res.render('auth/reset', {
+      title: 'Change Password',
+      formContent: 'resetPassword',
+      token: req.params.passwordToken
+    });
+
+  } catch (err) {
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
+  }
+};
+
+exports.putResetPassword = async (req, res, next) => {
+  // check token and expire date
+  const user = await User.findOne({
+    resetPasswordToken: req.params.passwordToken,
+    resetPasswordExpire: { $gt: Date.now() }
   });
-};
+  if (!user) {
+    req.flash('error', 'Password reset token is invalid or has expired');
+    return res.redirect("/forgot");
+  }
 
-exports.putResetPassword = (req, res, next) => {
+  // check validation
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render('auth/reset', {
+      title: 'Change Password',
+      formContent: 'resetPassword',
+      token: req.params.passwordToken,
+      error: errors.array()[0].msg,
+    });
+  }
+
+  // compare password and confirm password
+  const { newPassword, confirmNewPassword } = req.body;
+  if (newPassword !== confirmNewPassword) {
+    return res.status(401).render('auth/reset', {
+      title: 'Change Password',
+      formContent: 'resetPassword',
+      token: req.params.passwordToken,
+      error: 'Confirm password failed',
+    });
+  }
+
+  // initialize token
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  // hash password
+  const hashedPassword = await bcrypt.hash(newPassword, 12);
+  user.password = hashedPassword;
+  await user.save();
+
+  // パスワード変更メールを送信
+
   req.flash('success', 'Reset your password successfully! Login with your new password');
   res.redirect('/login');
 };

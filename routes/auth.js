@@ -59,6 +59,14 @@ router.post('/forgot', postForgotPassword);
 
 router.get('/reset/:passwordToken', getResetPassword);
 
-router.put('/reset/:passwordToken', putResetPassword);
+router.put(
+  '/reset/:passwordToken',
+  [
+    check('newPassword')
+      .isLength({ min: 5 })
+      .withMessage('Password must be at least 5 chars long')
+  ],
+  putResetPassword
+);
 
 module.exports = router;

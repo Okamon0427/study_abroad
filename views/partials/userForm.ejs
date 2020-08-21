@@ -30,7 +30,7 @@
       <h1 style="text-align: center;">
         <i class="fas fa-unlock-alt"></i> Reset Password
       </h1>
-      <form action="/reset/aaa?_method=PUT" method="POST">
+      <form action="/reset/<%= token %>?_method=PUT" method="POST">
       <% } %>
 
       <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password' ) { %> 
@@ -288,6 +288,6 @@
     </div>
   </div>
 
-<% if (formContent === 'signup' || formContent === 'login' || formContent === 'forgotPassword' || formContent === 'resetPassword' ) { %>
+<% if (formContent === 'signup' || formContent === 'login' || formContent === 'forgotPassword' || formContent === 'resetPassword') { %>
   </div>
 <% } %>
