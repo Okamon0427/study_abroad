@@ -16,11 +16,11 @@
         <form action="/schools/<%= school._id %>/favorite" method="POST">
           <% if (currentUser && isFavoriteUser) { %>
           <button class="btn btn-sm btn-secondary">
-            Liked (<%= school.likes.length %>)
+            <i class="fas fa-thumbs-up"></i> Liked (<%= school.likes.length %>)
           </button>
           <% } else if (currentUser && !isFavoriteUser) { %>
           <button class="btn btn-sm btn-primary">
-            Like (<%= school.likes.length %>)
+            <i class="fas fa-thumbs-up"></i> Like (<%= school.likes.length %>)
           </button>
           <% } %>
         </form>
@@ -32,7 +32,7 @@
           data-toggle="modal"
           data-target="#schoolLikes">
           <span>
-            Total likes: <%= school.likes.length %>
+            <i class="fas fa-thumbs-up"></i> Total likes: <%= school.likes.length %>
           </span>
         </button>
         <!-- Favorite Modal Trigger End -->
@@ -49,7 +49,9 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">All Users</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                  <i class="fas fa-users"></i> All Users
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -63,11 +65,8 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                  Close
+                  <i class="fas fa-window-close"></i> Close
                 </button>
-                <form action="/schools/<%= school._id %>?_method=DELETE" method="POST">
-                  <button class="btn btn-danger">Delete</button>
-                </form>
               </div>
             </div>
           </div>
@@ -85,15 +84,35 @@
         <p>
           <span>
             <% if (school.averageRating >= 1 &&school.averageRating < 1.5) { %>
-              ☆
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
             <% } else if (school.averageRating >= 1.5 && school.averageRating < 2.5) { %>
-              ☆☆
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
             <% } else if (school.averageRating >= 2.5 && school.averageRating < 3.5) { %>
-              ☆☆☆
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
             <% } else if (school.averageRating >= 3.5 && school.averageRating < 4.5) { %>
-              ☆☆☆☆
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
             <% } else if (school.averageRating >= 4.5 && school.averageRating <= 5) { %>
-              ☆☆☆☆☆
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
             <% } %>
           </span>
           (<%= school.averageRating.toFixed(2) %>)
@@ -106,7 +125,7 @@
           href="/schools/<%= school._id %>/edit"
           role="button"
         >
-          EDIT
+        <i class="fas fa-edit"></i> EDIT
         </a>
 
         <!-- Delete School Modal Trigger -->
@@ -117,7 +136,7 @@
         data-target="#deleteSchool"
         >
           <button class="btn btn-danger">
-            DELETE
+            <i class="fas fa-trash-alt"></i> DELETE
           </button>
         </a>
         <!-- Delete School Modal Trigger End -->
@@ -134,7 +153,9 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Warning!</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                  <i class="fas fa-exclamation-triangle"></i>Warning!
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -144,10 +165,12 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                  Close
+                  <i class="fas fa-window-close"></i> Close
                 </button>
                 <form action="/schools/<%= school._id %>?_method=DELETE" method="POST">
-                  <button class="btn btn-danger">Delete</button>
+                  <button class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i> Delete
+                  </button>
                 </form>
               </div>
             </div>
@@ -174,7 +197,7 @@
             aria-expanded="false"
             aria-controls="collapseNewReview"
           >
-            Add new review
+          <i class="fas fa-plus"></i> Add new review
           </a>
           <h4>
             <strong>
@@ -243,7 +266,11 @@
                         checked
                       />
                       <label for="first-rate5" title="Amazing">
-                        ☆☆☆☆☆
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                       </label>
                     </div>
                     <div>
@@ -254,7 +281,11 @@
                         value="4"
                       />
                       <label for="first-rate4" title="Very good">
-                        ☆☆☆☆
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
                       </label>
                     </div>
                     <div>
@@ -265,7 +296,11 @@
                         value="3"
                       />
                       <label for="first-rate3" title="Average">
-                        ☆☆☆
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
                       </label>
                     </div>
                     <div>
@@ -276,7 +311,11 @@
                         value="2"
                       />
                       <label for="first-rate2" title="Not good">
-                        ☆☆
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
                       </label>
                     </div>
                     <div>
@@ -287,7 +326,11 @@
                         value="1"
                       />
                       <label for="first-rate1" title="Terrible">
-                        ☆
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
                       </label>
                     </div>
                   </fieldset>
@@ -340,7 +383,7 @@
                       aria-expanded="false"
                       aria-controls="collapseEditReview"
                     >
-                      Edit
+                    <i class="fas fa-edit"></i> Edit
                     </a>
                     <!-- Edit Review Toggle End -->
 
@@ -352,7 +395,7 @@
                     data-target="#deleteReview"
                     >
                       <button class="btn btn-danger">
-                        DELETE
+                        <i class="fas fa-trash-alt"></i> DELETE
                       </button>
                     </a>
                     <!-- Delete School Modal Trigger End -->
@@ -369,7 +412,10 @@
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Warning!</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">
+                              <i class="fas fa-exclamation-triangle"></i>
+                              Warning!
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -379,10 +425,12 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                              Close
+                              <i class="fas fa-window-close"></i> Close
                             </button>
                             <form action="/schools/<%= school._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
-                              <button class="btn btn-danger">Delete</button>
+                              <button class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i> Delete
+                              </button>
                             </form>
                           </div>
                         </div>
@@ -396,15 +444,35 @@
                     <h3><%= review.title %></h3>
                     <span>
                       <% if (review.rating === 1) { %>
-                        ☆
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (review.rating === 2) { %>
-                        ☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (review.rating === 3) { %>
-                        ☆☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (review.rating === 4) { %>
-                        ☆☆☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (review.rating === 5) { %>
-                        ☆☆☆☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
                       <% } %>
                     </span>
                     <p><%= moment(review.createdAt).format('YYYY-MM-DD') %></p>
@@ -460,7 +528,11 @@
                                 <% } %>
                               />
                               <label for="first-rate5" title="Amazing">
-                                ☆☆☆☆☆
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                               </label>
                             </div>
                             <div>
@@ -474,7 +546,11 @@
                                 <% } %>
                               />
                               <label for="first-rate4" title="Very good">
-                                ☆☆☆☆
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
                               </label>
                             </div>
                             <div>
@@ -488,7 +564,11 @@
                                 <% } %>
                               />
                               <label for="first-rate3" title="Average">
-                                ☆☆☆
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
                               </label>
                             </div>
                             <div>
@@ -502,7 +582,11 @@
                                 <% } %>
                               />
                               <label for="first-rate2" title="Not good">
-                                ☆☆
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
                               </label>
                             </div>
                             <div>
@@ -516,7 +600,11 @@
                                 <% } %>
                               />
                               <label for="first-rate1" title="Terrible">
-                                ☆
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
                               </label>
                             </div>
                           </fieldset>
@@ -584,24 +672,44 @@
                   <p>
                     <span>
                       <% if (popularSchool.averageRating >= 1 &&popularSchool.averageRating < 1.5) { %>
-                        ☆
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (popularSchool.averageRating >= 1.5 && popularSchool.averageRating < 2.5) { %>
-                        ☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (popularSchool.averageRating >= 2.5 && popularSchool.averageRating < 3.5) { %>
-                        ☆☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (popularSchool.averageRating >= 3.5 && popularSchool.averageRating < 4.5) { %>
-                        ☆☆☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (popularSchool.averageRating >= 4.5 && popularSchool.averageRating <= 5) { %>
-                        ☆☆☆☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
                       <% } %>
                     </span>
                   </p>
                   <% } %>
                   <span class="badge badge-secondary mb-2">
-                    Like: <%= popularSchool.likes.length %>
+                    <i class="fas fa-thumbs-up"></i> Like: <%= popularSchool.likes.length %>
                   </span>
                   <span class="badge badge-secondary mb-2">
-                    Review: <%= popularSchool.reviews.length %>
+                    <i class="fas fa-comment-dots"></i> Review: <%= popularSchool.reviews.length %>
                   </span>
                 </div>
               </div>
@@ -633,24 +741,44 @@
                   <p>
                     <span>
                       <% if (newArrivalSchool.averageRating >= 1 &&newArrivalSchool.averageRating < 1.5) { %>
-                        ☆
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (newArrivalSchool.averageRating >= 1.5 && newArrivalSchool.averageRating < 2.5) { %>
-                        ☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (newArrivalSchool.averageRating >= 2.5 && newArrivalSchool.averageRating < 3.5) { %>
-                        ☆☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (newArrivalSchool.averageRating >= 3.5 && newArrivalSchool.averageRating < 4.5) { %>
-                        ☆☆☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
                       <% } else if (newArrivalSchool.averageRating >= 4.5 && newArrivalSchool.averageRating <= 5) { %>
-                        ☆☆☆☆☆
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
                       <% } %>
                     </span>
                   </p>
                   <% } %>
                   <span class="badge badge-secondary mb-2">
-                    Like: <%= newArrivalSchool.likes.length %>
+                    <i class="fas fa-thumbs-up"></i> Like: <%= newArrivalSchool.likes.length %>
                   </span>
                   <span class="badge badge-secondary mb-2">
-                    Review: <%= newArrivalSchool.reviews.length %>
+                    <i class="fas fa-comment-dots"></i> Review: <%= newArrivalSchool.reviews.length %>
                   </span>
                 </div>
               </div>

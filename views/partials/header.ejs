@@ -12,10 +12,17 @@
     crossorigin="anonymous">
   <!-- CSS -->
   <link rel="stylesheet" href="/stylesheets/main.css">
+  <!-- Font Awesome 5 -->
+  <script
+    src="https://kit.fontawesome.com/3b24b1e065.js" 
+    crossorigin="anonymous">
+  </script>
 </head>
 <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Study</a>
+    <a class="navbar-brand" href="#">
+      Study Abroad!
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,17 +47,25 @@
         </li>
         <!--  -->
         <li class="nav-item <%= typeof title !== 'undefined' && title === 'Login' ? 'active' : '' %>">
-          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link" href="/login">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
         </li>
         <li class="nav-item <%= typeof title !== 'undefined' && title === 'Signup' ? 'active' : '' %>">
-          <a class="nav-link" href="/signup">Signup</a>
+          <a class="nav-link" href="/signup">
+            <i class="fas fa-user-plus"></i> Signup
+          </a>
         </li>
         <% } else { %>
         <li class="nav-item <%= typeof title !== 'undefined' && title === 'My Page' ? 'active' : '' %>">
-          <a class="nav-link" href="/users/<%= currentUser.id %>">My Page</a>
+          <a class="nav-link" href="/users/<%= currentUser.id %>">
+            <i class="fas fa-user"></i> My Page
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
+          <a class="nav-link" href="/logout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
         </li>
         <% } %>
       </ul>

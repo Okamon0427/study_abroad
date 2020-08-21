@@ -7,11 +7,25 @@ const { deleteFile } = require('../utils/deleteFile');
 
 exports.getSchools = async (req, res, next) => {
   try {
-    const schools = await School.find().populate('reviews');
+    // Pagination
+    const perPage = 4;
+    const pageQuery = parseInt(req.query.page);
+    const pageNumber = pageQuery ? pageQuery : 1;
+
+    const schools =
+      await School
+        .find()
+        .skip((perPage * pageNumber) - perPage)
+        .limit(perPage)
+        .populate('reviews');
+    const count = await School.countDocuments();
+    const pages = Math.ceil(count / perPage);
 
     res.render('schools/schools', {
       schools,
       title: 'Schools',
+      currentPage: pageNumber,
+      pages
     });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);

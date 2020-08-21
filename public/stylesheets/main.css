@@ -3,6 +3,15 @@ body {
   background: #f5f5f5;
 }
 
+/* font-awesome */
+.fas.fa-star {
+  color: orange;
+}
+
+.far.fa-star {
+  color: gray;
+}
+
 footer {
   margin-top: 28px;
   background: #f5f5f5;
