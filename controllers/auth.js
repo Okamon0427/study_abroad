@@ -116,3 +116,27 @@ exports.logout = (req, res, next) => {
   req.flash('success', 'You are logged out');
   res.redirect('/schools');
 };
+
+exports.getForgotPassword = (req, res, next) => {
+  res.render('auth/forgot', {
+    title: 'Forget Password',
+    formContent: 'forgotPassword'
+  });
+};
+
+exports.postForgotPassword = (req, res, next) => {
+  req.flash('success', 'Message sent to your email address. Check the email and reset password');
+  res.redirect('/schools');
+};
+
+exports.getResetPassword = (req, res, next) => {
+  res.render('auth/forgot', {
+    title: 'Reset Password',
+    formContent: 'resetPassword'
+  });
+};
+
+exports.putResetPassword = (req, res, next) => {
+  req.flash('success', 'Reset your password successfully! Login with your new password');
+  res.redirect('/login');
+};

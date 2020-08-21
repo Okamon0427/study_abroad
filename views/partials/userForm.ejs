@@ -1,4 +1,4 @@
-<% if (formContent === 'signup' || formContent === 'login') { %>
+<% if (formContent === 'signup' || formContent === 'login' || formContent === 'forgotPassword' || formContent === 'resetPassword') { %>
   <div class="col-md-6 m-auto">
 <% } %>
 
@@ -17,6 +17,20 @@
         <i class="fas fa-sign-in-alt"></i> Login
       </h1>
       <form action="/login" method="POST">
+      <% } %>
+
+      <% if (formContent === 'forgotPassword') { %> 
+      <h1 style="text-align: center;">
+        <i class="fas fa-unlock-alt"></i> Forgot Password
+      </h1>
+      <form action="/forgot" method="POST">
+      <% } %>
+
+      <% if (formContent === 'resetPassword') { %> 
+      <h1 style="text-align: center;">
+        <i class="fas fa-unlock-alt"></i> Reset Password
+      </h1>
+      <form action="/reset/aaa?_method=PUT" method="POST">
       <% } %>
 
       <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password' ) { %> 
@@ -97,6 +111,44 @@
             name="password"
             placeholder="at least 5 letters or numbers"
             value="<%= typeof password != 'undefined' ? password : '' %>"
+          >
+        </div>
+        <% } %>
+
+        <% if (formContent === 'forgotPassword') { %>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="test@test.com"
+            value="<%= typeof email != 'undefined' ? email : '' %>"
+          >
+        </div>
+        <% } %>
+
+        <% if (formContent === 'resetPassword') { %>
+        <div class="form-group">
+          <label for="newPassword">New Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="newPassword"
+            name="newPassword"
+            placeholder="at least 5 letters or numbers"
+          >
+        </div>
+  
+        <div class="form-group">
+          <label for="confirmNewPassword">Confirm New Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="confirmNewPassword"
+            name="confirmNewPassword"
+            placeholder="at least 5 letters or numbers"
           >
         </div>
         <% } %>
@@ -230,12 +282,12 @@
       </form>
       
       <% if (formContent === 'login') { %> 
-      <p>	Forgot Password? <a href="#">Reset Password</a></p>
+      <p>	Forgot Password? <a href="/forgot">Reset Password</a></p>
       <% } %>
 
     </div>
   </div>
 
-<% if (formContent === 'signup' || formContent === 'login') { %>
+<% if (formContent === 'signup' || formContent === 'login' || formContent === 'forgotPassword' || formContent === 'resetPassword' ) { %>
   </div>
 <% } %>
