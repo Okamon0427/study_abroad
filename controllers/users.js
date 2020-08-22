@@ -225,7 +225,7 @@ exports.followUser = async (req, res, next) => {
       return res.redirect(`/users/${req.params.userId}`);
     }
 
-    // follow and unfollow depending whether the user who is logging in follows target user
+    // follow or unfollow depending whether the user who is logging in follows target user
     const isFollowing = checkIsFollowing(req, targetUser);
     if (isFollowing) {
       targetUser.followed.pull(req.user._id);

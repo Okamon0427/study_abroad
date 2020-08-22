@@ -214,7 +214,7 @@ exports.favoriteSchool = async (req, res, next) => {
       return next(error);
     }
 
-    // change Favorite Button if the user who is logging in has favorite of this school
+    // follow or unfollow depending whether the user who is logging in is being favorite of the school
     const isFavoriteUser = checkIsFavoriteUser(req, school);
     if (isFavoriteUser) {
       school.likes.pull(req.user._id);

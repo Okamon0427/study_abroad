@@ -16,7 +16,6 @@
   <% if (!mypage) { %> 
   <div class="card text-center mb-2">
     <div class="card-body">
-      <% if (currentUser) { %>
       <form action="/users/<%= user._id %>/follow" method="POST">
         <% if (isFollowing) { %>
         <p>You are following this user</p>
@@ -30,7 +29,6 @@
         </button>
         <% } %>
       </form>
-      <% } %>
       <p>followed by <%= user.followed.length %> users</p>
     </div>
   </div>

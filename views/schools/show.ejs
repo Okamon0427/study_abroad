@@ -16,13 +16,15 @@
         
         <!-- Favorite Button -->
         <form action="/schools/<%= school._id %>/favorite" method="POST">
-          <% if (currentUser && isFavoriteUser) { %>
+          <% if (isFavoriteUser) { %>
+          <p>This school is your favorite</p>
           <button class="btn btn-sm btn-secondary">
-            <i class="fas fa-thumbs-up"></i> Liked (<%= school.likes.length %>)
+            <i class="fas fa-thumbs-up"></i> Unfavorite
           </button>
-          <% } else if (currentUser && !isFavoriteUser) { %>
+          <% } else if (!isFavoriteUser) { %>
+          <p>This school is not your favorite</p>
           <button class="btn btn-sm btn-primary">
-            <i class="fas fa-thumbs-up"></i> Like (<%= school.likes.length %>)
+            <i class="fas fa-thumbs-up"></i> Favorite
           </button>
           <% } %>
         </form>
