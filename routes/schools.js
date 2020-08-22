@@ -6,10 +6,10 @@ const {
   newSchool,
   createSchool,
   getSchool,
-  favoriteSchool,
   editSchool,
   updateSchool,
-  deleteSchool
+  deleteSchool,
+  favoriteSchool
 } = require('../controllers/schools');
 const { isLoggedIn, isSchoolAuthorized } = require('../middleware/auth');
 
@@ -37,8 +37,6 @@ router.post(
 
 router.get('/:schoolId', getSchool);
 
-router.post('/:schoolId/favorite', isLoggedIn, favoriteSchool);
-
 router.get('/:schoolId/edit', isLoggedIn, isSchoolAuthorized, editSchool);
 
 router.put(
@@ -59,5 +57,7 @@ router.put(
 );
 
 router.delete('/:schoolId', isLoggedIn, isSchoolAuthorized, deleteSchool);
+
+router.post('/:schoolId/favorite', isLoggedIn, favoriteSchool);
 
 module.exports = router;

@@ -5,13 +5,16 @@ const {
   getUser,
   editUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  followUser
 } = require('../controllers/users');
 const { isLoggedIn, isUserAuthorized } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/:userId', isLoggedIn, getUser);
+router.get('/:userId', getUser);
+
+router.get('/:userId/edit', isLoggedIn, isUserAuthorized, editUser);
 
 router.put(
   '/:userId',
@@ -47,5 +50,7 @@ router.put(
 );
 
 router.delete('/:userId', isLoggedIn, isUserAuthorized, deleteUser);
+
+router.post('/:userId/follow', isLoggedIn, followUser);
 
 module.exports = router;

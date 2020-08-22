@@ -10,8 +10,14 @@
     <!-- Favorite School -->
     <div class="card text-center mb-2">
       <div class="card-body">
-      <h3 class="card-title mx-auto" style="width: 300px;">Your Favorite School</h3>
-      <hr>
+        <h3 class="card-title mx-auto">
+          <% if (mypage) { %>
+          Your Favorite School
+          <% } else { %>
+          <%= user.name %>'s Favorite School
+          <% } %>
+        </h3>
+        <hr>
         <div class="row row-cols-1 row-cols-md-3">
           <% schools.forEach(school => { %>
           <div class="col mb-4">
@@ -56,8 +62,13 @@
     <!-- Favorite School -->
     <div class="card text-center mb-2">
       <div class="card-body">
-      <h3 class="card-title mx-auto" style="width: 300px;">Your Favorite School</h3>
-      <hr>
+        <h3 class="card-title mx-auto">
+          <% if (mypage) { %>
+          Your Favorite School
+          <% } else { %>
+          <%= user.name %>'s Favorite School
+          <% } %>
+        </h3>
         <div class="row row-cols-1 row-cols-md-3">
           <% schools.forEach(school => { %>
           <div class="col mb-4">
@@ -102,8 +113,13 @@
     <!-- Favorite School -->
     <div class="card text-center mb-2">
       <div class="card-body">
-      <h3 class="card-title mx-auto" style="width: 300px;">Your Favorite School</h3>
-      <hr>
+        <h3 class="card-title mx-auto">
+          <% if (mypage) { %>
+          Your Favorite School
+          <% } else { %>
+          <%= user.name %>'s Favorite School
+          <% } %>
+        </h3>
         <div class="row row-cols-1 row-cols-md-3">
           <% schools.forEach(school => { %>
           <div class="col mb-4">

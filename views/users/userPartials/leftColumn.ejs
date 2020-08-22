@@ -12,6 +12,31 @@
     </div>
   </div>
 
+  <!-- Follow -->
+  <% if (!mypage) { %> 
+  <div class="card text-center mb-2">
+    <div class="card-body">
+      <% if (currentUser) { %>
+      <form action="/users/<%= user._id %>/follow" method="POST">
+        <% if (isFollowing) { %>
+        <p>You are following this user</p>
+        <button class="btn btn-sm btn-secondary">
+          Unfollow
+        </button>
+        <% } else { %>
+        <p>You are not following this user</p>
+        <button class="btn btn-sm btn-primary">
+          Follow
+        </button>
+        <% } %>
+      </form>
+      <% } %>
+      <p>followed by <%= user.followed.length %> users</p>
+    </div>
+  </div>
+  <% } %>
+  <!-- Follow End -->
+
   <!-- Edit Account -->
   <% if (mypage) { %>
   <div class="card text-center mb-2">

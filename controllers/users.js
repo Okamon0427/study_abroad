@@ -12,7 +12,8 @@ exports.getUser = async (req, res, next) => {
     let mypage = false;
     let title = `${user.name}'s Page`;
 
-    if (user._id.toString() === req.user._id.toString()) {
+    // User page becomes My Page if login user is watching his/herself page
+    if (req.user && user._id.toString() === req.user._id.toString()) {
       mypage = true;
       title = 'My Page';
     }
@@ -24,11 +25,15 @@ exports.getUser = async (req, res, next) => {
         .populate('reviews')
         .populate('likes');
 
+    // change Follow Button if the user who is logging in follows target user
+    const isFollowing = checkIsFollowing(req, user);
+
     res.render('users/user', {
       title,
       user,
       schools,
       mypage,
+      isFollowing
     });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
@@ -204,4 +209,44 @@ exports.deleteUser = async (req, res, next) => {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
   }
-}
+};
+
+exports.followUser = async (req, res, next) => {
+  try {
+    const targetUser = await User.findById(req.params.userId);
+    if (!targetUser) {
+      const error = new CustomError('User not found', 404);
+      return next(error);
+    }
+
+    // the user who is logging in cannot follow his/her own page
+    if (targetUser._id.toString() === req.user._id.toString()) {
+      req.flash('error', 'You cannot follow yourself');
+      return res.redirect(`/users/${req.params.userId}`);
+    }
+
+    // follow and unfollow depending whether the user who is logging in follows target user
+    const isFollowing = checkIsFollowing(req, targetUser);
+    if (isFollowing) {
+      targetUser.followed.pull(req.user._id);
+    } else {
+      targetUser.followed.push(req.user._id);
+    }
+    await targetUser.save();
+
+    return res.redirect(`/users/${targetUser._id}`);
+  } catch (err) {
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
+  }
+};
+
+const checkIsFollowing = (req, targetUser) => {
+  if (req.user) {
+    return targetUser.followed.some(followingUser => 
+      followingUser.equals(req.user._id)
+    );
+  } else {
+    return false;
+  }
+};

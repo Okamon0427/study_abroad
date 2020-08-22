@@ -132,30 +132,6 @@ exports.getSchool = async (req, res, next) => {
   }
 };
 
-exports.favoriteSchool = async (req, res, next) => {
-  try {
-    const school = await School.findById(req.params.schoolId);
-    if (!school) {
-      const error = new CustomError('School not found', 404);
-      return next(error);
-    }
-
-    // change Favorite Button if the user who is logging in has favorite of this school
-    const isFavoriteUser = checkIsFavoriteUser(req, school);
-    if (isFavoriteUser) {
-      school.likes.pull(req.user._id);
-    } else {
-      school.likes.push(req.user);
-    }
-
-    await school.save();
-    return res.redirect(`/schools/${school._id}`);
-  } catch (err) {
-    const error = new CustomError('Something went wrong', 500);
-    return next(error);
-  }
-};
-
 exports.editSchool = async (req, res, next) => {
   try {
     const school = await School.findById(req.params.schoolId);
@@ -224,6 +200,30 @@ exports.deleteSchool = async (req, res, next) => {
 
     req.flash('success', 'Deleted school!');
     res.redirect('/schools');
+  } catch (err) {
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
+  }
+};
+
+exports.favoriteSchool = async (req, res, next) => {
+  try {
+    const school = await School.findById(req.params.schoolId);
+    if (!school) {
+      const error = new CustomError('School not found', 404);
+      return next(error);
+    }
+
+    // change Favorite Button if the user who is logging in has favorite of this school
+    const isFavoriteUser = checkIsFavoriteUser(req, school);
+    if (isFavoriteUser) {
+      school.likes.pull(req.user._id);
+    } else {
+      school.likes.push(req.user);
+    }
+
+    await school.save();
+    return res.redirect(`/schools/${school._id}`);
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
