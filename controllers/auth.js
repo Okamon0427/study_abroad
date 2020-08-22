@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const nodemailer = require("nodemailer");
 const { validationResult } = require('express-validator');
 
 const User = require('../models/User');
@@ -128,12 +129,45 @@ exports.postForgotPassword = async (req, res, next) => {
     const token = bcrypt.hashSync('bacon', 8);
     user.resetPasswordToken = token;
     user.resetPasswordExpire = Date.now() + 3600000; // 1 hour
-    user.save();
+    await user.save();
 
-    // メールを送信する
+    try {
+      // send email to user
+      async function main() {
+        let transporter = nodemailer.createTransport({
+          host: process.env.SMTP_HOST,
+          port: process.env.SMTP_PORT,
+          auth: {
+            user: process.env.SMTP_EMAIL,
+            pass: process.env.SMTP_PASSWORD
+          }
+        });
 
-    req.flash('success', 'Message sent to your email address. Check the email and reset password');
-    res.redirect('/schools');
+        const message =
+          'You are receiving this email because you (or someone else) has requested the reset of a password.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          `${req.protocol}://${req.get('host')}/reset/${token}\n\n` +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n';
+        const subject = 'Password Reset';
+
+        await transporter.sendMail({
+          from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
+          to: user.email,
+          subject,
+          text: message
+        });
+      }
+      main();
+
+      req.flash('success', 'Message sent to your email address. Check the email and reset password');
+      res.redirect('/login');
+    } catch (err) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+      await user.save();
+      req.flash('error', 'Something went wrong. Please try again');
+      res.redirect('/forgot');
+    }
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);

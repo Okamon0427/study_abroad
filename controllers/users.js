@@ -69,8 +69,8 @@ exports.updateUser = async (req, res, next) => {
             );
     
         return res.status(422).render('users/edit', {
-          title: 'My Page',
           error: targetError.msg,
+          title: 'My Page',
           formContent: 'profile',
           user: { ...req.body },
           mypage: true,
@@ -81,8 +81,8 @@ exports.updateUser = async (req, res, next) => {
 
       if (existingUser && existingUser._id.toString() !== req.user.id.toString()) {
         return res.status(401).render('users/edit', {
-          title: 'My Page',
           error: 'This username has already been registered',
+          title: 'My Page',
           formContent: 'profile',
           user: { ...req.body },
           mypage: true,
@@ -108,8 +108,8 @@ exports.updateUser = async (req, res, next) => {
               content.param === 'newEmail'
             );
         return res.status(422).render('users/edit', {
-          title: 'My Page',
           error: targetError.msg,
+          title: 'My Page',
           formContent: 'email',
           user: { ...req.body },
           mypage: true,
@@ -120,8 +120,8 @@ exports.updateUser = async (req, res, next) => {
 
       if (existingUser) {
         return res.status(401).render('users/edit', {
-          title: 'My Page',
           error: 'This email has already been registered',
+          title: 'My Page',
           formContent: 'email',
           user: { ...req.body },
           mypage: true,

@@ -13,8 +13,6 @@ const router = express.Router();
 
 router.get('/:userId', isLoggedIn, getUser);
 
-router.get('/:userId/edit', isLoggedIn, isUserAuthorized, editUser);
-
 router.put(
   '/:userId',
   isLoggedIn,
