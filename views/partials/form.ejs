@@ -74,6 +74,7 @@
 
       <!-- Form Group -->
       <% if (formContent === 'signup') { %>
+      <%- include("./formParts/profile") %>
       <%- include("./formParts/email") %>
       <%- include("./formParts/password") %>
       <% } %>

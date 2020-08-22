@@ -134,7 +134,7 @@ exports.postForgotPassword = async (req, res, next) => {
     try {
       // send email to user
       async function main() {
-        let transporter = nodemailer.createTransport({
+        const transporter = nodemailer.createTransport({
           host: process.env.SMTP_HOST,
           port: process.env.SMTP_PORT,
           auth: {
