@@ -1,43 +1,15 @@
 <%- include("../partials/header") %>
 
 <div class="row">
-  <div class="col-md-4 col-sm-12">
-    <div class="card text-center">
-      <div class="card-body">
-        <img class="card-img-top" src="/<%= user.image %>" alt="No Image">
-        <h5 class="card-title"><%= user.name %></h5>
-        <p class="card-text"><%= user.introduction %></p>
-      </div>
-    </div>
+  <!-- Left Colomn -->
+  <%- include("./userPartials/leftColumn") %>
+  <!-- Left Column End -->
 
-    <% if (mypage) { %>
-    <div class="card text-center">
-      <div class="card-body">
-        <h5 class="card-title">Edit Your Account</h5>
-        <p class="card-text">
-          <a href="/users/<%= currentUser.id %>/edit?content=profile" class="card-link">
-            <i class="fas fa-user"></i> Profile
-          </a>
-        </p>
-        <p class="card-text">
-          <a href="/users/<%= currentUser.id %>/edit?content=email" class="card-link">
-            <i class="fas fa-envelope"></i> Email
-          </a>
-        </p>
-        <p class="card-text">
-          <a href="/users/<%= currentUser.id %>/edit?content=password" class="card-link">
-            <i class="fas fa-unlock-alt"></i> Password
-          </a>
-        </p>
-      </div>
-    </div>
-    <% } %>
-
-  </div>
-
+  <!-- Right Column -->
   <div class="col-md-8 col-sm-12">  
   <%- include("../partials/form") %>
   </div>
+  <!-- Right Row End -->
 </div>
 
 

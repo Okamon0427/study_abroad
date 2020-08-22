@@ -3,13 +3,12 @@ body {
   background: #f5f5f5;
 }
 
-/* font-awesome */
-.fas.fa-star {
-  color: orange;
+.fa-star {
+  color: gray;
 }
 
-.far.fa-star {
-  color: gray;
+.fa-star.checked {
+  color: orange;
 }
 
 footer {

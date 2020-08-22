@@ -6,12 +6,12 @@ const CustomError = require('../utils/CustomError');
 const { deleteFile } = require('../utils/deleteFile');
 
 exports.getSchools = async (req, res, next) => {
-  try {
-    // Pagination
-    const perPage = 4;
-    const pageQuery = parseInt(req.query.page);
-    const pageNumber = pageQuery ? pageQuery : 1;
+  // Pagination
+  const perPage = 4;
+  const pageQuery = parseInt(req.query.page);
+  const pageNumber = pageQuery ? pageQuery : 1;
 
+  try {
     const schools =
       await School
         .find()
@@ -22,9 +22,9 @@ exports.getSchools = async (req, res, next) => {
     const pages = Math.ceil(count / perPage);
 
     res.render('schools/schools', {
-      schools,
       title: 'Schools',
       currentPage: pageNumber,
+      schools,
       pages
     });
   } catch (err) {
@@ -42,33 +42,32 @@ exports.newSchool = async (req, res, next) => {
 
 exports.createSchool = async (req, res, next) => {
   const school = req.body
+  req.body.user = req.user.id;
+  if (req.file) {
+    req.body.image = req.file.path;
+  }
   
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render('schools/new', {
-      title: 'Add New School',
       error: errors.array()[0].msg,
-      school,
-      formContent: 'addSchool'
-    });
-  }
-
-  const existingSchool = await School.findOne({ name: req.body.name });
-  if (existingSchool) {
-    return res.status(401).render('schools/new', {
       title: 'Add New School',
-      error: 'This school has already been registered',
       formContent: 'addSchool',
       school
     });
   }
 
-  req.body.user = req.user.id;
-  if (req.file) {
-    req.body.image = req.file.path;
-  }
-
   try {
+    const existingSchool = await School.findOne({ name: req.body.name });
+    if (existingSchool) {
+      return res.status(401).render('schools/new', {
+        error: 'This school has already been registered',
+        title: 'Add New School',
+        formContent: 'addSchool',
+        school
+      });
+    }
+
     await School.create(req.body);
     req.flash('success', 'Created new school!');
     res.redirect('/schools');
@@ -162,9 +161,9 @@ exports.editSchool = async (req, res, next) => {
     const school = await School.findById(req.params.schoolId);
 
     res.render('schools/edit', {
-      school,
       title: 'Edit school',
-      formContent: 'editSchool'
+      formContent: 'editSchool',
+      school
     });
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
@@ -179,10 +178,10 @@ exports.updateSchool = async (req, res, next) => {
 
   if (!errors.isEmpty()) {
     return res.status(422).render('schools/edit', {
-      title: 'Edit School',
       error: errors.array()[0].msg,
-      school,
-      formContent: 'editSchool'
+      title: 'Edit School',
+      formContent: 'editSchool',
+      school
     });
   }
   

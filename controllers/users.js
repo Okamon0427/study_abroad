@@ -20,7 +20,9 @@ exports.getUser = async (req, res, next) => {
     const schools =
       await School
         .find({ likes: { $in: [req.params.userId] } })
-        .limit(3);
+        .limit(3)
+        .populate('reviews')
+        .populate('likes');
 
     res.render('users/user', {
       title,

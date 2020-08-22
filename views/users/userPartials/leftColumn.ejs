@@ -1,0 +1,45 @@
+<div class="col-md-4 col-sm-12">
+  <div class="card text-center mb-2">
+    <div class="card-body">
+      <h3 class="card-title">Profile</h3>
+      <hr>
+      <img class="card-img-top img-thumbnail" src="/<%= user.image %>" alt="No Image">
+      <hr>
+      <p class="card-text">User Name: <%= user.name %></p>
+      <p class="card-text"><%= user.studentType %></p>
+      <p class="card-text">Introduction: <%= user.introduction %></p>
+      <p class="card-text">English Level: <%= user.english %></p>
+    </div>
+  </div>
+
+  <!-- Edit Account -->
+  <% if (mypage) { %>
+  <div class="card text-center mb-2">
+    <div class="card-body">
+      <h3 class="card-title">Edit Your Account</h3>
+      <hr>
+      <p class="card-text">
+        <a href="/users/<%= currentUser.id %>/edit?content=profile" class="card-link">
+          <i class="fas fa-user"></i> Profile
+        </a>
+      </p>
+      <p class="card-text">
+        <a href="/users/<%= currentUser.id %>/edit?content=email" class="card-link">
+          <i class="fas fa-envelope"></i> Email
+        </a>
+      </p>
+      <p class="card-text">
+        <a href="/users/<%= currentUser.id %>/edit?content=password" class="card-link">
+          <i class="fas fa-unlock-alt"></i> Password
+        </a>
+      </p>
+
+      <!-- Delete User Modal -->
+      <%- include("../../partials/modal/deleteUser") %>
+      <!-- Delete User Modal End-->
+
+    </div>
+  </div>
+  <% } %>
+  <!-- Edit Account End -->
+</div>
