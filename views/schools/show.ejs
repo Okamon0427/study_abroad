@@ -517,10 +517,10 @@
       <div class="card-body">
         <h5 class="card-title">Popular Schools</h5>
         <hr>
-        <a href="#" class="card-link">
-          <div class="row">
-            <% popularSchools.forEach(popularSchool => { %>
-            <div class="col-md-12">
+        <div class="row">
+          <% popularSchools.forEach(popularSchool => { %>
+          <div class="col-md-12">
+            <a href="#" class="card-link">
               <div class="card">
                 <img src="/<%= popularSchool.image %>" class="card-img-top" alt="No Image">
                 <div class="card-body">
@@ -550,10 +550,10 @@
                   </span>
                 </div>
               </div>
-            </div>
-            <% }) %>
+            </a>
           </div>
-        </a>
+          <% }) %>
+        </div>
       </div>
     </div>
 
@@ -561,10 +561,10 @@
       <div class="card-body">
         <h5 class="card-title">New Arrivai Schools</h5>
         <hr>
-        <a href="#" class="card-link">
-          <div class="row">
-            <div class="col-md-12">
-              <% newArrivalSchools.forEach(newArrivalSchool => { %>
+        <div class="row">
+          <% newArrivalSchools.forEach(newArrivalSchool => { %>
+          <div class="col-md-12">
+            <a href="#" class="card-link">
               <div class="card">
                 <img src="/<%= newArrivalSchool.image %>" class="card-img-top" alt="No Image">
                 <div class="card-body">
@@ -594,10 +594,10 @@
                   </span>
                 </div>
               </div>
-              <% }) %>
-            </div>
+            </a>
           </div>
-        </a>
+          <% }) %>
+        </div>
       </div>
     </div>
 
