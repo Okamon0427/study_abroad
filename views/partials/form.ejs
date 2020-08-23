@@ -68,7 +68,7 @@
     <% } %>
 
     <% if (formContent === 'editSchool') { %> 
-    <form action="/schools/<%= school._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <form action="/schools/<%= school.slug %>?_method=PUT" method="POST" enctype="multipart/form-data">
     <% } %>
     <!-- Form Action -->
 
@@ -132,7 +132,7 @@
     <% } %>
 
     <% if (formContent === 'editSchool') { %>
-    <a href="/schools/<%= school._id %>">Go back to <%= school.name %> Page</a>
+    <a href="/schools/<%= school.slug %>">Go back to <%= school.name %> Page</a>
     <% } %>
 
   </div>

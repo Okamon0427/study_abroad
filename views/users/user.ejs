@@ -21,7 +21,7 @@
         <div class="row row-cols-1 row-cols-md-3">
           <% schools.forEach(school => { %>
           <div class="col mb-4">
-            <a href="/schools/<%= school._id %>" class="card-link">
+            <a href="/schools/<%= school.slug %>" class="card-link">
               <div class="card">
                 <img src="/<%= school.image %>" class="card-img-top" alt="No Image">
                 <div class="card-body">
@@ -73,7 +73,7 @@
         <div class="row row-cols-1 row-cols-md-3">
           <% schools.forEach(school => { %>
           <div class="col mb-4">
-            <a href="/schools/<%= school._id %>" class="card-link">
+            <a href="/schools/<%= school.slug %>" class="card-link">
               <div class="card">
                 <img src="/<%= school.image %>" class="card-img-top" alt="No Image">
                 <div class="card-body">

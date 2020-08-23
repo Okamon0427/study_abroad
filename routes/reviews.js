@@ -11,7 +11,7 @@ const { isLoggedIn, isReviewAuthorized } = require('../middleware/auth');
 const router = express.Router();
 
 router.post(
-  '/:schoolId/reviews',
+  '/:slug/reviews',
   isLoggedIn,
   [
     check('title')
@@ -26,7 +26,7 @@ router.post(
 );
 
 router.put(
-  '/:schoolId/reviews/:reviewId',
+  '/:slug/reviews/:reviewId',
   isLoggedIn,
   isReviewAuthorized,
   [
@@ -42,7 +42,7 @@ router.put(
 );
 
 router.delete(
-  '/:schoolId/reviews/:reviewId',
+  '/:slug/reviews/:reviewId',
   isLoggedIn,
   isReviewAuthorized,
   deleteReview

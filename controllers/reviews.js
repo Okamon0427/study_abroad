@@ -6,24 +6,22 @@ const CustomError = require('../utils/CustomError');
 
 exports.createReview = async (req, res, next) => {
   try {
-    const school = await School.findById(req.params.schoolId);
-    const reviews = await Review.find({ school: req.params.schoolId });
+    const school = await School.findOne({ slug: req.params.slug });
+    const reviews = await Review.find({ school: school._id });
 
     // Validate in case User who is logging in has already written Review to the School
     const isUserHasReview = checkIsUserHasReview(req, reviews);
     if (isUserHasReview) {
       req.flash('error', 'You have already written review to this school');
-      return res.redirect(`/schools/${req.params.schoolId}`);
+      return res.redirect(`/schools/${req.params.slug}`);
     }
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       // check the user who is logging in has favorite of this school (true or false)
       const isFavoriteUser = checkIsFavoriteUser(req, school);
-
       const limitedReviews =
         await Review
-          .find({ school: req.params.schoolId })
+          .find({ school: school._id })
           .limit(3)
           .populate('user');
       return res.status(422).render('schools/show', {
@@ -37,16 +35,16 @@ exports.createReview = async (req, res, next) => {
     }
 
     req.body.user = req.user.id;
-    req.body.school = req.params.schoolId;
+    req.body.school = school._id;
     await Review.create(req.body);
 
     // calculate average rating and save it in School Model
-    const updatedReviews = await Review.find({ school: req.params.schoolId });
+    const updatedReviews = await Review.find({ school: school._id });
     school.averageRating = getAverageRating(updatedReviews);
     await school.save();
 
     req.flash('success', 'Created new review!');
-    res.redirect(`/schools/${req.params.schoolId}`);
+    res.redirect(`/schools/${req.params.slug}`);
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -55,8 +53,8 @@ exports.createReview = async (req, res, next) => {
 
 exports.updateReview = async (req, res, next) => {
   try {
-    const school = await School.findById(req.params.schoolId);
-    const reviews = await Review.find({ school: req.params.schoolId });
+    const school = await School.findOne({ slug: req.params.slug });
+    const reviews = await Review.find({ school: school._id });
     
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -69,7 +67,7 @@ exports.updateReview = async (req, res, next) => {
 
       const limitedReviews =
        await Review
-        .find({ school: req.params.schoolId })
+        .find({ school: school._id })
         .limit(3)
         .populate('user');
       return res.status(422).render('schools/show', {
@@ -92,12 +90,12 @@ exports.updateReview = async (req, res, next) => {
     );
 
     // calculate average rating and save it in School Model
-    const updatedReviews = await Review.find({ school: req.params.schoolId });
+    const updatedReviews = await Review.find({ school: school._id });
     school.averageRating = getAverageRating(updatedReviews);
     await school.save();
 
     req.flash('success', 'Editted review!');
-    res.redirect(`/schools/${req.params.schoolId}`);
+    res.redirect(`/schools/${req.params.slug}`);
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -107,15 +105,15 @@ exports.updateReview = async (req, res, next) => {
 exports.deleteReview = async (req, res, next) => {
   try {
     await Review.findByIdAndDelete(req.params.reviewId);
-    const school = await School.findById(req.params.schoolId);
+    const school = await School.findOne({ slug: req.params.slug });
 
     // calculate average rating and save it in School Model
-    const updatedReviews = await Review.find({ school: req.params.schoolId });
+    const updatedReviews = await Review.find({ school: school._id });
     school.averageRating = getAverageRating(updatedReviews);
     await school.save();
 
     req.flash('success', 'Deleted review!');
-    res.redirect(`/schools/${req.params.schoolId}`);
+    res.redirect(`/schools/${req.params.slug}`);
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);

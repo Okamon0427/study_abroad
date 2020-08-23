@@ -14,7 +14,7 @@ exports.isLoggedIn = (req, res, next) => {
 
 exports.isSchoolAuthorized = async (req, res, next) => {
   try {
-    const school = await School.findById(req.params.schoolId);
+    const school = await School.findOne({ slug: req.params.slug });
   
     if (!school) {
       const error = new CustomError('School not found', 404);
@@ -35,7 +35,7 @@ exports.isSchoolAuthorized = async (req, res, next) => {
 
 exports.isReviewAuthorized = async (req, res, next) => {
   try {
-    const school = await School.findById(req.params.schoolId);
+    const school = await School.findOne({ slug: req.params.slug });
     const review = await Review.findById(req.params.reviewId);
   
     if (!school) {
@@ -50,7 +50,7 @@ exports.isReviewAuthorized = async (req, res, next) => {
   
     if (review.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
       req.flash('error', 'You are not authorized to do that');
-      return res.redirect(`/schools/${req.params.schoolId}`);
+      return res.redirect(`/schools/${req.params.slug}`);
     }
   
     next();

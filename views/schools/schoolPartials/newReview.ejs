@@ -37,7 +37,7 @@
       <% if(currentUser && !isUserHasReview) { %>
       <h4 class="card-title">Write your review</h4>
       <form
-        action="/schools/<%= school._id %>/reviews"
+        action="/schools/<%= school.slug %>/reviews"
         method="POST"
       >
         <div class="form-group">

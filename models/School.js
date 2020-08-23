@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const SchoolSchema = new mongoose.Schema({
   name: {
@@ -31,6 +32,10 @@ const SchoolSchema = new mongoose.Schema({
     min: 1,
     max: 5
   },
+  slug: {
+    type: String,
+    unique: true
+  },
   likes: [
     {
       type: mongoose.Schema.ObjectId,
@@ -49,6 +54,16 @@ const SchoolSchema = new mongoose.Schema({
 }, {
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
+});
+
+SchoolSchema.pre('save', function(next) {
+  this.slug = slugify(this.name,
+    {
+      replacement: '-',
+      lower: true
+    }
+  );
+  next();
 });
 
 // delete Review when corresponding school is deleted

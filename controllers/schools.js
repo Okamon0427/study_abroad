@@ -81,10 +81,10 @@ exports.getSchool = async (req, res, next) => {
   try {
     const school =
       await School
-        .findById(req.params.schoolId)
+        .findOne({ slug: req.params.slug })
         .populate('reviews')
         .populate('likes');
-    const reviews = await Review.find({ school: req.params.schoolId });
+    const reviews = await Review.find({ school: school._id });
 
     if (!school) {
       const error = new CustomError('School not found', 404);
@@ -99,7 +99,7 @@ exports.getSchool = async (req, res, next) => {
 
     const limitedReviews =
       await Review
-        .find({ school: req.params.schoolId })
+        .find({ school: school._id })
         .limit(3)
         .populate('user');
 
@@ -134,7 +134,7 @@ exports.getSchool = async (req, res, next) => {
 
 exports.editSchool = async (req, res, next) => {
   try {
-    const school = await School.findById(req.params.schoolId);
+    const school = await School.findOne({ slug: req.params.slug });
 
     res.render('schools/edit', {
       title: 'Edit school',
@@ -162,7 +162,7 @@ exports.updateSchool = async (req, res, next) => {
   }
   
   try {
-    school = await School.findById(req.params.schoolId);
+    school = await School.findOne({ slug: req.params.slug });
     
     if (req.file) {
       if (school.image !== 'uploads\\no-photo.jpg') {
@@ -171,14 +171,13 @@ exports.updateSchool = async (req, res, next) => {
       req.body.image = req.file.path;
     }
 
-    await School.findByIdAndUpdate(
-      req.params.schoolId,
-      req.body,
-      {
-        new: true,
-        runValidators: true
-      }
-    );
+    school.name = req.body.name;
+    school.country = req.body.country;
+    school.image = req.body.image;
+    school.type = req.body.type;
+    school.website = req.body.website;
+
+    await school.save();
 
     req.flash('success', 'Editted product!');
     res.redirect('/schools');
@@ -190,7 +189,7 @@ exports.updateSchool = async (req, res, next) => {
 
 exports.deleteSchool = async (req, res, next) => {
   try {
-    const school = await School.findById(req.params.schoolId);
+    const school = await School.findOne({ slug: req.params.slug });
     
     if (school.image !== 'uploads\\no-photo.jpg') {
       deleteFile(school.image);
@@ -208,7 +207,7 @@ exports.deleteSchool = async (req, res, next) => {
 
 exports.favoriteSchool = async (req, res, next) => {
   try {
-    const school = await School.findById(req.params.schoolId);
+    const school = await School.findOne({ slug: req.params.slug });
     if (!school) {
       const error = new CustomError('School not found', 404);
       return next(error);
@@ -224,7 +223,7 @@ exports.favoriteSchool = async (req, res, next) => {
 
     await school.save();
 
-    return res.redirect(`/schools/${school._id}`);
+    return res.redirect(`/schools/${school.slug}`);
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);

@@ -35,12 +35,12 @@ router.post(
   createSchool
 );
 
-router.get('/:schoolId', getSchool);
+router.get('/:slug', getSchool);
 
-router.get('/:schoolId/edit', isLoggedIn, isSchoolAuthorized, editSchool);
+router.get('/:slug/edit', isLoggedIn, isSchoolAuthorized, editSchool);
 
 router.put(
-  '/:schoolId',
+  '/:slug',
   isLoggedIn,
   isSchoolAuthorized,
   [
@@ -56,8 +56,8 @@ router.put(
   updateSchool
 );
 
-router.delete('/:schoolId', isLoggedIn, isSchoolAuthorized, deleteSchool);
+router.delete('/:slug', isLoggedIn, isSchoolAuthorized, deleteSchool);
 
-router.post('/:schoolId/favorite', isLoggedIn, favoriteSchool);
+router.post('/:slug/favorite', isLoggedIn, favoriteSchool);
 
 module.exports = router;

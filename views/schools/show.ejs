@@ -7,15 +7,14 @@
     <!-- Main Information -->
     <div class="card mb-2">
       <div class="card-body">
-        <h3 style="text-align: center;">School</h3>
+        <h3 style="text-align: center;"><%= school.name %></h3>
         <hr>
         <img class="card-img-top" src="/<%= school.image %>" alt="No Image">
         <hr>
-        <p class="h4"><%= school.name %></p>
         <p class="h4"><%= school.country %></p>
         
         <!-- Favorite Button -->
-        <form action="/schools/<%= school._id %>/favorite" method="POST">
+        <form action="/schools/<%= school.slug %>/favorite" method="POST">
           <% if (isFavoriteUser) { %>
           <p>This school is your favorite</p>
           <button class="btn btn-sm btn-secondary">
@@ -55,7 +54,7 @@
         <% if (currentUser && currentUser._id.equals(school.user) || (currentUser && currentUser.isAdmin)) { %>
         <a
           class="btn btn-warning"
-          href="/schools/<%= school._id %>/edit"
+          href="/schools/<%= school.slug %>/edit"
           role="button"
         >
           <i class="fas fa-edit"></i> EDIT
@@ -101,7 +100,7 @@
         <div class="row">
           <% popularSchools.forEach(popularSchool => { %>
           <div class="col-md-12">
-            <a href="#" class="card-link">
+            <a href="/schools/<%= popularSchool.slug %>" class="card-link">
               <div class="card mb-2">
                 <img src="/<%= popularSchool.image %>" class="card-img-top" alt="No Image">
                 <div class="card-body">
