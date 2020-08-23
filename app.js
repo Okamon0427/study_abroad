@@ -4,9 +4,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const passport = require('passport');
-const LocalStrategy = require('passport-local');
 const flash = require('connect-flash');
-const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const moment = require('moment');
 require('dotenv').config();
@@ -15,40 +13,15 @@ const schoolRoutes = require('./routes/schools');
 const userRoutes = require('./routes/users');
 const reviewRoutes = require('./routes/reviews');
 const authRoutes = require('./routes/auth');
-const User = require('./models/User');
 const CustomError = require('./utils/CustomError');
+const authenticate = require('./config/passport');
 const database = require('./config/database');
 
+// Database Connect
 database().catch(err => next(err));
 
-passport.use(
-  new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-    User.findOne({ email }, (err, user) => {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect email.' });
-      }
-      bcrypt.compare(password, user.password, (err, isMatch) => {
-        if (err) throw err;
-        if (isMatch) {
-          return done(null, user);
-        } else {
-          return done(null, false, { message: 'Password incorrect' });
-        }
-      });
-    });
-  }
-));
-
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
-});
+// passport connect
+authenticate(passport);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
