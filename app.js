@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const session = require('express-session');
@@ -18,16 +17,9 @@ const reviewRoutes = require('./routes/reviews');
 const authRoutes = require('./routes/auth');
 const User = require('./models/User');
 const CustomError = require('./utils/CustomError');
+const database = require('./config/database');
 
-const mongooseConfig = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-};
-mongoose.connect(process.env.MONGODB_URI, mongooseConfig)
-  .then(() => console.log('Mongoose connected!'))
-  .catch(err => console.log(err));
+database().catch(err => next(err));
 
 passport.use(
   new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
@@ -85,7 +77,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
-  res.locals.moment = moment();
+  res.locals.moment = moment;
   res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
@@ -109,5 +101,5 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(3000, () => {
-  console.log('Server has started');
+  console.log('Server has started!');
 });
