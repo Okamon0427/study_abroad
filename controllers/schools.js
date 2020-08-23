@@ -223,6 +223,7 @@ exports.favoriteSchool = async (req, res, next) => {
     }
 
     await school.save();
+
     return res.redirect(`/schools/${school._id}`);
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);

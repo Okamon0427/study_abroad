@@ -20,7 +20,7 @@ const database = require('./config/database');
 // Database Connect
 database().catch(err => next(err));
 
-// passport connect
+// Passport Connect
 authenticate(passport);
 
 const storage = multer.diskStorage({
@@ -42,7 +42,7 @@ app.use(flash());
 app.use(multer({ storage: storage }).single('image'));
 
 app.use(session({
-  secret: 'ramen is the most favorite food',
+  secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true
 }));

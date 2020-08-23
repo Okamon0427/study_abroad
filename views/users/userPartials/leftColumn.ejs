@@ -36,29 +36,31 @@
   <!-- Follow End -->
 
   <!-- Edit Account -->
-  <% if (mypage) { %>
+  <% if (mypage || currentUser.isAdmin) { %>
   <div class="card text-center mb-2">
     <div class="card-body">
       <h3 class="card-title">Edit Your Account</h3>
       <hr>
       <p class="card-text">
-        <a href="/users/<%= currentUser.id %>/edit?content=profile" class="card-link">
+        <a href="/users/<%= user._id %>/edit?content=profile" class="card-link">
           <i class="fas fa-user"></i> Profile
         </a>
       </p>
       <p class="card-text">
-        <a href="/users/<%= currentUser.id %>/edit?content=email" class="card-link">
+        <a href="/users/<%= user._id %>/edit?content=email" class="card-link">
           <i class="fas fa-envelope"></i> Email
         </a>
       </p>
       <p class="card-text">
-        <a href="/users/<%= currentUser.id %>/edit?content=password" class="card-link">
+        <a href="/users/<%= user._id %>/edit?content=password" class="card-link">
           <i class="fas fa-unlock-alt"></i> Password
         </a>
       </p>
 
       <!-- Delete User Modal -->
+      <% if (!currentUser.isAdmin) { %>
       <%- include("../../partials/modal/deleteUser") %>
+      <% } %>
       <!-- Delete User Modal End-->
 
     </div>

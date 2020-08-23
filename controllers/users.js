@@ -43,7 +43,7 @@ exports.getUser = async (req, res, next) => {
 
 exports.editUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.params.userId);
 
     res.render('users/edit', {
       title: 'My Page',
@@ -60,7 +60,7 @@ exports.editUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.params.userId);
 
     let updatedObject;
     const errors = validationResult(req);
@@ -177,7 +177,7 @@ exports.updateUser = async (req, res, next) => {
     }
 
     await User.findByIdAndUpdate(
-      req.user.id,
+      user._id,
       updatedObject,
       {
         new: true,
@@ -186,7 +186,7 @@ exports.updateUser = async (req, res, next) => {
     );
 
     req.flash('success', 'Editted your account!');
-    res.redirect(`/users/${user._id}`);
+    res.redirect(`/users/${user.params.userId}`);
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -195,7 +195,13 @@ exports.updateUser = async (req, res, next) => {
 
 exports.deleteUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.params.userId);
+
+    // Admin user cannot be deleted (need to manipulate database directly)
+    if (user.isAdmin) {
+      req.flash('error', 'Admin user cannot be deleted');
+      res.redirect(`/users/${user._id}`);
+    }
 
     if (user.image !== 'uploads\\no-photo.jpg') {
       deleteFile(user.image);

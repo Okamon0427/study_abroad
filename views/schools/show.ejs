@@ -5,7 +5,7 @@
   <div class="col-md-9 col-sm-12">
 
     <!-- Main Information -->
-    <div class="card">
+    <div class="card mb-2">
       <div class="card-body">
         <h3 style="text-align: center;">School</h3>
         <hr>
@@ -52,7 +52,7 @@
         </p>
         <% } %>
 
-        <% if (currentUser && currentUser._id.equals(school.user)) { %>
+        <% if ((currentUser && currentUser._id.equals(school.user)) || currentUser.isAdmin) { %>
         <a
           class="btn btn-warning"
           href="/schools/<%= school._id %>/edit"
@@ -259,7 +259,7 @@
                   <div class="col-6 col-md-4">
                     <img src="/<%= review.user.image %>" class="card-img-top" alt="No Image">
                     <p><%= review.user.name %></p>
-                    <% if (currentUser && currentUser._id.equals(review.user._id)) { %>
+                    <% if ((currentUser && currentUser._id.equals(review.user._id)) || currentUser.isAdmin) { %>
 
                     <!-- Edit Review Toggle -->
                     <a
@@ -513,7 +513,7 @@
 
   <!-- Right Column -->
   <div class="col-md-3 col-sm-12">
-    <div class="card text-center">
+    <div class="card text-center mb-2">
       <div class="card-body">
         <h5 class="card-title">Popular Schools</h5>
         <hr>
@@ -521,7 +521,7 @@
           <% popularSchools.forEach(popularSchool => { %>
           <div class="col-md-12">
             <a href="#" class="card-link">
-              <div class="card">
+              <div class="card mb-2">
                 <img src="/<%= popularSchool.image %>" class="card-img-top" alt="No Image">
                 <div class="card-body">
                   <p class="card-title">
@@ -557,7 +557,7 @@
       </div>
     </div>
 
-    <div class="card text-center">
+    <div class="card text-center mb-2">
       <div class="card-body">
         <h5 class="card-title">New Arrivai Schools</h5>
         <hr>
@@ -565,7 +565,7 @@
           <% newArrivalSchools.forEach(newArrivalSchool => { %>
           <div class="col-md-12">
             <a href="#" class="card-link">
-              <div class="card">
+              <div class="card mb-2">
                 <img src="/<%= newArrivalSchool.image %>" class="card-img-top" alt="No Image">
                 <div class="card-body">
                   <p class="card-title">

@@ -59,7 +59,7 @@
     <form action="/reset/<%= token %>?_method=PUT" method="POST">
     <% } %>
 
-    <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password' ) { %> 
+    <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password') { %> 
     <form action="/users/<%= currentUser.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
     <% } %>
 
@@ -121,6 +121,10 @@
     
     <% if (formContent === 'login') { %> 
     <p>	Forgot Password? <a href="/forgot">Reset Password</a></p>
+    <% } %>
+
+    <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password') { %>
+      <a href="/users/<%= user._id %>">Go back</a>
     <% } %>
 
     <% if (formContent === 'addSchool') { %>

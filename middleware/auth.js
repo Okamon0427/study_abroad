@@ -21,7 +21,7 @@ exports.isSchoolAuthorized = async (req, res, next) => {
       return next(error);
     }
   
-    if (school.user.toString() !== req.user._id.toString()) {
+    if (school.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
       req.flash('error', 'You are not authorized to do that');
       return res.redirect('/schools');
     }
@@ -48,7 +48,7 @@ exports.isReviewAuthorized = async (req, res, next) => {
       return next(error);
     }
   
-    if (review.user.toString() !== req.user._id.toString()) {
+    if (review.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
       req.flash('error', 'You are not authorized to do that');
       return res.redirect(`/schools/${req.params.schoolId}`);
     }
@@ -69,7 +69,7 @@ exports.isUserAuthorized = async (req, res, next) => {
       return next(error);
     }
 
-    if (user._id.toString() !== req.user._id.toString()) {
+    if (user._id.toString() !== req.user._id.toString() && !req.user.isAdmin) {
       req.flash('error', 'You are not authorized to do that');
       return res.redirect(`/users/${user._id}`);
     }
