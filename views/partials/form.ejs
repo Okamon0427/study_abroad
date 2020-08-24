@@ -60,7 +60,7 @@
     <% } %>
 
     <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password') { %> 
-    <form action="/users/<%= currentUser.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <form action="/users/<%= currentUser.slug %>?_method=PUT" method="POST" enctype="multipart/form-data">
     <% } %>
 
     <% if (formContent === 'addSchool') { %> 
@@ -124,7 +124,7 @@
     <% } %>
 
     <% if (formContent === 'profile'|| formContent === 'email' || formContent === 'password') { %>
-      <a href="/users/<%= user._id %>">Go back</a>
+      <a href="/users/<%= user.slug %>">Go back</a>
     <% } %>
 
     <% if (formContent === 'addSchool') { %>

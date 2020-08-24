@@ -62,7 +62,7 @@ exports.isReviewAuthorized = async (req, res, next) => {
 
 exports.isUserAuthorized = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findOne({ slug: req.params.slug });
 
     if (!user) {
       const error = new CustomError('User not found', 404);
@@ -71,7 +71,7 @@ exports.isUserAuthorized = async (req, res, next) => {
 
     if (user._id.toString() !== req.user._id.toString() && !req.user.isAdmin) {
       req.flash('error', 'You are not authorized to do that');
-      return res.redirect(`/users/${user._id}`);
+      return res.redirect(`/users/${user.slug}`);
     }
 
     next();

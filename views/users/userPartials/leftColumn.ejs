@@ -16,7 +16,7 @@
   <% if (!mypage) { %> 
   <div class="card text-center mb-2">
     <div class="card-body">
-      <form action="/users/<%= user._id %>/follow" method="POST">
+      <form action="/users/<%= user.slug %>/follow" method="POST">
         <% if (isFollowing) { %>
         <p>You are following this user</p>
         <button class="btn btn-sm btn-secondary">
@@ -42,17 +42,17 @@
       <h3 class="card-title">Edit Your Account</h3>
       <hr>
       <p class="card-text">
-        <a href="/users/<%= user._id %>/edit?content=profile" class="card-link">
+        <a href="/users/<%= user.slug %>/edit?content=profile" class="card-link">
           <i class="fas fa-user"></i> Profile
         </a>
       </p>
       <p class="card-text">
-        <a href="/users/<%= user._id %>/edit?content=email" class="card-link">
+        <a href="/users/<%= user.slug %>/edit?content=email" class="card-link">
           <i class="fas fa-envelope"></i> Email
         </a>
       </p>
       <p class="card-text">
-        <a href="/users/<%= user._id %>/edit?content=password" class="card-link">
+        <a href="/users/<%= user.slug %>/edit?content=password" class="card-link">
           <i class="fas fa-unlock-alt"></i> Password
         </a>
       </p>

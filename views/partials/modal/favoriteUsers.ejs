@@ -29,7 +29,7 @@
       </div>
       <div class="modal-body">
         <% school.likes.forEach(favoriteUser => { %>
-          <a href="/users/<%= favoriteUser._id %>">
+          <a href="/users/<%= favoriteUser.slug %>">
             <p><%= favoriteUser.name %></p>
           </a>
         <% }) %>

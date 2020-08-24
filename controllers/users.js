@@ -8,7 +8,7 @@ const { deleteFile } = require('../utils/deleteFile');
 
 exports.getUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findOne({ slug: req.params.slug });
     let mypage = false;
     let title = `${user.name}'s Page`;
 
@@ -20,7 +20,7 @@ exports.getUser = async (req, res, next) => {
     
     const schools =
       await School
-        .find({ likes: { $in: [req.params.userId] } })
+        .find({ likes: { $in: [user._id] } })
         .limit(3)
         .populate('reviews')
         .populate('likes');
@@ -43,7 +43,7 @@ exports.getUser = async (req, res, next) => {
 
 exports.editUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findOne({ slug: req.params.slug });
 
     res.render('users/edit', {
       title: 'My Page',
@@ -60,9 +60,7 @@ exports.editUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.userId);
-
-    let updatedObject;
+    const user = await User.findOne({ slug: req.user.slug });
     const errors = validationResult(req);
 
     if (req.body.content === 'profile') {
@@ -99,12 +97,15 @@ exports.updateUser = async (req, res, next) => {
           deleteFile(user.image);
         }
         req.body.image = req.file.path;
+        user.image = req.body.image;
       }
 
-      delete req.body.content;
-      updatedObject = { ...req.body };
+      user.name = req.body.name;
+      user.english = req.body.english;
+      user.introduction = req.body.introduction;
+      user.studentType = req.body.studentType;
     }
-
+    
     if (req.body.content === 'email') {
       if (!errors.isEmpty()) {
         const targetError =
@@ -133,7 +134,7 @@ exports.updateUser = async (req, res, next) => {
         });
       }
 
-      updatedObject = { email: req.body.newEmail };
+      user.email = req.body.newEmail;
     }
 
     if (req.body.content === 'password') {
@@ -173,20 +174,13 @@ exports.updateUser = async (req, res, next) => {
       }
 
       const hashedPassword = await bcrypt.hash(newPassword, 12);
-      updatedObject = { password: hashedPassword };
+      user.password = hashedPassword;
     }
 
-    await User.findByIdAndUpdate(
-      user._id,
-      updatedObject,
-      {
-        new: true,
-        runValidators: true
-      }
-    );
+    await user.save()
 
     req.flash('success', 'Editted your account!');
-    res.redirect(`/users/${user.params.userId}`);
+    res.redirect(`/users/${user.slug}`);
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
@@ -195,12 +189,12 @@ exports.updateUser = async (req, res, next) => {
 
 exports.deleteUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findOne({ slug: req.params.slug });
 
     // Admin user cannot be deleted (need to manipulate database directly)
     if (user.isAdmin) {
       req.flash('error', 'Admin user cannot be deleted');
-      res.redirect(`/users/${user._id}`);
+      res.redirect(`/users/${user.slug}`);
     }
 
     if (user.image !== 'uploads\\no-photo.jpg') {
@@ -219,7 +213,7 @@ exports.deleteUser = async (req, res, next) => {
 
 exports.followUser = async (req, res, next) => {
   try {
-    const targetUser = await User.findById(req.params.userId);
+    const targetUser = await User.findOne({ slug: req.params.slug });
     if (!targetUser) {
       const error = new CustomError('User not found', 404);
       return next(error);
@@ -228,7 +222,7 @@ exports.followUser = async (req, res, next) => {
     // the user who is logging in cannot follow his/her own page
     if (targetUser._id.toString() === req.user._id.toString()) {
       req.flash('error', 'You cannot follow yourself');
-      return res.redirect(`/users/${req.params.userId}`);
+      return res.redirect(`/users/${targetUser.slug}`);
     }
 
     // follow or unfollow depending whether the user who is logging in follows target user
@@ -236,11 +230,11 @@ exports.followUser = async (req, res, next) => {
     if (isFollowing) {
       targetUser.followed.pull(req.user._id);
     } else {
-      targetUser.followed.push(req.user._id);
+      targetUser.followed.push(req.user);
     }
     await targetUser.save();
 
-    return res.redirect(`/users/${targetUser._id}`);
+    return res.redirect(`/users/${targetUser.slug}`);
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);

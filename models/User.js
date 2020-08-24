@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -8,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    retuired: true,
+    required: true,
     unique: true
   },
   password: {
@@ -41,6 +42,10 @@ const UserSchema = new mongoose.Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
+  slug: {
+    type: String,
+    unique: true
+  },
   isAdmin: {
     type: Boolean,
     default: false
@@ -51,6 +56,16 @@ const UserSchema = new mongoose.Schema({
       ref: 'User'
     }
   ]
+});
+
+UserSchema.pre('save', function(next) {
+  this.slug = slugify(this.name,
+    {
+      replacement: '-',
+      lower: true
+    }
+  );
+  next();
 });
 
 UserSchema.pre('remove', async function (next) {
