@@ -10,6 +10,7 @@ const moment = require('moment');
 require('dotenv').config();
 
 const schoolRoutes = require('./routes/schools');
+const rankingRoutes = require('./routes/ranking');
 const userRoutes = require('./routes/users');
 const reviewRoutes = require('./routes/reviews');
 const authRoutes = require('./routes/auth');
@@ -59,6 +60,7 @@ app.use((req, res, next) => {
 
 app.use('/schools', schoolRoutes);
 app.use('/schools', reviewRoutes);
+app.use('/ranking', rankingRoutes);
 app.use('/users', userRoutes);
 app.use(authRoutes);
 

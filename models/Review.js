@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { find } = require('./School');
 
 const ReviewSchema = new mongoose.Schema({
   title: {
@@ -48,22 +47,14 @@ const ReviewSchema = new mongoose.Schema({
 // calculate average rating and save it in School Model 
 ReviewSchema.statics.getAverageRating = async function(schoolId) {
   try {
-    console.log(2)
     const reviews = await this.find({ school: schoolId });
   
-    console.log(3)
-    console.log(reviews)
-
     let reviewsSum = 0;
     reviews.forEach(review => {
       reviewsSum += review.rating
     });
 
-    console.log(4)
-    console.log(reviewsSum)
-
     const averageRating = reviewsSum / reviews.length;
-    console.log(averageRating)
 
     await this.model('School').findByIdAndUpdate(
       schoolId,

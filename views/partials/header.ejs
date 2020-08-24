@@ -32,7 +32,14 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item <%= typeof title !== 'undefined' && title === 'Schools' ? 'active' : '' %>">
-            <a class="nav-link" href="/schools">Schools</a>
+            <a class="nav-link" href="/schools">
+              <i class="fas fa-school"></i> Schools
+            </a>
+          </li>
+          <li class="nav-item <%= typeof title !== 'undefined' && title === 'Ranking' ? 'active' : '' %>">
+            <a class="nav-link" href="/ranking">
+              <i class="fas fa-crown"></i> Ranking
+            </a>
           </li>
         </ul>
         <ul class="navbar-nav">
