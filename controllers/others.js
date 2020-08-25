@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 
 const User = require('../models/User');
+const Inquiry = require('../models/Inquiry');
 const CustomError = require('../utils/CustomError');
 const sendEmail = require('../utils/sendEmail');
 
@@ -27,14 +28,40 @@ exports.sendInquiry = async (req, res, next) => {
   }
 
   try {
+    const inquiry = await Inquiry.create(req.body);
+
     // if user exists, save user information into Inquiry model
     const user = await User.findOne({ email });
     if (user) {
-      const isRegisteredUser = true;
+      inquiry.isRegisteredUser = true;
+      inquiry.user = user;
+      await inquiry.save();
     }
-  
-    req.flash('success', 'Inquiry sent to our team successfully!');
-    res.redirect('/schools');
+
+    // for email
+    const subject = 'Inquiry sent to our team successfully!';
+    const message =
+      `Hello ${name},\n\n` +
+      'We received your inquiry and will get back to you as soon as possible.\n\n' +
+      'Thanks,\n' +
+      'Study Abroad! team\n';
+
+    try {
+      // send email to user
+      await sendEmail(email, subject, message);
+
+      req.flash('success', 'Inquiry sent to our team successfully!');
+      res.redirect('/schools');
+    } catch (err) {
+      req.flash('error', 'Email could not be sent. Please try again');
+      return res.status(422).render('others/inquiry', {
+        title: 'Inquiry',
+        formContent: 'inquiry',
+        name,
+        email,
+        inquiry
+      });
+    }
   } catch (err) {
     const error = new CustomError('Something went wrong', 500);
     return next(error);
