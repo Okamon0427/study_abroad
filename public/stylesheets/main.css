@@ -11,6 +11,10 @@ body {
   color: orange;
 }
 
+p {
+  margin-bottom: 0;
+}
+
 footer {
   margin-top: 28px;
   background: #f5f5f5;

@@ -1,0 +1,52 @@
+<div
+  class="tab-pane fade"
+  id="list-rated"
+  role="tabpanel"
+  aria-labelledby="list-rated-list"
+>
+  <div class="card mb-2">
+    <div class="card-body">
+      <h5 class="card-title text-center">Most Rated School</h5>
+      <% ratedSchools.forEach(ratedSchool => { %>
+      <div class="card shadow mb-2">
+        <a href="/schools/<%= ratedSchool.slug %>" class="card-link">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6 col-md-4">
+                <img src="/<%= ratedSchool.image %>" class="card-img-top" alt="No Image">            
+              </div>
+              <div class="col-12 col-md-8">
+                <h5><%= ratedSchool.name %></h5>
+                <% if (!ratedSchool.averageRating) { %>
+                <p>
+                  No Rating Yet
+                </p>
+                <% } else { %>
+                <p>
+                  <span>
+                    <i class="fas fa-star <% if (ratedSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
+                    <i class="fas fa-star <% if (ratedSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
+                    <i class="fas fa-star <% if (ratedSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
+                    <i class="fas fa-star <% if (ratedSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
+                    <i class="fas fa-star <% if (ratedSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
+                  </span>
+                  (<%= ratedSchool.averageRating.toFixed(2) %>)
+                </p>
+                <% } %>
+                <span class="badge badge-secondary mb-2">
+                  <i class="fas fa-thumbs-up"></i> Favorite: <%= ratedSchool.likes.length %>
+                </span>
+                <span class="badge badge-secondary mb-2">
+                  <i class="fas fa-comment-dots"></i> Review: <%= ratedSchool.reviews.length %>
+                </span>
+                <br>
+                <span>created on <%= moment(ratedSchool.createdAt).format('YYYY-MM-DD') %></span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</div>

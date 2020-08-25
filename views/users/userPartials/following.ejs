@@ -6,24 +6,24 @@
 >
   <div class="card mb-2">
     <div class="card-body">
-      <h5 class="card-title" style="text-align: center;">Following</h5>
+      <h5 class="card-title text-center">Following</h5>
       <% targetUsers.forEach(targetUser => { %>
-        <a href="/users/<%= targetUser.slug %>" class="card-link">
-          <div class="card">
+        <div class="card shadow mb-2">
+          <a href="/users/<%= targetUser.slug %>" class="card-link">
             <div class="card-body">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-4">
                   <img src="/<%= targetUser.image %>" class="card-img-top" alt="No Image">            
                 </div>
-                <div class="col-md-8">
+                <div class="col-8">
                   <h5><%= targetUser.name %></h5>
-                  <p><%= targetUser.studentType %></p>
+                  <p class="font-italic"><%= targetUser.studentType %></p>
                   <p><%= targetUser.introduction %></p>
                 </div>
               </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
         <% }) %>
     </div>
   </div>

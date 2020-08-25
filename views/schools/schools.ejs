@@ -9,16 +9,12 @@
     <% schools.forEach(school => { %>
       <div class="col-md-3 col-sm-6">
         <a href="/schools/<%= school.slug %>" class="card-link">
-          <div class="card text-center border-0 mb-2">
+          <div class="card shadow text-center border-0 mb-2">
             <img class="card-img-top" src="<%= school.image %>" alt="No Image">
             <div class="card-body">
-              <p class="card-title">
-                <%= school.name %>
-              </p>
+              <p><%= school.name %></p>
               <% if (!school.averageRating) { %>
-              <p>
-                No Rating Yet
-              </p>
+              <p>No Rating Yet</p>
               <% } else { %>
               <p>
                 <span>

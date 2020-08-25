@@ -7,7 +7,7 @@
     <!-- Main Information -->
     <div class="card mb-2">
       <div class="card-body">
-        <h3 style="text-align: center;"><%= school.name %></h3>
+        <h3 class="text-center"><%= school.name %></h3>
         <hr>
         <img class="card-img-top" src="/<%= school.image %>" alt="No Image">
         <hr>
@@ -16,12 +16,10 @@
         <!-- Favorite Button -->
         <form action="/schools/<%= school.slug %>/favorite" method="POST">
           <% if (isFavoriteUser) { %>
-          <p>This school is your favorite</p>
           <button class="btn btn-sm btn-secondary">
             <i class="fas fa-thumbs-up"></i> Unfavorite
           </button>
           <% } else if (!isFavoriteUser) { %>
-          <p>This school is not your favorite</p>
           <button class="btn btn-sm btn-primary">
             <i class="fas fa-thumbs-up"></i> Favorite
           </button>
@@ -33,13 +31,11 @@
         <%- include("../partials/modal/favoriteUsers") %>
         <!-- Favorite Modal End-->
 
-        <p class="h4">Rating</p>
-        <% if (!school.averageRating) { %>
-        <p>
-          No Rating Yet
-        </p>
-        <% } else { %>
-        <p>
+        <p class="h5">
+          Rating: 
+          <% if (!school.averageRating) { %>
+          <span>No Rating Yet</span>
+          <% } else { %>
           <span>
             <i class="fas fa-star <% if (school.averageRating >= 1.0) { %> checked <% } %>"></i>
             <i class="fas fa-star <% if (school.averageRating >= 1.5) { %> checked <% } %>"></i>
@@ -48,12 +44,12 @@
             <i class="fas fa-star <% if (school.averageRating >= 4.5) { %> checked <% } %>"></i>
           </span>
           (<%= school.averageRating.toFixed(2) %>)
+          <% } %>
         </p>
-        <% } %>
 
         <% if (currentUser && currentUser._id.equals(school.user) || (currentUser && currentUser.isAdmin)) { %>
         <a
-          class="btn btn-warning"
+          class="btn btn-sm btn-warning"
           href="/schools/<%= school.slug %>/edit"
           role="button"
         >
@@ -70,7 +66,7 @@
     <!-- Main Information End -->
     
     <!-- Reviews -->
-    <div class="card">
+    <div class="card mb-2">
       <div class="card-body">
         <!-- New Review -->
         <%- include("./schoolPartials/newReview") %>
@@ -96,16 +92,12 @@
           <% popularSchools.forEach(popularSchool => { %>
           <div class="col-md-12">
             <a href="/schools/<%= popularSchool.slug %>" class="card-link">
-              <div class="card mb-2">
+              <div class="card shadow mb-2">
                 <img src="/<%= popularSchool.image %>" class="card-img-top" alt="No Image">
                 <div class="card-body">
-                  <p class="card-title">
-                    <%= popularSchool.name %>
-                  </p>
+                  <p><%= popularSchool.name %></p>
                   <% if (!popularSchool.averageRating) { %>
-                  <p>
-                    No Rating Yet
-                  </p>
+                  <p class="font-italic">No Rating Yet</p>
                   <% } else { %>
                   <p>
                     <span>
@@ -140,16 +132,12 @@
           <% newArrivalSchools.forEach(newArrivalSchool => { %>
           <div class="col-md-12">
             <a href="#" class="card-link">
-              <div class="card mb-2">
+              <div class="card shadow mb-2">
                 <img src="/<%= newArrivalSchool.image %>" class="card-img-top" alt="No Image">
                 <div class="card-body">
-                  <p class="card-title">
-                    <%= newArrivalSchool.name %>
-                  </p>
+                  <p><%= newArrivalSchool.name %></p>
                   <% if (!newArrivalSchool.averageRating) { %>
-                  <p>
-                    No Rating Yet
-                  </p>
+                  <p class="font-italic">No Rating Yet</p>
                   <% } else { %>
                   <p>
                     <span>

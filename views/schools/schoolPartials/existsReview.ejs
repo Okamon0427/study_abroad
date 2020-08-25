@@ -1,16 +1,16 @@
 <div class="row">
   <div class="col-md-12">
     <% reviews.forEach(review => { %>
-    <div class="card">
+    <div class="card shadow mb-2">
       <div class="card-body">
         <div class="row">
-          <div class="col-6 col-md-4">
+          <div class="col-4">
             <img src="/<%= review.user.image %>" class="card-img-top" alt="No Image">
-            <p><%= review.user.name %></p>
+            <p class="my-2 text-center"><%= review.user.name %></p>
             
           </div>
-          <div class="col-12 col-md-8">
-            <h3><%= review.title %></h3>
+          <div class="col-8">
+            <h5><%= review.title %></h5>
             <span>
               <i class="fas fa-star <% if (review.rating >= 1.0) { %> checked <% } %>"></i>
               <i class="fas fa-star <% if (review.rating >= 1.5) { %> checked <% } %>"></i>
@@ -25,7 +25,7 @@
           <% if (currentUser && currentUser._id.equals(review.user._id) || (currentUser && currentUser.isAdmin)) { %>
           <!-- Edit Review Toggle -->
           <a
-            class="btn btn-warning"
+            class="btn btn-sm btn-warning"
             role="button"
             data-toggle="collapse"
             href="#collapseEditReview<%= review.user._id %>"
@@ -43,7 +43,7 @@
             data-toggle="modal"
             data-target="#deleteReview"
           >
-            <button class="btn btn-danger">
+            <button class="btn btn-sm btn-danger">
               <i class="fas fa-trash-alt"></i> DELETE
             </button>
           </a>

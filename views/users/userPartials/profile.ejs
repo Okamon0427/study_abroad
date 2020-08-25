@@ -1,10 +1,20 @@
 <div class="card mb-2">
   <div class="card-body">
-    <h5 class="card-title" style="text-align: center;"><%= user.name %></h5>
-    <img class="card-img-top img-thumbnail" src="/<%= user.image %>" alt="No Image">
-    <p class="card-text"><%= user.studentType %></p>
-    <p class="card-text"><%= user.introduction %></p>
-    <p style="text-align: center;"><%= targetUsers.length %> Following | <%= user.followed.length %> Followers</p>
+    <h5 class="card-title text-center">Profile</h5>
+    <div class="row">
+      <div class="col-4 col-md-12">
+        <img class="card-img-top img-thumbnail" src="/<%= user.image %>" alt="No Image">
+      </div>
+      <div class="col-8 col-md-12">
+        <h5 class="card-text"><%= user.name %></h5>
+        <p class="card-text font-italic"><%= user.studentType %></p>
+        <p class="card-text my-2" ><%= user.introduction %></p>
+      </div>
+    </div>
+    <hr>
+    <p class="text-center my-2">
+      <%= targetUsers.length %> Following | <%= user.followed.length %> Followers
+    </p>
 
     <!-- Edit Account -->
     <% if (mypage || (currentUser && currentUser.isAdmin)) { %>
@@ -55,15 +65,17 @@
     <!-- Follow -->
     <% if (!mypage) { %> 
     <form action="/users/<%= user.slug %>/follow" method="POST">
-      <% if (isFollowing) { %>
-      <button class="btn btn-sm btn-secondary">
-        Unfollow
-      </button>
-      <% } else { %>
-      <button class="btn btn-sm btn-primary">
-        Follow
-      </button>
-      <% } %>
+      <div class="text-center">
+        <% if (isFollowing) { %>
+        <button class="btn btn-sm btn-secondary">
+          Unfollow
+        </button>
+        <% } else { %>
+        <button class="btn btn-sm btn-primary">
+          Follow
+        </button>
+        <% } %>
+      </div>
     </form>
     <% } %>
     <!-- Follow End -->
