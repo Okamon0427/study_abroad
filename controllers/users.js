@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 
 const User = require("../models/User");
 const School = require('../models/School');
+const Review = require('../models/Review');
 const CustomError = require('../utils/CustomError');
 const { deleteFile } = require('../utils/deleteFile');
 
@@ -21,9 +22,13 @@ exports.getUser = async (req, res, next) => {
     const schools =
       await School
         .find({ likes: { $in: [user._id] } })
-        .limit(3)
         .populate('reviews')
         .populate('likes');
+
+    const reviews =
+      await Review
+        .find({ user: user._id })
+        .populate('school');
 
     // change Follow Button if the user who is logging in follows target user
     const isFollowing = checkIsFollowing(req, user);
@@ -32,6 +37,7 @@ exports.getUser = async (req, res, next) => {
       title,
       user,
       schools,
+      reviews,
       mypage,
       isFollowing
     });
@@ -101,7 +107,6 @@ exports.updateUser = async (req, res, next) => {
       }
 
       user.name = req.body.name;
-      user.english = req.body.english;
       user.introduction = req.body.introduction;
       user.studentType = req.body.studentType;
     }

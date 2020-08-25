@@ -13,7 +13,7 @@
         role="tab"
         aria-controls="favorited"
       >
-      <i class="fas fa-thumbs-up"></i> Favorited
+        <i class="fas fa-thumbs-up"></i> Favorited
       </a>
       <!-- Favorited School List End -->
 
@@ -26,7 +26,7 @@
         role="tab"
         aria-controls="rated"
       >
-      <i class="fas fa-star checked"></i> Rated
+        <i class="fas fa-star checked"></i> Rated
       </a>
       <!-- Rated School List End -->
 
@@ -39,7 +39,7 @@
         role="tab"
         aria-controls="reviewed"
       >
-      <i class="fas fa-comment-dots"></i> Reviewed
+        <i class="fas fa-comment-dots"></i> Reviewed
       </a>
       <!-- reviewed School List End -->
 
@@ -68,46 +68,52 @@
         role="tabpanel"
         aria-labelledby="list-favorited-list"
       >
-      <% favoritedSchools.forEach(favoritedSchool => { %>
-        <a href="/schools/<%= favoritedSchool.slug %>" class="card-link">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-6 col-md-4">
-                  <img src="/<%= favoritedSchool.image %>" class="card-img-top" alt="No Image">            
-                </div>
-                <div class="col-12 col-md-8">
-                  <h5><%= favoritedSchool.name %></h5>
-                  <% if (!favoritedSchool.averageRating) { %>
-                  <p>
-                    No Rating Yet
-                  </p>
-                  <% } else { %>
-                  <p>
-                    <span>
-                      <i class="fas fa-star <% if (favoritedSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (favoritedSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (favoritedSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (favoritedSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (favoritedSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
-                    </span>
-                    (<%= favoritedSchool.averageRating.toFixed(2) %>)
-                  </p>
-                  <% } %>
-                  <span><%= moment(favoritedSchool.createdAt).format('YYYY-MM-DD') %></span>
-                  <br>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-thumbs-up"></i> Favorite: <%= favoritedSchool.likes.length %>
-                  </span>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-comment-dots"></i> Review: <%= favoritedSchool.reviews.length %>
-                  </span>
+        <div class="card text-center mb-2">
+          <div class="card-body">
+            <h5 class="card-title">Most Favorited School</h5>
+            <hr>
+            <% favoritedSchools.forEach(favoritedSchool => { %>
+            <a href="/schools/<%= favoritedSchool.slug %>" class="card-link">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6 col-md-4">
+                      <img src="/<%= favoritedSchool.image %>" class="card-img-top" alt="No Image">            
+                    </div>
+                    <div class="col-12 col-md-8">
+                      <h5><%= favoritedSchool.name %></h5>
+                      <% if (!favoritedSchool.averageRating) { %>
+                      <p>
+                        No Rating Yet
+                      </p>
+                      <% } else { %>
+                      <p>
+                        <span>
+                          <i class="fas fa-star <% if (favoritedSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (favoritedSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (favoritedSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (favoritedSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (favoritedSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
+                        </span>
+                        (<%= favoritedSchool.averageRating.toFixed(2) %>)
+                      </p>
+                      <% } %>
+                      <span><%= moment(favoritedSchool.createdAt).format('YYYY-MM-DD') %></span>
+                      <br>
+                      <span class="badge badge-secondary mb-2">
+                        <i class="fas fa-thumbs-up"></i> Favorite: <%= favoritedSchool.likes.length %>
+                      </span>
+                      <span class="badge badge-secondary mb-2">
+                        <i class="fas fa-comment-dots"></i> Review: <%= favoritedSchool.reviews.length %>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </a>
+            <% }) %>
           </div>
-        </a>
-      <% }) %>
+        </div>
       </div>
       <!-- Favorited School End -->
 
@@ -118,46 +124,52 @@
         role="tabpanel"
         aria-labelledby="list-rated-list"
       >
-      <% ratedSchools.forEach(ratedSchool => { %>
-        <a href="/schools/<%= ratedSchool.slug %>" class="card-link">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-6 col-md-4">
-                  <img src="/<%= ratedSchool.image %>" class="card-img-top" alt="No Image">            
-                </div>
-                <div class="col-12 col-md-8">
-                  <h5><%= ratedSchool.name %></h5>
-                  <% if (!ratedSchool.averageRating) { %>
-                  <p>
-                    No Rating Yet
-                  </p>
-                  <% } else { %>
-                  <p>
-                    <span>
-                      <i class="fas fa-star <% if (ratedSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (ratedSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (ratedSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (ratedSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (ratedSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
-                    </span>
-                    (<%= ratedSchool.averageRating.toFixed(2) %>)
-                  </p>
-                  <% } %>
-                  <span><%= moment(ratedSchool.createdAt).format('YYYY-MM-DD') %></span>
-                  <br>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-thumbs-up"></i> Favorite: <%= ratedSchool.likes.length %>
-                  </span>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-comment-dots"></i> Review: <%= ratedSchool.reviews.length %>
-                  </span>
+        <div class="card text-center mb-2">
+          <div class="card-body">
+            <h5 class="card-title">Most Rated School</h5>
+            <hr>
+            <% ratedSchools.forEach(ratedSchool => { %>
+            <a href="/schools/<%= ratedSchool.slug %>" class="card-link">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6 col-md-4">
+                      <img src="/<%= ratedSchool.image %>" class="card-img-top" alt="No Image">            
+                    </div>
+                    <div class="col-12 col-md-8">
+                      <h5><%= ratedSchool.name %></h5>
+                      <% if (!ratedSchool.averageRating) { %>
+                      <p>
+                        No Rating Yet
+                      </p>
+                      <% } else { %>
+                      <p>
+                        <span>
+                          <i class="fas fa-star <% if (ratedSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (ratedSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (ratedSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (ratedSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (ratedSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
+                        </span>
+                        (<%= ratedSchool.averageRating.toFixed(2) %>)
+                      </p>
+                      <% } %>
+                      <span><%= moment(ratedSchool.createdAt).format('YYYY-MM-DD') %></span>
+                      <br>
+                      <span class="badge badge-secondary mb-2">
+                        <i class="fas fa-thumbs-up"></i> Favorite: <%= ratedSchool.likes.length %>
+                      </span>
+                      <span class="badge badge-secondary mb-2">
+                        <i class="fas fa-comment-dots"></i> Review: <%= ratedSchool.reviews.length %>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </a>
+            <% }) %>
           </div>
-        </a>
-      <% }) %>
+        </div>
       </div>
       <!-- Rated School End -->
 
@@ -168,46 +180,52 @@
         role="tabpanel"
         aria-labelledby="list-reviewed-list"
       >
-      <% reviewedSchools.forEach(reviewedSchool => { %>
-        <a href="/schools/<%= reviewedSchool.slug %>" class="card-link">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-6 col-md-4">
-                  <img src="/<%= reviewedSchool.image %>" class="card-img-top" alt="No Image">            
-                </div>
-                <div class="col-12 col-md-8">
-                  <h5><%= reviewedSchool.name %></h5>
-                  <% if (!reviewedSchool.averageRating) { %>
-                  <p>
-                    No Rating Yet
-                  </p>
-                  <% } else { %>
-                  <p>
-                    <span>
-                      <i class="fas fa-star <% if (reviewedSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (reviewedSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (reviewedSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (reviewedSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (reviewedSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
-                    </span>
-                    (<%= reviewedSchool.averageRating.toFixed(2) %>)
-                  </p>
-                  <% } %>
-                  <span><%= moment(reviewedSchool.createdAt).format('YYYY-MM-DD') %></span>
-                  <br>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-thumbs-up"></i> Favorite: <%= reviewedSchool.likes.length %>
-                  </span>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-comment-dots"></i> Review: <%= reviewedSchool.reviews.length %>
-                  </span>
+        <div class="card text-center mb-2">
+          <div class="card-body">
+            <h5 class="card-title">Most Reviewed School</h5>
+            <hr>
+            <% reviewedSchools.forEach(reviewedSchool => { %>
+            <a href="/schools/<%= reviewedSchool.slug %>" class="card-link">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6 col-md-4">
+                      <img src="/<%= reviewedSchool.image %>" class="card-img-top" alt="No Image">            
+                    </div>
+                    <div class="col-12 col-md-8">
+                      <h5><%= reviewedSchool.name %></h5>
+                      <% if (!reviewedSchool.averageRating) { %>
+                      <p>
+                        No Rating Yet
+                      </p>
+                      <% } else { %>
+                      <p>
+                        <span>
+                          <i class="fas fa-star <% if (reviewedSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (reviewedSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (reviewedSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (reviewedSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (reviewedSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
+                        </span>
+                        (<%= reviewedSchool.averageRating.toFixed(2) %>)
+                      </p>
+                      <% } %>
+                      <span><%= moment(reviewedSchool.createdAt).format('YYYY-MM-DD') %></span>
+                      <br>
+                      <span class="badge badge-secondary mb-2">
+                        <i class="fas fa-thumbs-up"></i> Favorite: <%= reviewedSchool.likes.length %>
+                      </span>
+                      <span class="badge badge-secondary mb-2">
+                        <i class="fas fa-comment-dots"></i> Review: <%= reviewedSchool.reviews.length %>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </a>
+          <% }) %>
           </div>
-        </a>
-      <% }) %>
+        </div>
       </div>
       <!-- Reviewed School -->
 
@@ -218,46 +236,52 @@
         role="tabpanel"
         aria-labelledby="list-latest-list"
       >
-      <% latestSchools.forEach(latestSchool => { %>
-        <a href="/schools/<%= latestSchool.slug %>" class="card-link">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-6 col-md-4">
-                  <img src="/<%= latestSchool.image %>" class="card-img-top" alt="No Image">            
-                </div>
-                <div class="col-12 col-md-8">
-                  <h5><%= latestSchool.name %></h5>
-                  <% if (!latestSchool.averageRating) { %>
-                  <p>
-                    No Rating Yet
-                  </p>
-                  <% } else { %>
-                  <p>
-                    <span>
-                      <i class="fas fa-star <% if (latestSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (latestSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (latestSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (latestSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (latestSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
-                    </span>
-                    (<%= latestSchool.averageRating.toFixed(2) %>)
-                  </p>
-                  <% } %>
-                  <span><%= moment(latestSchool.createdAt).format('YYYY-MM-DD') %></span>
-                  <br>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-thumbs-up"></i> Like: <%= latestSchool.likes.length %>
-                  </span>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-comment-dots"></i> Review: <%= latestSchool.reviews.length %>
-                  </span>
+        <div class="card text-center mb-2">
+          <div class="card-body">
+            <h5 class="card-title">Latest Registered School</h5>
+            <hr>
+            <% latestSchools.forEach(latestSchool => { %>
+            <a href="/schools/<%= latestSchool.slug %>" class="card-link">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6 col-md-4">
+                      <img src="/<%= latestSchool.image %>" class="card-img-top" alt="No Image">            
+                    </div>
+                    <div class="col-12 col-md-8">
+                      <h5><%= latestSchool.name %></h5>
+                      <% if (!latestSchool.averageRating) { %>
+                      <p>
+                        No Rating Yet
+                      </p>
+                      <% } else { %>
+                      <p>
+                        <span>
+                          <i class="fas fa-star <% if (latestSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (latestSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (latestSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (latestSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
+                          <i class="fas fa-star <% if (latestSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
+                        </span>
+                        (<%= latestSchool.averageRating.toFixed(2) %>)
+                      </p>
+                      <% } %>
+                      <span><%= moment(latestSchool.createdAt).format('YYYY-MM-DD') %></span>
+                      <br>
+                      <span class="badge badge-secondary mb-2">
+                        <i class="fas fa-thumbs-up"></i> Like: <%= latestSchool.likes.length %>
+                      </span>
+                      <span class="badge badge-secondary mb-2">
+                        <i class="fas fa-comment-dots"></i> Review: <%= latestSchool.reviews.length %>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </a>
+            <% }) %>
           </div>
-        </a>
-      <% }) %>
+        </div>
       </div>
       <!-- Latest School End -->
 

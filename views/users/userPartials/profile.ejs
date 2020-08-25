@@ -1,0 +1,70 @@
+<div class="card mb-2">
+  <div class="card-body">
+    <h5 class="card-title" style="text-align: center;"><%= user.name %></h5>
+    <img class="card-img-top img-thumbnail" src="/<%= user.image %>" alt="No Image">
+    <span class="card-text"><%= user.studentType %></span>
+    <p class="card-text"><%= user.introduction %></p>
+
+    <!-- Edit Account -->
+    <% if (mypage || (currentUser && currentUser.isAdmin)) { %>
+    <a
+      class="btn btn-warning"
+      role="button"
+      data-toggle="collapse"
+      href="#collapseUserEdit"
+      aria-expanded="false"
+      aria-controls="collapseUserEdit"
+    >
+      <i class="fas fa-edit"></i> Edit
+    </a>
+
+    <div class="collapse" id="collapseUserEdit">
+      <div class="text-center">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <a href="/users/<%= user.slug %>/edit?content=profile" class="card-link">
+              <i class="fas fa-user"></i> Profile
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a href="/users/<%= user.slug %>/edit?content=email" class="card-link">
+              <i class="fas fa-envelope"></i> Email
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a href="/users/<%= user.slug %>/edit?content=password" class="card-link">
+              <i class="fas fa-unlock-alt"></i> Password
+            </a>
+          </li>
+        </ul>
+
+        <!-- Delete User Modal -->
+        <% if (!currentUser.isAdmin) { %>
+        <%- include("../../partials/modal/deleteUser") %>
+        <% } %>
+        <!-- Delete User Modal End-->
+
+      </div>
+    </div>
+    <% } %>
+    <!-- Edit Account End -->
+
+    <!-- Follow -->
+    <% if (!mypage) { %> 
+    <form action="/users/<%= user.slug %>/follow" method="POST">
+      <% if (isFollowing) { %>
+      <button class="btn btn-sm btn-secondary">
+        Unfollow
+      </button>
+      <% } else { %>
+      <button class="btn btn-sm btn-primary">
+        Follow
+      </button>
+      <% } %>
+    </form>
+    <span>followed by <%= user.followed.length %> users</span>
+    <% } %>
+    <!-- Follow End -->
+
+  </div>
+</div>
