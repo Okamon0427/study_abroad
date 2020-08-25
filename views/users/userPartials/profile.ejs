@@ -2,21 +2,24 @@
   <div class="card-body">
     <h5 class="card-title" style="text-align: center;"><%= user.name %></h5>
     <img class="card-img-top img-thumbnail" src="/<%= user.image %>" alt="No Image">
-    <span class="card-text"><%= user.studentType %></span>
+    <p class="card-text"><%= user.studentType %></p>
     <p class="card-text"><%= user.introduction %></p>
+    <p style="text-align: center;"><%= targetUsers.length %> Following | <%= user.followed.length %> Followers</p>
 
     <!-- Edit Account -->
     <% if (mypage || (currentUser && currentUser.isAdmin)) { %>
-    <a
-      class="btn btn-warning"
-      role="button"
-      data-toggle="collapse"
-      href="#collapseUserEdit"
-      aria-expanded="false"
-      aria-controls="collapseUserEdit"
-    >
-      <i class="fas fa-edit"></i> Edit
-    </a>
+    <div style="text-align: center;">
+      <button
+        class="btn btn-sm btn-warning"
+        role="button"
+        data-toggle="collapse"
+        href="#collapseUserEdit"
+        aria-expanded="false"
+        aria-controls="collapseUserEdit"
+      >
+        <i class="fas fa-edit"></i> Edit
+      </button>
+    </div>
 
     <div class="collapse" id="collapseUserEdit">
       <div class="text-center">
@@ -62,7 +65,6 @@
       </button>
       <% } %>
     </form>
-    <span>followed by <%= user.followed.length %> users</span>
     <% } %>
     <!-- Follow End -->
 

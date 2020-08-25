@@ -9,9 +9,12 @@ const { deleteFile } = require('../utils/deleteFile');
 
 exports.getUser = async (req, res, next) => {
   try {
-    const user = await User.findOne({ slug: req.params.slug });
+    const user = await User.findOne({ slug: req.params.slug }).populate('followed');
     let mypage = false;
     let title = `${user.name}'s Page`;
+
+    // the user above is following targetUsers
+    const targetUsers = await User.find({ followed: { $in: [user._id] } });
 
     // User page becomes My Page if login user is watching his/herself page
     if (req.user && user._id.toString() === req.user._id.toString()) {
@@ -36,6 +39,7 @@ exports.getUser = async (req, res, next) => {
     res.render('users/user', {
       title,
       user,
+      targetUsers,
       schools,
       reviews,
       mypage,
@@ -51,10 +55,14 @@ exports.editUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ slug: req.params.slug });
 
+    // the user above is following targetUsers
+    const targetUsers = await User.find({ followed: { $in: [user._id] } });
+
     res.render('users/edit', {
       title: 'My Page',
       formContent: req.query.content,
       user,
+      targetUsers,
       mypage: true,
     });
     
