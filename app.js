@@ -14,6 +14,7 @@ const rankingRoutes = require('./routes/ranking');
 const userRoutes = require('./routes/users');
 const reviewRoutes = require('./routes/reviews');
 const authRoutes = require('./routes/auth');
+const otherRoutes = require('./routes/others');
 const CustomError = require('./utils/CustomError');
 const authenticate = require('./config/passport');
 const database = require('./config/database');
@@ -63,6 +64,7 @@ app.use('/schools', reviewRoutes);
 app.use('/ranking', rankingRoutes);
 app.use('/users', userRoutes);
 app.use(authRoutes);
+app.use(otherRoutes);
 
 app.use((req, res, next) => {
   const error = new CustomError('Could not find this route.', 404);

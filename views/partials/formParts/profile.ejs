@@ -12,6 +12,20 @@
 </div>
 <% } %>
 
+<% if (formContent === 'inquiry') { %>
+<div class="form-group">
+  <label for="name">Your Name (required)</label>
+  <input
+    type="text"
+    class="form-control"
+    id="name"
+    name="name"
+    placeholder="Micheal Jackson"
+    value="<%= typeof name != 'undefined' ? name : '' %>"
+  >
+</div>
+<% } %>
+
 <% if (formContent === 'profile') { %>
 <div class="form-group">
   <label for="introduction">Introduction</label>

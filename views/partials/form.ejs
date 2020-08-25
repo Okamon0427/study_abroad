@@ -38,6 +38,10 @@
       <% if (formContent === 'editSchool') { %> 
       Edit School
       <% } %>
+
+      <% if (formContent === 'inquiry') { %> 
+      <i class="fas fa-question-circle"></i> Inquiry
+      <% } %>
     </h1>
     <hr>
     <!-- Form Title End -->
@@ -69,6 +73,10 @@
 
     <% if (formContent === 'editSchool') { %> 
     <form action="/schools/<%= school.slug %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <% } %>
+
+    <% if (formContent === 'inquiry') { %> 
+    <form action="/inquiry" method="POST">
     <% } %>
     <!-- Form Action -->
 
@@ -106,6 +114,12 @@
 
       <% if (formContent === 'addSchool' || formContent === 'editSchool') { %>
       <%- include("./formParts/school") %>
+      <% } %>
+
+      <% if (formContent === 'inquiry') { %>
+      <%- include("./formParts/profile") %>
+      <%- include("./formParts/email") %>
+      <%- include("./formParts/other") %>
       <% } %>
       
       <% if (formContent === 'profile' || formContent === 'email' || formContent === 'password' ) { %> 
