@@ -12,10 +12,10 @@
           <a href="/schools/<%= school.slug %>" class="card-link">
             <div class="card-body">
               <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-sm-4">
                   <img src="/<%= school.image %>" class="card-img-top" alt="No Image">            
                 </div>
-                <div class="col-8">
+                <div class="col-12 col-sm-8 text-center text-sm-left">
                   <h5><%= school.name %></h5>
                   <% if (!school.averageRating) { %>
                   <p>
