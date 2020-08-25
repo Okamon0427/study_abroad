@@ -1,0 +1,39 @@
+<div class="card text-center mb-2">
+  <div class="card-body">
+    <h5 class="card-title">New Arrival Schools</h5>
+    <hr>
+    <div class="row">
+      <% newArrivalSchools.forEach(newArrivalSchool => { %>
+      <div class="col-md-12">
+        <a href="#" class="card-link">
+          <div class="card shadow mb-2">
+            <img src="/<%= newArrivalSchool.image %>" class="card-img-top" alt="No Image">
+            <div class="card-body">
+              <p><%= newArrivalSchool.name %></p>
+              <% if (!newArrivalSchool.averageRating) { %>
+              <p class="font-italic">No Rating Yet</p>
+              <% } else { %>
+              <p>
+                <span>
+                  <i class="fas fa-star <% if (newArrivalSchool.averageRating>= 1.0) { %> checked <% } %>"></i>
+                  <i class="fas fa-star <% if (newArrivalSchool.averageRating>= 1.5) { %> checked <% } %>"></i>
+                  <i class="fas fa-star <% if (newArrivalSchool.averageRating>= 2.5) { %> checked <% } %>"></i>
+                  <i class="fas fa-star <% if (newArrivalSchool.averageRating>= 3.5) { %> checked <% } %>"></i>
+                  <i class="fas fa-star <% if (newArrivalSchool.averageRating>= 4.5) { %> checked <% } %>"></i>
+                </span>
+              </p>
+              <% } %>
+              <span class="badge badge-secondary mb-2">
+                <i class="fas fa-thumbs-up"></i> Like: <%= newArrivalSchool.likes.length %>
+              </span>
+              <span class="badge badge-secondary mb-2">
+                <i class="fas fa-comment-dots"></i> Review: <%= newArrivalSchool.reviews.length %>
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</div>

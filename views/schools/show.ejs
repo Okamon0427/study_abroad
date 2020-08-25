@@ -12,25 +12,8 @@
         <img class="card-img-top" src="/<%= school.image %>" alt="No Image">
         <hr>
         <p class="h4"><%= school.country %></p>
-        
-        <!-- Favorite Button -->
-        <form action="/schools/<%= school.slug %>/favorite" method="POST">
-          <% if (isFavoriteUser) { %>
-          <button class="btn btn-sm btn-secondary">
-            <i class="fas fa-thumbs-up"></i> Unfavorite
-          </button>
-          <% } else if (!isFavoriteUser) { %>
-          <button class="btn btn-sm btn-primary">
-            <i class="fas fa-thumbs-up"></i> Favorite
-          </button>
-          <% } %>
-        </form>
-        <!-- Favorite Button End -->
 
-        <!-- Favorite Modal -->
-        <%- include("../partials/modal/favoriteUsers") %>
-        <!-- Favorite Modal End-->
-
+        <!-- Average Rating -->
         <p class="h5">
           Rating: 
           <% if (!school.averageRating) { %>
@@ -46,7 +29,26 @@
           (<%= school.averageRating.toFixed(2) %>)
           <% } %>
         </p>
+        <!-- Average Rating End -->
+        
+        <!-- Favorite -->
+        <form action="/schools/<%= school.slug %>/favorite" method="POST">
+          <% if (isFavoriteUser) { %>
+          <button class="btn btn-sm btn-secondary">
+            <i class="fas fa-thumbs-up"></i> Unfavorite
+          </button>
+          <% } else if (!isFavoriteUser) { %>
+          <button class="btn btn-sm btn-primary">
+            <i class="fas fa-thumbs-up"></i> Favorite
+          </button>
+          <% } %>
+        </form>
+        <%- include("../partials/modal/favoriteUsers") %>
+        <!-- Favorite End-->
+        
+        <br>
 
+        <!-- School Edit -->
         <% if (currentUser && currentUser._id.equals(school.user) || (currentUser && currentUser.isAdmin)) { %>
         <a
           class="btn btn-sm btn-warning"
@@ -61,6 +63,8 @@
         <!-- Delete School Modal Trigger End -->
 
         <% } %>
+        <!-- School Edit End -->
+
       </div>
     </div>
     <!-- Main Information End -->
@@ -84,93 +88,11 @@
 
   <!-- Right Column -->
   <div class="col-md-3 col-sm-12">
-    <div class="card text-center mb-2">
-      <div class="card-body">
-        <h5 class="card-title">Popular Schools</h5>
-        <hr>
-        <div class="row">
-          <% popularSchools.forEach(popularSchool => { %>
-          <div class="col-md-12">
-            <a href="/schools/<%= popularSchool.slug %>" class="card-link">
-              <div class="card shadow mb-2">
-                <img src="/<%= popularSchool.image %>" class="card-img-top" alt="No Image">
-                <div class="card-body">
-                  <p><%= popularSchool.name %></p>
-                  <% if (!popularSchool.averageRating) { %>
-                  <p class="font-italic">No Rating Yet</p>
-                  <% } else { %>
-                  <p>
-                    <span>
-                      <i class="fas fa-star <% if (popularSchool.averageRating>= 1.0) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (popularSchool.averageRating>= 1.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (popularSchool.averageRating>= 2.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (popularSchool.averageRating>= 3.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (popularSchool.averageRating>= 4.5) { %> checked <% } %>"></i>
-                    </span>
-                  </p>
-                  <% } %>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-thumbs-up"></i> Like: <%= popularSchool.likes.length %>
-                  </span>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-comment-dots"></i> Review: <%= popularSchool.reviews.length %>
-                  </span>
-                </div>
-              </div>
-            </a>
-          </div>
-          <% }) %>
-        </div>
-      </div>
-    </div>
-
-    <div class="card text-center mb-2">
-      <div class="card-body">
-        <h5 class="card-title">New Arrivai Schools</h5>
-        <hr>
-        <div class="row">
-          <% newArrivalSchools.forEach(newArrivalSchool => { %>
-          <div class="col-md-12">
-            <a href="#" class="card-link">
-              <div class="card shadow mb-2">
-                <img src="/<%= newArrivalSchool.image %>" class="card-img-top" alt="No Image">
-                <div class="card-body">
-                  <p><%= newArrivalSchool.name %></p>
-                  <% if (!newArrivalSchool.averageRating) { %>
-                  <p class="font-italic">No Rating Yet</p>
-                  <% } else { %>
-                  <p>
-                    <span>
-                      <i class="fas fa-star <% if (newArrivalSchool.averageRating>= 1.0) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (newArrivalSchool.averageRating>= 1.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (newArrivalSchool.averageRating>= 2.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (newArrivalSchool.averageRating>= 3.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (newArrivalSchool.averageRating>= 4.5) { %> checked <% } %>"></i>
-                    </span>
-                  </p>
-                  <% } %>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-thumbs-up"></i> Like: <%= newArrivalSchool.likes.length %>
-                  </span>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-comment-dots"></i> Review: <%= newArrivalSchool.reviews.length %>
-                  </span>
-                </div>
-              </div>
-            </a>
-          </div>
-          <% }) %>
-        </div>
-      </div>
-    </div>
-
-    <div class="card text-center">
-      <div class="card-body">
-        <h5 class="card-title">Schools in the same country</h5>
-      </div>
-    </div>
+  <%- include("./schoolPartials/popular") %>
+  <%- include("./schoolPartials/newArrival") %>
   </div>
   <!-- Right Column End -->
+
 </div>
 
 <%- include("../partials/footer") %>
