@@ -53,7 +53,7 @@ exports.createReview = async (req, res, next) => {
 
 exports.updateReview = async (req, res, next) => {
   try {
-    const school = await School.findOne({ slug: req.params.slug });
+    const school = await School.findOne({ slug: req.params.slug }).populate('reviews');
     const reviews = await Review.find({ school: school._id });
     
     const errors = validationResult(req);
@@ -61,7 +61,7 @@ exports.updateReview = async (req, res, next) => {
 
       // check the user who is logging in has favorite of this school (true or false)
       const isFavoriteUser = checkIsFavoriteUser(req, school);
-
+      
       // check the user who is logging in has already written Review to the School
       const isUserHasReview = checkIsUserHasReview(req, reviews);
 
@@ -70,10 +70,27 @@ exports.updateReview = async (req, res, next) => {
         .find({ school: school._id })
         .limit(3)
         .populate('user');
+
+      const popularSchools =
+        await School
+          .find()
+          .sort({ likes: -1 })
+          .populate('reviews')
+          .limit(3);
+      
+      const newArrivalSchools =
+        await School
+          .find()
+          .sort({ createdAt: -1 })
+          .populate('reviews')
+          .limit(3);
+
       return res.status(422).render('schools/show', {
         error: errors.array()[0].msg,
         title: school.name,
         school,
+        popularSchools,
+        newArrivalSchools,
         isFavoriteUser,
         isUserHasReview,
         reviews: limitedReviews

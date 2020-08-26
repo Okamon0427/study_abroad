@@ -148,8 +148,8 @@ exports.editSchool = async (req, res, next) => {
 };
 
 exports.updateSchool = async (req, res, next) => {
-  const _id = req.params.schoolId
-  let school = { ...req.body, _id }
+  const _id = req.params.schoolId;
+  let school = { ...req.body, _id };
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {

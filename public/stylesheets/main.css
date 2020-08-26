@@ -15,6 +15,10 @@ p {
   margin-bottom: 0;
 }
 
+div.card-body {
+  padding: 10px;
+}
+
 footer {
   margin-top: 28px;
   background: #f5f5f5;
