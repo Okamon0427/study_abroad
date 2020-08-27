@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const geocoder = require('../utils/geocoder');
 
 const SchoolSchema = new mongoose.Schema({
   name: {
@@ -9,7 +10,21 @@ const SchoolSchema = new mongoose.Schema({
   },
   country: {
     type: String,
-    retuired: true
+    required: true
+  },
+  address: {
+    type: String
+  },
+  location: {
+    coordinates: {
+      type: [Number]
+    },
+    formattedAddress: String,
+    street: String,
+    city: String,
+    state: String,
+    country: String,
+    zipcode: String,
   },
   image: {
     type: String,
@@ -63,6 +78,23 @@ SchoolSchema.pre('save', function(next) {
       lower: true
     }
   );
+  next();
+});
+
+SchoolSchema.pre('save', async function(next) {
+  const res = await geocoder.geocode(this.address);
+  
+  this.location = {
+    coordinates: [res[0].longitude, res[0].latitude],
+    formattedAddress: res[0].formattedAddress,
+    street: res[0].streetName,
+    city: res[0].city,
+    state: res[0].stateCode,
+    country: res[0].countryCode,
+    zipcode: res[0].zipcode,
+  }
+  // use formattedAddress instead of address
+  this.address = undefined;
   next();
 });
 
