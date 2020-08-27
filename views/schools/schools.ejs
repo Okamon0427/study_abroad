@@ -13,6 +13,8 @@
         <div class="card-body">
           <img class="card-img-top" src="<%= school.image %>" alt="No Image">
           <p><%= school.name %></p>
+          <span class="badge badge-pill badge-info"><%= school.location.country %></span>
+          <span class="badge badge-pill badge-secondary"><%= school.location.city %></span>
           <% if (!school.averageRating) { %>
           <p>No Rating Yet</p>
           <% } else { %>
