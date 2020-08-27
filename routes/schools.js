@@ -27,10 +27,10 @@ router.post(
       .not()
       .isEmpty()
       .withMessage('Name should not be empty'),
-    check('country')
+    check('address')
       .not()
       .isEmpty()
-      .withMessage('Country should not be empty'),
+      .withMessage('Address should not be empty'),
   ],
   createSchool
 );
@@ -48,10 +48,10 @@ router.put(
       .not()
       .isEmpty()
       .withMessage('Name should not be empty'),
-    check('country')
+    check('address')
       .not()
       .isEmpty()
-      .withMessage('Country should not be empty'),
+      .withMessage('Address should not be empty'),
   ],
   updateSchool
 );

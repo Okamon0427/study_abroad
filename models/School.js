@@ -8,12 +8,9 @@ const SchoolSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  country: {
+  address: {
     type: String,
     required: true
-  },
-  address: {
-    type: String
   },
   location: {
     coordinates: {

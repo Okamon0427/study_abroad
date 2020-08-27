@@ -172,7 +172,7 @@ exports.updateSchool = async (req, res, next) => {
     }
 
     school.name = req.body.name;
-    school.country = req.body.country;
+    school.address = req.body.address;
     school.image = req.body.image;
     school.type = req.body.type;
     school.website = req.body.website;
