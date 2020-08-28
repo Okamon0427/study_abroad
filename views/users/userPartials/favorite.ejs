@@ -4,49 +4,45 @@
   role="tabpanel"
   aria-labelledby="list-favorited-list"
 >
-  <div class="card mb-2">
-    <div class="card-body">
-      <h5 class="card-title text-center">Favorite School</h5>
-      <% schools.forEach(school => { %>
-        <div class="card shadow mb-2">
-          <a href="/schools/<%= school.slug %>" class="card-link">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12 col-sm-4">
-                  <img src="/<%= school.image %>" class="card-img-top" alt="No Image">            
-                </div>
-                <div class="col-12 col-sm-8 text-center text-sm-left">
-                  <h5><%= school.name %></h5>
-                  <% if (!school.averageRating) { %>
-                  <p>
-                    No Rating Yet
-                  </p>
-                  <% } else { %>
-                  <p>
-                    <span>
-                      <i class="fas fa-star <% if (school.averageRating >= 1.0) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (school.averageRating >= 1.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (school.averageRating >= 2.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (school.averageRating >= 3.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (school.averageRating >= 4.5) { %> checked <% } %>"></i>
-                    </span>
-                    (<%= school.averageRating.toFixed(2) %>)
-                  </p>
-                  <% } %>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-thumbs-up"></i> Favorite: <%= school.likes.length %>
-                  </span>
-                  <span class="badge badge-secondary mb-2">
-                    <i class="fas fa-comment-dots"></i> Review: <%= school.reviews.length %>
-                  </span>
-                  <br>
-                  <span>created on <%= moment(school.createdAt).format('YYYY-MM-DD') %></span>
-                </div>
-              </div>
-            </div>
-          </a>
+  <h5 class="card-title text-center">Favorite School</h5>
+  <% schools.forEach(school => { %>
+  <div class="card shadow mb-4">
+    <a href="/schools/<%= school.slug %>" class="card-link">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-sm-4">
+            <img src="/<%= school.image %>" class="card-img-top" alt="No Image">            
+          </div>
+          <div class="col-12 col-sm-8 text-center text-sm-left">
+            <h5><%= school.name %></h5>
+            <% if (!school.averageRating) { %>
+            <p>
+              No Rating Yet
+            </p>
+            <% } else { %>
+            <p>
+              <span>
+                <i class="fas fa-star <% if (school.averageRating >= 1.0) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (school.averageRating >= 1.5) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (school.averageRating >= 2.5) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (school.averageRating >= 3.5) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (school.averageRating >= 4.5) { %> checked <% } %>"></i>
+              </span>
+              (<%= school.averageRating.toFixed(2) %>)
+            </p>
+            <% } %>
+            <span class="badge badge-secondary mb-2">
+              <i class="fas fa-thumbs-up"></i> Favorite: <%= school.likes.length %>
+            </span>
+            <span class="badge badge-secondary mb-2">
+              <i class="fas fa-comment-dots"></i> Review: <%= school.reviews.length %>
+            </span>
+            <br>
+            <span>created on <%= moment(school.createdAt).format('YYYY-MM-DD') %></span>
+          </div>
         </div>
-        <% }) %>
-    </div>
+      </div>
+    </a>
   </div>
+  <% }) %>
 </div>

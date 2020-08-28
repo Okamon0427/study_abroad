@@ -4,43 +4,39 @@
   role="tabpanel"
   aria-labelledby="list-reviewed-list"
 >
-  <div class="card mb-2">
-    <div class="card-body">
-      <h5 class="card-title text-center">Review</h5>
-      <% reviews.forEach(review => { %>
-        <div class="card shadow mb-2">
-          <a href="/schools/<%= review.school.slug %>" class="card-link">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12 col-sm-4">
-                  <img src="/<%= review.school.image %>" class="card-img-top" alt="No Image">            
-                </div>
-                <div class="col-12 col-sm-8 text-center text-sm-left">
-                  <h5><%= review.title %></h5>
-                  <p><%= review.school.name %> / <%= review.degree %></p>
-                  <% if (!review.rating) { %>
-                  <p>
-                    No Rating Yet
-                  </p>
-                  <% } else { %>
-                  <p>
-                    <span>
-                      <i class="fas fa-star <% if (review.rating >= 1.0) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (review.rating >= 1.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (review.rating >= 2.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (review.rating >= 3.5) { %> checked <% } %>"></i>
-                      <i class="fas fa-star <% if (review.rating >= 4.5) { %> checked <% } %>"></i>
-                    </span>
-                    (<%= review.rating.toFixed(2) %>)
-                  </p>
-                  <% } %>
-                  <span>created on <%= moment(review.createdAt).format('YYYY-MM-DD') %></span>
-                </div>
-              </div>
-            </div>
-          </a>
+  <h5 class="card-title text-center">Review</h5>
+  <% reviews.forEach(review => { %>
+  <div class="card shadow mb-4">
+    <a href="/schools/<%= review.school.slug %>" class="card-link">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-sm-4">
+            <img src="/<%= review.school.image %>" class="card-img-top" alt="No Image">            
+          </div>
+          <div class="col-12 col-sm-8 text-center text-sm-left">
+            <h5><%= review.title %></h5>
+            <p><%= review.school.name %> / <%= review.degree %></p>
+            <% if (!review.rating) { %>
+            <p>
+              No Rating Yet
+            </p>
+            <% } else { %>
+            <p>
+              <span>
+                <i class="fas fa-star <% if (review.rating >= 1.0) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (review.rating >= 1.5) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (review.rating >= 2.5) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (review.rating >= 3.5) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (review.rating >= 4.5) { %> checked <% } %>"></i>
+              </span>
+              (<%= review.rating.toFixed(2) %>)
+            </p>
+            <% } %>
+            <span>created on <%= moment(review.createdAt).format('YYYY-MM-DD') %></span>
+          </div>
         </div>
-        <% }) %>
-    </div>
+      </div>
+    </a>
   </div>
+  <% }) %>
 </div>

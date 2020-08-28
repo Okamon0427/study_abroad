@@ -5,7 +5,7 @@
   <div class="col-md-12 col-lg-9">
 
     <!-- Main Information -->
-    <div class="card mb-2">
+    <div class="card mb-4">
       <div class="card-body">
         <h3 class="text-center"><%= school.name %></h3>
         <hr>
@@ -22,7 +22,7 @@
         <p><%= school.location.formattedAddress %></p>
 
         <!-- Show Map -->
-        <div id='map' style='width: 400px; height: 300px;'></div>
+        <div id='map' style='width: 300px; height: 300px;'></div>
         <script>
           const lat = <%= school.location.coordinates[0] %>;
           const lng = <%= school.location.coordinates[1] %>;
@@ -99,7 +99,7 @@
     <!-- Main Information End -->
     
     <!-- Reviews -->
-    <div class="card mb-2">
+    <div class="card mb-4">
       <div class="card-body">
         <!-- New Review -->
         <%- include("./schoolPartials/newReview") %>

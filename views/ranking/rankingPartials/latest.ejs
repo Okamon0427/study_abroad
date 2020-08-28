@@ -4,49 +4,45 @@
   role="tabpanel"
   aria-labelledby="list-latest-list"
 >
-  <div class="card mb-2">
-    <div class="card-body">
-      <h5 class="card-title text-center">Latest Registered School</h5>
-      <% latestSchools.forEach(latestSchool => { %>
-      <div class="card shadow mb-2">
-        <a href="/schools/<%= latestSchool.slug %>" class="card-link">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-12 col-sm-4">
-                <img src="/<%= latestSchool.image %>" class="card-img-top" alt="No Image">            
-              </div>
-              <div class="col-12 col-sm-8 text-center text-sm-left">
-                <h5><%= latestSchool.name %></h5>
-                <% if (!latestSchool.averageRating) { %>
-                <p>
-                  No Rating Yet
-                </p>
-                <% } else { %>
-                <p>
-                  <span>
-                    <i class="fas fa-star <% if (latestSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
-                    <i class="fas fa-star <% if (latestSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
-                    <i class="fas fa-star <% if (latestSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
-                    <i class="fas fa-star <% if (latestSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
-                    <i class="fas fa-star <% if (latestSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
-                  </span>
-                  (<%= latestSchool.averageRating.toFixed(2) %>)
-                </p>
-                <% } %>
-                <span class="badge badge-secondary mb-2">
-                  <i class="fas fa-thumbs-up"></i> Like: <%= latestSchool.likes.length %>
-                </span>
-                <span class="badge badge-secondary mb-2">
-                  <i class="fas fa-comment-dots"></i> Review: <%= latestSchool.reviews.length %>
-                </span>
-                <br>
-                <span>created on <%= moment(latestSchool.createdAt).format('YYYY-MM-DD') %></span>
-              </div>
-            </div>
+  <h5 class="card-title text-center">Latest Registered School</h5>
+  <% latestSchools.forEach(latestSchool => { %>
+  <div class="card shadow mb-4">
+    <a href="/schools/<%= latestSchool.slug %>" class="card-link">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-sm-4">
+            <img src="/<%= latestSchool.image %>" class="card-img-top" alt="No Image">            
           </div>
-        </a>
+          <div class="col-12 col-sm-8 text-center text-sm-left">
+            <h5><%= latestSchool.name %></h5>
+            <% if (!latestSchool.averageRating) { %>
+            <p>
+              No Rating Yet
+            </p>
+            <% } else { %>
+            <p>
+              <span>
+                <i class="fas fa-star <% if (latestSchool.averageRating >= 1.0) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (latestSchool.averageRating >= 1.5) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (latestSchool.averageRating >= 2.5) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (latestSchool.averageRating >= 3.5) { %> checked <% } %>"></i>
+                <i class="fas fa-star <% if (latestSchool.averageRating >= 4.5) { %> checked <% } %>"></i>
+              </span>
+              (<%= latestSchool.averageRating.toFixed(2) %>)
+            </p>
+            <% } %>
+            <span class="badge badge-secondary mb-2">
+              <i class="fas fa-thumbs-up"></i> Like: <%= latestSchool.likes.length %>
+            </span>
+            <span class="badge badge-secondary mb-2">
+              <i class="fas fa-comment-dots"></i> Review: <%= latestSchool.reviews.length %>
+            </span>
+            <br>
+            <span>created on <%= moment(latestSchool.createdAt).format('YYYY-MM-DD') %></span>
+          </div>
+        </div>
       </div>
-      <% }) %>
-    </div>
+    </a>
   </div>
+  <% }) %>
 </div>
