@@ -8,6 +8,8 @@
           <div class="card-body">
             <img src="/<%= newArrivalSchool.image %>" class="card-img-top" alt="No Image">
             <p><%= newArrivalSchool.name %></p>
+            <span class="badge badge-pill badge-info"><%= newArrivalSchool.location.country %></span>
+            <span class="badge badge-pill badge-secondary"><%= newArrivalSchool.location.city %></span>
             <% if (!newArrivalSchool.averageRating) { %>
             <p class="font-italic">No Rating Yet</p>
             <% } else { %>

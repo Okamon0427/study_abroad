@@ -44,7 +44,7 @@
         <p class="h5">
           Rating: 
           <% if (!school.averageRating) { %>
-          <span>No Rating Yet</span>
+          <span class="font-italic">No Rating Yet</span>
           <% } else { %>
           <span>
             <i class="fas fa-star <% if (school.averageRating >= 1.0) { %> checked <% } %>"></i>
@@ -99,16 +99,15 @@
     <!-- Main Information End -->
     
     <!-- Reviews -->
-    <div class="card mb-4">
-      <div class="card-body">
+    <div class="mb-4">
+      <!-- <div class="card-body"> -->
         <!-- New Review -->
         <%- include("./schoolPartials/newReview") %>
         <!-- New Review End -->
-        <hr>
         <!-- Exists Reviews -->
         <%- include("./schoolPartials/existsReview") %>
         <!-- Exists Reviews End -->
-      </div>
+      <!-- </div> -->
     </div>
     <!-- Reviews End-->
 

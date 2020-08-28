@@ -11,6 +11,18 @@ body {
   color: orange;
 }
 
+.fa-crown.gold {
+  color: gold;
+}
+
+.fa-crown.silver {
+  color: silver;
+}
+
+.fa-crown.bronze {
+  color: #cd7f32;
+}
+
 p {
   margin-bottom: 0;
 }

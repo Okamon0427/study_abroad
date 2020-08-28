@@ -10,14 +10,16 @@
     <a href="/schools/<%= review.school.slug %>" class="card-link">
       <div class="card-body">
         <div class="row">
-          <div class="col-12 col-sm-4">
+          <div class="col-12 col-sm-4 d-flex align-items-center">
             <img src="/<%= review.school.image %>" class="card-img-top" alt="No Image">            
           </div>
           <div class="col-12 col-sm-8 text-center text-sm-left">
             <h5><%= review.title %></h5>
             <p><%= review.school.name %> / <%= review.degree %></p>
+            <span class="badge badge-pill badge-info"><%= review.school.location.country %></span>
+            <span class="badge badge-pill badge-secondary"><%= review.school.location.city %></span>
             <% if (!review.rating) { %>
-            <p>
+            <p class="font-italic">
               No Rating Yet
             </p>
             <% } else { %>
