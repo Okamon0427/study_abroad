@@ -18,6 +18,7 @@ const otherRoutes = require('./routes/others');
 const CustomError = require('./utils/CustomError');
 const authenticate = require('./config/passport');
 const database = require('./config/database');
+const { storage, fileFilter } = require('./config/multer');
 
 // Database Connect
 database().catch(err => next(err));
@@ -48,28 +49,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   next();
 });
-
-// multer setting
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === 'image/jpg' ||
-    file.mimetype === 'image/jpeg' ||
-    file.mimetype === 'image/png'
-  ) {
-    cb(null, true);
-  } else {
-    return cb(new CustomError('Only image files (jpg, jpeg, or png) are allowed', 400), false);
-  }
-};
 
 app.use(multer({
   storage,
