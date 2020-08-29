@@ -25,15 +25,6 @@ database().catch(err => next(err));
 // Passport Connect
 authenticate(passport);
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,7 +32,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(flash());
-app.use(multer({ storage: storage }).single('image'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -58,6 +48,34 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   next();
 });
+
+// multer setting
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/png'
+  ) {
+    cb(null, true);
+  } else {
+    return cb(new CustomError('Only image files (jpg, jpeg, or png) are allowed', 400), false);
+  }
+};
+
+app.use(multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 1000000 }
+}).single('image'));
 
 app.use('/schools', schoolRoutes);
 app.use('/schools', reviewRoutes);

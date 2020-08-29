@@ -27,6 +27,14 @@ p {
   margin-bottom: 0;
 }
 
+div.upwards {
+  transition: all 0.3s;
+}
+
+div.upwards:hover {
+  transform: translateY(-5px)
+}
+
 div.card-body {
   padding: 10px;
 }
