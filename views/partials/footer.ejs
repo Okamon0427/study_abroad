@@ -1,10 +1,12 @@
   </div>
 
-  <footer class="bd-footer bg-secondary ">
-    <div class="container-fluid p-3 p-md-5">
-      <a href="/inquiry/new">Inquiry</a>
+  <footer class="bd-footer bg-secondary">
+    <div class="container p-4">
+      <a href="/inquiry/new" class="text-white">Inquiry</a>
       <div class="mx-auto" style="width: 250px;">
-        <p class="text-white">Copyright © Study Abroad 2020</p>
+        <p class="text-white">
+          Copyright &copy; Study Abroad <span id="year"></span>
+        </p>
       </div>
     </div>
   </footer>
@@ -24,6 +26,9 @@
     src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous">
+  </script>
+  <script>
+    $('#year').text(new Date().getFullYear());
   </script>
 </body>
 </html>
