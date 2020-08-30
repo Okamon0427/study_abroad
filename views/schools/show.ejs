@@ -1,126 +1,111 @@
 <%- include("../partials/header") %>
 
-<div class="row">
-  <!-- Left Column -->
-  <div class="col-md-12 col-lg-9">
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-lg-9">
 
-    <!-- Main Information -->
-    <div class="card mb-4">
-      <div class="card-body">
-        <h3 class="text-center"><%= school.name %></h3>
-        <hr>
-        <img class="card-img-top" src="/<%= school.image %>" alt="No Image">
-        <hr>
-        <h5>
-          <span class="badge badge-pill badge-info">
-            <%= school.location.country %>
-          </span>
-          <span class="badge badge-pill badge-secondary">
-            <%= school.location.city %>
-          </span>
-        </h5>
-        <p><%= school.location.formattedAddress %></p>
+      <!-- Main Information -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h3 class="text-center"><%= school.name %></h3>
+          <hr>
+          <img class="card-img-top" src="/<%= school.image %>" alt="No Image">
+          <hr>
+          <h5>
+            <span class="badge badge-pill badge-info">
+              <%= school.location.country %>
+            </span>
+            <span class="badge badge-pill badge-secondary">
+              <%= school.location.city %>
+            </span>
+          </h5>
+          <p><%= school.location.formattedAddress %></p>
 
-        <!-- Show Map -->
-        <div id='map' style='width: 300px; height: 300px;'></div>
-        <script>
-          const lat = <%= school.location.coordinates[0] %>;
-          const lng = <%= school.location.coordinates[1] %>;
-          const key = 'pk.eyJ1IjoiaGVtaGVtIiwiYSI6ImNrZWRpdHByZzAza2syeW83cDk2ZHh5dTYifQ.-CbpUnMncBCHzPLwheZUJA';
-          mapboxgl.accessToken = key;
-          const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            zoom: 13,
-            center: [lat, lng]
-          });
-          const marker = new mapboxgl.Marker()
-          .setLngLat([lat, lng])
-          .addTo(map);
-        </script>
-        <!-- Show Map End -->
+          <!-- Show Map -->
+          <div id='map' style='width: 300px; height: 300px;'></div>
+          <script>
+            const lat = <%= school.location.coordinates[0] %>;
+            const lng = <%= school.location.coordinates[1] %>;
+            const key = 'pk.eyJ1IjoiaGVtaGVtIiwiYSI6ImNrZWRpdHByZzAza2syeW83cDk2ZHh5dTYifQ.-CbpUnMncBCHzPLwheZUJA';
+            mapboxgl.accessToken = key;
+            const map = new mapboxgl.Map({
+              container: 'map',
+              style: 'mapbox://styles/mapbox/streets-v11',
+              zoom: 13,
+              center: [lat, lng]
+            });
+            const marker = new mapboxgl.Marker()
+            .setLngLat([lat, lng])
+            .addTo(map);
+          </script>
 
-        <!-- Average Rating -->
-        <p class="h5">
-          Rating: 
-          <% if (!school.averageRating) { %>
-          <span class="font-italic">No Rating Yet</span>
-          <% } else { %>
-          <span>
-            <i class="fas fa-star <% if (school.averageRating >= 1.0) { %> checked <% } %>"></i>
-            <i class="fas fa-star <% if (school.averageRating >= 1.5) { %> checked <% } %>"></i>
-            <i class="fas fa-star <% if (school.averageRating >= 2.5) { %> checked <% } %>"></i>
-            <i class="fas fa-star <% if (school.averageRating >= 3.5) { %> checked <% } %>"></i>
-            <i class="fas fa-star <% if (school.averageRating >= 4.5) { %> checked <% } %>"></i>
-          </span>
-          <span>
-            (<%= school.averageRating.toFixed(2) %>)
-          </span>
+          <!-- Average Rating -->
+          <p class="h5">
+            Rating: 
+            <% if (!school.averageRating) { %>
+            <span class="font-italic">No Rating Yet</span>
+            <% } else { %>
+            <span>
+              <i class="fas fa-star <% if (school.averageRating >= 1.0) { %> checked <% } %>"></i>
+              <i class="fas fa-star <% if (school.averageRating >= 1.5) { %> checked <% } %>"></i>
+              <i class="fas fa-star <% if (school.averageRating >= 2.5) { %> checked <% } %>"></i>
+              <i class="fas fa-star <% if (school.averageRating >= 3.5) { %> checked <% } %>"></i>
+              <i class="fas fa-star <% if (school.averageRating >= 4.5) { %> checked <% } %>"></i>
+            </span>
+            <span>
+              (<%= school.averageRating.toFixed(2) %>)
+            </span>
+            <% } %>
+          </p>
+          
+          <!-- Favorite -->
+          <form action="/schools/<%= school.slug %>/favorite" method="POST">
+            <% if (isFavoriteUser) { %>
+            <button class="btn btn-sm btn-secondary">
+              <i class="fas fa-thumbs-up"></i> Unfavorite
+            </button>
+            <% } else if (!isFavoriteUser) { %>
+            <button class="btn btn-sm btn-primary">
+              <i class="fas fa-thumbs-up"></i> Favorite
+            </button>
+            <% } %>
+          </form>
+          <%- include("../partials/modal/favoriteUsers") %>
+          
+          <br>
+
+          <!-- School Edit -->
+          <% if (currentUser && currentUser._id.equals(school.user) || (currentUser && currentUser.isAdmin)) { %>
+          <a
+            class="btn btn-sm btn-warning"
+            href="/schools/<%= school.slug %>/edit"
+            role="button"
+          >
+            <i class="fas fa-edit"></i> EDIT
+          </a>
+
+          <!-- Delete School Modal-->
+          <%- include("../partials/modal/deleteSchool") %>
+
           <% } %>
-        </p>
-        <!-- Average Rating End -->
-        
-        <!-- Favorite -->
-        <form action="/schools/<%= school.slug %>/favorite" method="POST">
-          <% if (isFavoriteUser) { %>
-          <button class="btn btn-sm btn-secondary">
-            <i class="fas fa-thumbs-up"></i> Unfavorite
-          </button>
-          <% } else if (!isFavoriteUser) { %>
-          <button class="btn btn-sm btn-primary">
-            <i class="fas fa-thumbs-up"></i> Favorite
-          </button>
-          <% } %>
-        </form>
-        <%- include("../partials/modal/favoriteUsers") %>
-        <!-- Favorite End-->
-        
-        <br>
 
-        <!-- School Edit -->
-        <% if (currentUser && currentUser._id.equals(school.user) || (currentUser && currentUser.isAdmin)) { %>
-        <a
-          class="btn btn-sm btn-warning"
-          href="/schools/<%= school.slug %>/edit"
-          role="button"
-        >
-          <i class="fas fa-edit"></i> EDIT
-        </a>
-
-        <!-- Delete School Modal-->
-        <%- include("../partials/modal/deleteSchool") %>
-        <!-- Delete School Modal Trigger End -->
-
-        <% } %>
-        <!-- School Edit End -->
-
+        </div>
       </div>
+      
+      <!-- Reviews -->
+      <div class="mb-4">
+          <%- include("./schoolPartials/newReview") %>
+          <%- include("./schoolPartials/existsReview") %>
+      </div>
+
     </div>
-    <!-- Main Information End -->
-    
-    <!-- Reviews -->
-    <div class="mb-4">
-      <!-- <div class="card-body"> -->
-        <!-- New Review -->
-        <%- include("./schoolPartials/newReview") %>
-        <!-- New Review End -->
-        <!-- Exists Reviews -->
-        <%- include("./schoolPartials/existsReview") %>
-        <!-- Exists Reviews End -->
-      <!-- </div> -->
+
+    <div class="col-md-12 col-lg-3">
+    <%- include("./schoolPartials/popular") %>
+    <%- include("./schoolPartials/newArrival") %>
     </div>
-    <!-- Reviews End-->
 
   </div>
-  <!-- Left Column End -->
-
-  <!-- Right Column -->
-  <div class="col-md-12 col-lg-3">
-  <%- include("./schoolPartials/popular") %>
-  <%- include("./schoolPartials/newArrival") %>
-  </div>
-  <!-- Right Column End -->
-
 </div>
 
 <%- include("../partials/footer") %>

@@ -1,23 +1,20 @@
 <%- include("../partials/header") %>
 
-<div class="row">
-  <!-- Left Colomn -->
-  <div class="col-sm-12 col-md-4">
-  <%- include("./userPartials/profile") %>
-  <%- include("./userPartials/list") %>
-  </div>
-  <!-- Left Column End -->
-  
-  <!-- Right Column -->
-  <div class="col-sm-12 col-md-8">
-    <div class="tab-content" id="nav-tabContent">
-    <%- include("./userPartials/favorite") %>
-    <%- include("./userPartials/review") %>
-    <%- include("./userPartials/following") %>
-    <%- include("./userPartials/followers") %>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-4">
+    <%- include("./userPartials/profile") %>
+    <%- include("./userPartials/list") %>
+    </div>
+    <div class="col-sm-12 col-md-8">
+      <div class="tab-content" id="nav-tabContent">
+      <%- include("./userPartials/favorite") %>
+      <%- include("./userPartials/review") %>
+      <%- include("./userPartials/following") %>
+      <%- include("./userPartials/followers") %>
+      </div>
     </div>
   </div>
-  <!-- Right Column End -->
 </div>
 
 <%- include("../partials/footer") %>

@@ -1,22 +1,20 @@
 <%- include("../partials/header") %>
 
-<div class="row">
-  <!-- Left Column -->
-  <div class="col-sm-12 col-md-4">
-  <%- include("./rankingPartials/list") %>
-  </div>
-  <!-- Left Column End -->
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-4">
+    <%- include("./rankingPartials/list") %>
+    </div>
 
-  <!-- Right Column -->
-  <div class="col-sm-12 col-md-8">
-    <div class="tab-content" id="nav-tabContent">
-    <%- include("./rankingPartials/favorited") %>
-    <%- include("./rankingPartials/rated") %>
-    <%- include("./rankingPartials/reviewed") %>
-    <%- include("./rankingPartials/latest") %>
+    <div class="col-sm-12 col-md-8">
+      <div class="tab-content" id="nav-tabContent">
+      <%- include("./rankingPartials/favorited") %>
+      <%- include("./rankingPartials/rated") %>
+      <%- include("./rankingPartials/reviewed") %>
+      <%- include("./rankingPartials/latest") %>
+      </div>
     </div>
   </div>
-  <!-- Right Column End -->
 </div>
 
 <%- include("../partials/footer") %>
