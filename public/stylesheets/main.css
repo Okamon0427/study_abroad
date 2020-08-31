@@ -1,11 +1,19 @@
 body {
-  padding-top: 84px; /* for fixed-top navbar */
+  padding-top: 59px; /* for fixed-top navbar */
   background: #f5f5f5;
 }
 
 .navbar {
   border-bottom: #007bff 3px solid;
   opacity: 0.9;
+}
+
+.alert {
+  margin: 0;
+}
+
+section#form {
+  margin: 20px 0;
 }
 
 .fa-star {
@@ -42,12 +50,4 @@ div.upwards {
 
 div.upwards:hover {
   transform: translateY(-5px)
-}
-
-div.card-body {
-  padding: 10px;
-}
-
-footer {
-  margin-top: 28px;
 }

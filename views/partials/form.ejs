@@ -1,50 +1,47 @@
-<div class="card bg-white p-4 mb-4">
+<div class="card bg-white">
+  <h5 class="card-header text-center bg-secondary text-light">
+    <% if (formContent === 'signup') { %> 
+    <i class="fas fa-user-plus"></i> Signup
+    <% } %>
+
+    <% if (formContent === 'login') { %> 
+    <i class="fas fa-sign-in-alt"></i> Login
+    <% } %>
+
+    <% if (formContent === 'forgotPassword') { %>
+    <i class="fas fa-unlock-alt"></i> Forgot Password
+    <% } %>
+
+    <% if (formContent === 'resetPassword') { %> 
+    <i class="fas fa-unlock-alt"></i> Reset Password
+    <% } %>
+
+    <% if (formContent === 'profile') { %> 
+    <i class="fas fa-user"></i> Edit Your Profile
+    <% } %>
+
+    <% if (formContent === 'email') { %> 
+    <i class="fas fa-envelope"></i> Edit Your Email
+    <% } %>
+
+    <% if (formContent === 'password') { %> 
+    <i class="fas fa-unlock-alt"></i> Edit Your Password
+    <% } %>
+
+    <% if (formContent === 'addSchool') { %> 
+    Add School
+    <% } %>
+
+    <% if (formContent === 'editSchool') { %> 
+    Edit School
+    <% } %>
+
+    <% if (formContent === 'inquiry') { %> 
+    <i class="fas fa-question-circle"></i> Inquiry
+    <% } %>
+  </h5>
+  
   <div class="card-body">
-    
-    <!-- Form Title -->
-    <h1 style="text-align: center;">
-      <% if (formContent === 'signup') { %> 
-      <i class="fas fa-user-plus"></i> Signup
-      <% } %>
-
-      <% if (formContent === 'login') { %> 
-      <i class="fas fa-sign-in-alt"></i> Login
-      <% } %>
-
-      <% if (formContent === 'forgotPassword') { %>
-      <i class="fas fa-unlock-alt"></i> Forgot Password
-      <% } %>
-
-      <% if (formContent === 'resetPassword') { %> 
-      <i class="fas fa-unlock-alt"></i> Reset Password
-      <% } %>
-
-      <% if (formContent === 'profile') { %> 
-      <i class="fas fa-user"></i> Edit Your Profile
-      <% } %>
-
-      <% if (formContent === 'email') { %> 
-      <i class="fas fa-envelope"></i> Edit Your Email
-      <% } %>
-
-      <% if (formContent === 'password') { %> 
-      <i class="fas fa-unlock-alt"></i> Edit Your Password
-      <% } %>
-
-      <% if (formContent === 'addSchool') { %> 
-      Add School
-      <% } %>
-
-      <% if (formContent === 'editSchool') { %> 
-      Edit School
-      <% } %>
-
-      <% if (formContent === 'inquiry') { %> 
-      <i class="fas fa-question-circle"></i> Inquiry
-      <% } %>
-    </h1>
-
-    <hr>
 
     <!-- Form Action -->
     <% if (formContent === 'signup') { %> 
