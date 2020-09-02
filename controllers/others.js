@@ -1,9 +1,38 @@
 const { validationResult } = require('express-validator');
 
+const School = require('../models/School');
+const Review = require('../models/Review');
 const User = require('../models/User');
 const Inquiry = require('../models/Inquiry');
 const CustomError = require('../utils/CustomError');
 const sendEmail = require('../utils/sendEmail');
+
+exports.landing = async (req, res, next) => {
+  try {
+    const latestSchools =
+      await School
+        .find()
+        .sort({ createdAt: -1 })
+        .populate('reviews')
+        .limit(3);
+
+    const latestReviews =
+      await Review
+        .find()
+        .sort({ createdAt: -1 })
+        .populate('school')
+        .limit(3);
+
+    res.render('landing', {
+      title: 'Main Page',
+      latestSchools,
+      latestReviews
+    });
+  } catch (err) {
+    const error = new CustomError('Something went wrong', 500);
+    return next(error);
+  }
+};
 
 exports.newInquiry = (req, res, next) => {
   res.render('others/inquiry', {

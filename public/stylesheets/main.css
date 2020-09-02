@@ -12,6 +12,31 @@ body {
   margin: 0;
 }
 
+#landing-top {
+  background: url(../../uploads/no-photo.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 400px;
+}
+
+#landing-top .dark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 459px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#landing-top .container {
+  padding-top: 150px;
+}
+
+#landing-card {
+  background: gray;
+}
+
 section#form {
   margin: 20px 0;
 }

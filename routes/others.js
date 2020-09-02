@@ -2,11 +2,14 @@ const express = require('express');
 const { check } = require('express-validator');
 
 const {
+  landing,
   newInquiry,
   sendInquiry,
 } = require('../controllers/others');
 
 const router = express.Router();
+
+router.get('/', landing);
 
 router.get('/inquiry/new', newInquiry);
 
