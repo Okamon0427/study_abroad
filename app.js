@@ -74,6 +74,6 @@ app.use((error, req, res, next) => {
   res.status(status).render('error', { title: 'Error', message });
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('Server has started!');
 });
