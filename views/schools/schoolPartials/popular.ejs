@@ -1,12 +1,14 @@
 <div class="text-center mb-4">
-  <h5 class="card-title">Popular Schools</h5>
+  <h3 class="card-title">Popular Schools</h3>
   <div class="row">
     <% popularSchools.forEach(popularSchool => { %>
     <div class="col-md-12 upwards">
       <a href="/schools/<%= popularSchool.slug %>" class="card-link">
         <div class="card shadow mb-4">
           <div class="card-body">
-            <img src="<%= popularSchool.image.url %>" class="card-img-top" alt="No Image">
+            <div class="col-6 col-md-12 mx-auto pr-0 pl-0">
+              <img style="width: 100%; max-width: 300px;" src="<%= popularSchool.image.url %>" class="card-img-top" alt="No Image">
+            </div>
             <p><%= popularSchool.name %></p>
             <span class="badge badge-pill badge-info"><%= popularSchool.location.country %></span>
             <span class="badge badge-pill badge-secondary"><%= popularSchool.location.city %></span>

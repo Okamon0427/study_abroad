@@ -124,7 +124,7 @@ exports.login = (req, res, next) => {
 exports.logout = (req, res, next) => {
   req.logout();
   req.flash('success', 'You are logged out');
-  res.redirect('/schools');
+  res.redirect('/');
 };
 
 exports.getForgotPassword = (req, res, next) => {

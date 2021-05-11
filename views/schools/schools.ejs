@@ -1,6 +1,6 @@
 <%- include("../partials/header") %>
 
-<div class="jumbotron">
+<div class="jumbotron pt-5 pb-5">
   <div class="container"> 
     <h1 class="display-4">All Schools</h1>
   </div>
@@ -14,7 +14,9 @@
       <a href="/schools/<%= school.slug %>" class="card-link">
         <div class="card shadow text-center border-0 mb-4">
           <div class="card-body">
-            <img class="card-img-top" src="<%= school.image && school.image.url %>" alt="No Image">
+            <div class="col-6 col-md-12 mx-auto pr-0 pl-0">
+              <img class="card-img-top" src="<%= school.image && school.image.url %>" alt="No Image">
+            </div>
             <p><%= school.name %></p>
             <span class="badge badge-pill badge-info"><%= school.location.country %></span>
             <span class="badge badge-pill badge-secondary"><%= school.location.city %></span>
@@ -121,7 +123,7 @@
 <% } %>
 
 <div class="container">
-  <a class="btn btn-sm btn-primary" href="/schools/new" role="button">
+  <a class="btn btn-sm btn-primary mb-2" href="/schools/new" role="button">
     <i class="fas fa-plus"></i> Add New School
   </a>
 </div>

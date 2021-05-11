@@ -26,7 +26,7 @@ const SchoolSchema = new mongoose.Schema({
   image: {
     url: {
       type: String,
-      default: 'uploads\\no-photo.jpg'
+      default: '../uploads/no-photo-school.jpg'
     },
     filename: {
       type: String

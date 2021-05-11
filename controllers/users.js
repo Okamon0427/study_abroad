@@ -210,8 +210,8 @@ exports.deleteUser = async (req, res, next) => {
       res.redirect(`/users/${user.slug}`);
     }
 
-    if (user.image !== 'uploads\\no-photo.jpg') {
-      deleteFile(user.image);
+    if (user.image.url !== 'uploads\\no-photo.jpg') {
+      await cloudinary.uploader.destroy(user.image.filename);
     }
 
     await user.remove();
