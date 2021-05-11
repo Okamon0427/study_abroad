@@ -4,7 +4,7 @@ body {
 }
 
 .navbar {
-  border-bottom: #007bff 3px solid;
+  border-bottom: #6c757d 3px solid;
   opacity: 0.9;
 }
 
@@ -13,7 +13,7 @@ body {
 }
 
 #landing-top {
-  background: url(../../uploads/no-photo.jpg);
+  background: url(../../uploads/landing.JPG);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -31,10 +31,6 @@ body {
 
 #landing-top .container {
   padding-top: 150px;
-}
-
-#landing-card {
-  background: gray;
 }
 
 section#form {
