@@ -1,5 +1,8 @@
 const express = require('express');
 const { check, oneOf } = require('express-validator');
+const multer = require('multer');
+const { storage } = require('../config/cloudinary');
+const upload = multer({ storage })
 
 const {
   getUser,
@@ -20,6 +23,7 @@ router.put(
   '/:slug',
   isLoggedIn,
   isUserAuthorized,
+  upload.single('image'),
   oneOf([
     [
       check('name')

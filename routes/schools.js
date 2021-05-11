@@ -1,5 +1,8 @@
 const express = require('express');
 const { check } = require('express-validator');
+const multer = require('multer');
+const { storage } = require('../config/cloudinary');
+const upload = multer({ storage })
 
 const {
   getSchools,
@@ -22,6 +25,7 @@ router.get('/new', isLoggedIn, newSchool);
 router.post(
   '/',
   isLoggedIn,
+  upload.single('image'),
   [
     check('name')
       .not()
@@ -43,6 +47,7 @@ router.put(
   '/:slug',
   isLoggedIn,
   isSchoolAuthorized,
+  upload.single('image'),
   [
     check('name')
       .not()

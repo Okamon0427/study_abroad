@@ -5,7 +5,6 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
-const multer = require('multer');
 const moment = require('moment');
 require('dotenv').config();
 
@@ -18,7 +17,6 @@ const otherRoutes = require('./routes/others');
 const CustomError = require('./utils/CustomError');
 const authenticate = require('./config/passport');
 const database = require('./config/database');
-const { storage, fileFilter } = require('./config/multer');
 
 // Database Connect
 database().catch(err => next(err));
@@ -49,12 +47,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   next();
 });
-
-app.use(multer({
-  storage,
-  fileFilter,
-  limits: { fileSize: 1000000 }
-}).single('image'));
 
 app.use('/schools', schoolRoutes);
 app.use('/schools', reviewRoutes);

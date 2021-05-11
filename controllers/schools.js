@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const School = require('../models/School');
 const Review = require('../models/Review');
 const CustomError = require('../utils/CustomError');
-const { deleteFile } = require('../utils/deleteFile');
+const { cloudinary } = require('../config/cloudinary');
 
 exports.getSchools = async (req, res, next) => {
   // Pagination
@@ -44,7 +44,7 @@ exports.createSchool = async (req, res, next) => {
   const school = req.body
   req.body.user = req.user.id;
   if (req.file) {
-    req.body.image = req.file.path;
+    req.body.image = { url: req.file.path, filename: req.file.filename };
   }
   
   const errors = validationResult(req);
@@ -150,8 +150,8 @@ exports.editSchool = async (req, res, next) => {
 exports.updateSchool = async (req, res, next) => {
   const _id = req.params.schoolId;
   let school = { ...req.body, _id };
-  const errors = validationResult(req);
 
+  const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render('schools/edit', {
       error: errors.array()[0].msg,
@@ -163,17 +163,17 @@ exports.updateSchool = async (req, res, next) => {
   
   try {
     school = await School.findOne({ slug: req.params.slug });
-    
-    if (req.file) {
-      if (school.image !== 'uploads\\no-photo.jpg') {
-        deleteFile(school.image);
-      }
-      req.body.image = req.file.path;
-    }
 
+    if (req.file) {
+      if (school.image.url !== 'uploads\\no-photo.jpg') {
+        await cloudinary.uploader.destroy(school.image.filename);
+      }
+      req.body.image = { url: req.file.path, filename: req.file.filename };
+      school.image = req.body.image;
+    }
+    
     school.name = req.body.name;
     school.address = req.body.address;
-    school.image = req.body.image;
     school.type = req.body.type;
     school.website = req.body.website;
 
@@ -191,8 +191,8 @@ exports.deleteSchool = async (req, res, next) => {
   try {
     const school = await School.findOne({ slug: req.params.slug });
     
-    if (school.image !== 'uploads\\no-photo.jpg') {
-      deleteFile(school.image);
+    if (school.image.url !== 'uploads\\no-photo.jpg') {
+      await cloudinary.uploader.destroy(school.image.filename);
     }
 
     await school.remove();

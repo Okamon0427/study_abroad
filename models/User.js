@@ -22,8 +22,13 @@ const UserSchema = new mongoose.Schema({
     maxlength: 500
   },
   image: {
-    type: String,
-    default: 'uploads\\no-photo.jpg'
+    url: {
+      type: String,
+      default: 'uploads\\no-photo.jpg'
+    },
+    filename: {
+      type: String
+    }
   },
   studentType: {
     type: String,

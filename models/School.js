@@ -24,8 +24,13 @@ const SchoolSchema = new mongoose.Schema({
     zipcode: String,
   },
   image: {
-    type: String,
-    default: 'uploads\\no-photo.jpg'
+    url: {
+      type: String,
+      default: 'uploads\\no-photo.jpg'
+    },
+    filename: {
+      type: String
+    }
   },
   schoolType: {
     type: String,
@@ -80,7 +85,6 @@ SchoolSchema.pre('save', function(next) {
 
 SchoolSchema.pre('save', async function(next) {
   const res = await geocoder.geocode(this.address);
-  
   this.location = {
     coordinates: [res[0].longitude, res[0].latitude],
     formattedAddress: res[0].formattedAddress,

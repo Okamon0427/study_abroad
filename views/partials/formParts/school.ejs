@@ -18,7 +18,7 @@
     id="address"
     name="address"
     placeholder="27 King's College Cir, Toronto, Ontario"
-    value="<%= typeof school != 'undefined' ? school.location.formattedAddress : '' %>"
+    value="<%= (typeof school != 'undefined' && school.location) ? school.location.formattedAddress : '' %>"
   >
 </div>
 

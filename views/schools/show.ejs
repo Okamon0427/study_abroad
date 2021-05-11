@@ -9,7 +9,7 @@
         <div class="card-body">
           <h3 class="text-center"><%= school.name %></h3>
           <hr>
-          <img class="card-img-top" src="/<%= school.image %>" alt="No Image">
+          <img class="card-img-top" src="<%= school.image && school.image.url %>" alt="No Image">
           <hr>
           <h5>
             <span class="badge badge-pill badge-info">

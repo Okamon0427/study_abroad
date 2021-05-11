@@ -14,7 +14,7 @@
       <a href="/schools/<%= school.slug %>" class="card-link">
         <div class="card shadow text-center border-0 mb-4">
           <div class="card-body">
-            <img class="card-img-top" src="<%= school.image %>" alt="No Image">
+            <img class="card-img-top" src="<%= school.image && school.image.url %>" alt="No Image">
             <p><%= school.name %></p>
             <span class="badge badge-pill badge-info"><%= school.location.country %></span>
             <span class="badge badge-pill badge-secondary"><%= school.location.city %></span>

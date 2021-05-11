@@ -5,7 +5,7 @@ const User = require("../models/User");
 const School = require('../models/School');
 const Review = require('../models/Review');
 const CustomError = require('../utils/CustomError');
-const { deleteFile } = require('../utils/deleteFile');
+const { cloudinary } = require('../config/cloudinary');
 
 exports.getUser = async (req, res, next) => {
   try {
@@ -107,10 +107,10 @@ exports.updateUser = async (req, res, next) => {
       }
 
       if (req.file) {
-        if (user.image !== 'uploads\\no-photo.jpg') {
-          deleteFile(user.image);
+        if (user.image.url && (user.image.url !== 'uploads\\no-photo.jpg')) {
+          await cloudinary.uploader.destroy(user.image.filename);
         }
-        req.body.image = req.file.path;
+        req.body.image = { url: req.file.path, filename: req.file.filename };
         user.image = req.body.image;
       }
 
