@@ -7,6 +7,12 @@
 </div>
 
 <div class="container">
+  <div class="row mb-4 ml-1">
+    <a class="btn btn-sm btn-primary mb-2" href="/schools/new" role="button">
+      <i class="fas fa-plus"></i> Add New School
+    </a>
+  </div>
+
   <div class="row">
     <% if (schools && schools.length > 0) { %>
     <% schools.forEach(school => { %>
@@ -15,7 +21,7 @@
         <div class="card shadow text-center border-0 mb-4">
           <div class="card-body">
             <div class="col-6 col-md-12 mx-auto pr-0 pl-0">
-              <img class="card-img-top" src="<%= school.image && school.image.url %>" alt="No Image">
+              <img style="height: 150px" class="card-img-top" src="<%= school.image && school.image.url %>" alt="No Image">
             </div>
             <p><%= school.name %></p>
             <span class="badge badge-pill badge-info"><%= school.location.country %></span>
@@ -121,11 +127,5 @@
   </ul>
 </nav>
 <% } %>
-
-<div class="container">
-  <a class="btn btn-sm btn-primary mb-2" href="/schools/new" role="button">
-    <i class="fas fa-plus"></i> Add New School
-  </a>
-</div>
 
 <%- include("../partials/footer") %>

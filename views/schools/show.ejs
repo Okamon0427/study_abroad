@@ -9,19 +9,24 @@
         <div class="card-body">
           <h3 class="text-center"><%= school.name %></h3>
 
-          <div class="row mb-4">
-            <div class="col-12 col-md-6 col-lg-4 mx-auto">
-              <img style="width: 100%; max-width: 300px;" src="<%= school.image && school.image.url %>" alt="No Image">
+          <div class="row mt-4 mb-4">
+            <div class="col-12 col-md-6 col-lg-4">
+              <img style="width: 100%; max-width: 300px;" class="mx-auto d-block" src="<%= school.image && school.image.url %>" alt="No Image">
             </div>
             <div class="col-12 col-md-6 col-lg-8 pt-2 pb-2">
-              <p class="h5">Overview</p>
+              <h5>About</h5>
+              <p><%= school.description ? school.description : 'No description yet' %></p>
             </div>
           </div>
 
           <div class="row">
             <div class="col-12 col-md-6 mx-auto pt-2 pb-2"> 
+              <p><b>Type: </b><%= school.schoolType ? school.schoolType : '' %></p>
+              <p><b>Address: </b><%= school.location.formattedAddress %></p>
+              <p><b>Website: </b><a href="<%= school.website && school.website %>" target="_blank"><%= school.website ? school.website : 'N/A' %></a></p>
+
               <!-- Average Rating -->
-              <p class="h5">
+              <p class="h5 mt-2">
                 Rating: 
                 <% if (!school.averageRating) { %>
                 <span class="font-italic">No Rating Yet</span>
@@ -39,7 +44,7 @@
                 <% } %>
               </p>
 
-              <div class="mt-4 mb-4">
+              <div class="mt-2 mb-2">
                 <!-- Favorite -->
                 <form class="mb-2" action="/schools/<%= school.slug %>/favorite" method="POST">
                   <% if (isFavoriteUser) { %>
@@ -69,19 +74,10 @@
 
                 <% } %>
               </div>
-              <p><b>Address: </b><%= school.location.formattedAddress %></p>
-              <h5>
-                <span class="badge badge-pill badge-info">
-                  <%= school.location.country %>
-                </span>
-                <span class="badge badge-pill badge-secondary">
-                  <%= school.location.city %>
-                </span>
-              </h5>
             </div>
             <!-- Show Map -->
             <div class="col-12 col-md-6 mx-auto mb-4">
-              <div id='map' style='width: 250px; height: 250px;'></div>
+              <div id='map' style='height: 250px;'></div>
               <script>
                 const lat = <%= school.location.coordinates[0] %>;
                 const lng = <%= school.location.coordinates[1] %>;

@@ -13,14 +13,14 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <h3 class="text-center">Latest Schools</h3>
+        <h3 class="text-center mb-4">Latest Schools</h3>
         <% latestSchools.forEach(school => { %>
         <div class="card shadow mb-4 upwards">
           <a href="/schools/<%= school.slug %>" class="card-link">
             <div class="card-body">
               <div class="row">
                 <div class="col-12 col-sm-4 pr-0 pl-0 d-flex align-items-center">
-                  <div class="col-6 col-sm-12 pr-0 pl-0 mx-auto">
+                  <div class="col-6 col-sm-12 mx-auto">
                     <img src="<%= school.image && school.image.url %>" class="card-img-top" alt="No Image">            
                   </div>
                 </div>
@@ -61,14 +61,14 @@
       </div>
 
       <div class="col-md-6">
-        <h3 class="text-center">Latest Reviews</h3>
+        <h3 class="text-center mb-4">Latest Reviews</h3>
         <% latestReviews.forEach(review => { %>
         <div class="card shadow mb-4 upwards">
           <a href="/schools/<%= review.school.slug %>" class="card-link">
             <div class="card-body">
               <div class="row">
                 <div class="col-12 col-sm-4 pr-0 pl-0 d-flex align-items-center">
-                  <div class="col-6 col-sm-12 pr-0 pl-0 mx-auto">
+                  <div class="col-6 col-sm-12 mx-auto">
                     <img src="<%= review.school.image && review.school.image.url %>" class="card-img-top" alt="No Image">
                   </div>            
                 </div>

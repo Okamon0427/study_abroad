@@ -107,7 +107,7 @@ exports.updateUser = async (req, res, next) => {
       }
 
       if (req.file) {
-        if (user.image.url && (user.image.url !== 'uploads\\no-photo.jpg')) {
+        if (user.image.url && (user.image.url !== '../uploads/no-photo-user.jpg')) {
           await cloudinary.uploader.destroy(user.image.filename);
         }
         req.body.image = { url: req.file.path, filename: req.file.filename };

@@ -175,6 +175,7 @@ exports.updateSchool = async (req, res, next) => {
     school.name = req.body.name;
     school.address = req.body.address;
     school.type = req.body.type;
+    school.description = req.body.description;
     school.website = req.body.website;
 
     await school.save();

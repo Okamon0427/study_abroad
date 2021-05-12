@@ -44,6 +44,7 @@ const SchoolSchema = new mongoose.Schema({
   website: {
     type: String
   },
+  description: String,
   averageRating: {
     type: Number,
     min: 1,
