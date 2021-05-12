@@ -165,7 +165,7 @@ exports.updateSchool = async (req, res, next) => {
     school = await School.findOne({ slug: req.params.slug });
 
     if (req.file) {
-      if (school.image.url !== 'uploads\\no-photo.jpg') {
+      if (school.image.url !== '../uploads/no-photo-school.jpg') {
         await cloudinary.uploader.destroy(school.image.filename);
       }
       req.body.image = { url: req.file.path, filename: req.file.filename };

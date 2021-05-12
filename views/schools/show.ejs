@@ -1,6 +1,6 @@
 <%- include("../partials/header") %>
 
-<div class="container">
+<div class="container mt-4">
   <div class="row">
     <div class="col-md-12 col-lg-9">
 
@@ -9,17 +9,17 @@
         <div class="card-body">
           <h3 class="text-center"><%= school.name %></h3>
 
-          <div class="row mb-2">
+          <div class="row mb-4">
             <div class="col-12 col-md-6 col-lg-4 mx-auto">
               <img style="width: 100%; max-width: 300px;" src="<%= school.image && school.image.url %>" alt="No Image">
             </div>
-            <div class="col-12 col-md-6 col-lg-8">
+            <div class="col-12 col-md-6 col-lg-8 pt-2 pb-2">
               <p class="h5">Overview</p>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-12 col-md-6 mx-auto"> 
+            <div class="col-12 col-md-6 mx-auto pt-2 pb-2"> 
               <!-- Average Rating -->
               <p class="h5">
                 Rating: 
@@ -39,35 +39,37 @@
                 <% } %>
               </p>
 
-              <!-- Favorite -->
-              <form class="mb-2" action="/schools/<%= school.slug %>/favorite" method="POST">
-                <% if (isFavoriteUser) { %>
-                <button class="btn btn-sm mr-2 btn-secondary">
-                  <i class="fas fa-thumbs-up"></i> Unfavorite
-                </button>
-                <% } else if (!isFavoriteUser) { %>
-                <button class="btn btn-sm mr-2 btn-primary">
-                  <i class="fas fa-thumbs-up"></i> Favorite
-                </button>
+              <div class="mt-4 mb-4">
+                <!-- Favorite -->
+                <form class="mb-2" action="/schools/<%= school.slug %>/favorite" method="POST">
+                  <% if (isFavoriteUser) { %>
+                  <button class="btn btn-sm mr-2 btn-secondary">
+                    <i class="fas fa-thumbs-up"></i> Unfavorite
+                  </button>
+                  <% } else if (!isFavoriteUser) { %>
+                  <button class="btn btn-sm mr-2 btn-primary">
+                    <i class="fas fa-thumbs-up"></i> Favorite
+                  </button>
+                  <% } %>
+                  <%- include("../partials/modal/favoriteUsers") %>
+                </form>
+
+                <!-- School Edit -->
+                <% if (currentUser && currentUser._id.equals(school.user) || (currentUser && currentUser.isAdmin)) { %>
+                <a
+                  class="btn btn-sm btn-warning mr-2"
+                  href="/schools/<%= school.slug %>/edit"
+                  role="button"
+                >
+                  <i class="fas fa-edit"></i> EDIT
+                </a>
+
+                <!-- Delete School Modal-->
+                <%- include("../partials/modal/deleteSchool") %>
+
                 <% } %>
-                <%- include("../partials/modal/favoriteUsers") %>
-              </form>
-
-              <!-- School Edit -->
-              <% if (currentUser && currentUser._id.equals(school.user) || (currentUser && currentUser.isAdmin)) { %>
-              <a
-                class="btn btn-sm btn-warning"
-                href="/schools/<%= school.slug %>/edit"
-                role="button"
-              >
-                <i class="fas fa-edit"></i> EDIT
-              </a>
-
-              <!-- Delete School Modal-->
-              <%- include("../partials/modal/deleteSchool") %>
-
-              <% } %>
-              <p><%= school.location.formattedAddress %></p>
+              </div>
+              <p><b>Address: </b><%= school.location.formattedAddress %></p>
               <h5>
                 <span class="badge badge-pill badge-info">
                   <%= school.location.country %>
