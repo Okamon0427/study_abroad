@@ -4,7 +4,7 @@
   <div class="dark-overlay">
     <div class="container">
       <h1 class="text-white">Study Abroad!</h1>
-      <p class="text-white">Find your dream. Enjoy your life.</p>
+      <h4 class="text-white">Find your dream. Enjoy your life.</h4>
     </div>
   </div>
 </header>
@@ -26,8 +26,8 @@
                 </div>
                 <div class="col-12 col-sm-8 text-center text-sm-left">
                   <h5><%= school.name %></h5>
-                  <span class="badge badge-pill badge-info"><%= school.location.country %></span>
-                  <span class="badge badge-pill badge-secondary"><%= school.location.city %></span>
+                  <span class="badge badge-info"><%= school.location.country %></span>
+                  <span class="badge badge-secondary"><%= school.location.city %></span>
                   <% if (!school.averageRating) { %>
                   <p class="font-italic">
                     No Rating Yet
@@ -44,10 +44,10 @@
                     (<%= school.averageRating.toFixed(2) %>)
                   </p>
                   <% } %>
-                  <span class="badge badge-secondary mb-2">
+                  <span class="badge badge-light mb-2">
                     <i class="fas fa-thumbs-up"></i> Favorite: <%= school.likes.length %>
                   </span>
-                  <span class="badge badge-secondary mb-2">
+                  <span class="badge badge-light mb-2">
                     <i class="fas fa-comment-dots"></i> Review: <%= school.reviews.length %>
                   </span>
                   <br>
@@ -75,8 +75,8 @@
                 <div class="col-12 col-sm-8 text-center text-sm-left">
                   <h5><%= review.title %></h5>
                   <p><%= review.school.name %> / <%= review.degree %></p>
-                  <span class="badge badge-pill badge-info"><%= review.school.location.country %></span>
-                  <span class="badge badge-pill badge-secondary"><%= review.school.location.city %></span>
+                  <span class="badge badge-info"><%= review.school.location.country %></span>
+                  <span class="badge badge-secondary"><%= review.school.location.city %></span>
                   <% if (!review.rating) { %>
                   <p class="font-italic">
                     No Rating Yet

@@ -7,7 +7,7 @@ const { cloudinary } = require('../config/cloudinary');
 
 exports.getSchools = async (req, res, next) => {
   // Pagination
-  const perPage = 4;
+  const perPage = 8;
   const pageQuery = parseInt(req.query.page);
   const pageNumber = pageQuery ? pageQuery : 1;
 

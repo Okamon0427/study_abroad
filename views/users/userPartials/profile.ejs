@@ -21,7 +21,7 @@
     <% if (mypage || (currentUser && currentUser.isAdmin)) { %>
     <div style="text-align: center;">
       <button
-        class="btn btn-sm btn-warning"
+        class="btn btn-sm btn-outline-dark"
         role="button"
         data-toggle="collapse"
         href="#collapseUserEdit"
@@ -68,11 +68,11 @@
     <form action="/users/<%= user.slug %>/follow" method="POST">
       <div class="text-center">
         <% if (isFollowing) { %>
-        <button class="btn btn-sm btn-secondary">
+        <button class="btn btn-sm btn-outline-secondary">
           Unfollow
         </button>
         <% } else { %>
-        <button class="btn btn-sm btn-primary">
+        <button class="btn btn-sm btn-outline-primary">
           Follow
         </button>
         <% } %>

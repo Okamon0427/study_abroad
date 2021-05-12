@@ -16,8 +16,8 @@
           <div class="col-12 col-sm-8 text-center text-sm-left">
             <h5><%= review.title %></h5>
             <p><%= review.school.name %> / <%= review.degree %></p>
-            <span class="badge badge-pill badge-info"><%= review.school.location.country %></span>
-            <span class="badge badge-pill badge-secondary"><%= review.school.location.city %></span>
+            <span class="badge badge-info"><%= review.school.location.country %></span>
+            <span class="badge badge-secondary"><%= review.school.location.city %></span>
             <% if (!review.rating) { %>
             <p class="font-italic">
               No Rating Yet

@@ -9,6 +9,8 @@
         <div class="card-body">
           <h3 class="text-center"><%= school.name %></h3>
 
+          <hr>
+
           <div class="row mt-4 mb-4">
             <div class="col-12 col-md-6 col-lg-4">
               <img style="width: 100%; max-width: 300px;" class="mx-auto d-block" src="<%= school.image && school.image.url %>" alt="No Image">
@@ -19,8 +21,12 @@
             </div>
           </div>
 
+          <hr>
+
           <div class="row">
             <div class="col-12 col-md-6 mx-auto pt-2 pb-2"> 
+              <p><b>Country: </b><%= school.location ? school.location.country : '' %></p>
+              <p><b>City: </b><%= school.location ? school.location.city : '' %></p>
               <p><b>Type: </b><%= school.schoolType ? school.schoolType : '' %></p>
               <p><b>Address: </b><%= school.location.formattedAddress %></p>
               <p><b>Website: </b><a href="<%= school.website && school.website %>" target="_blank"><%= school.website ? school.website : 'N/A' %></a></p>
@@ -48,11 +54,11 @@
                 <!-- Favorite -->
                 <form class="mb-2" action="/schools/<%= school.slug %>/favorite" method="POST">
                   <% if (isFavoriteUser) { %>
-                  <button class="btn btn-sm mr-2 btn-secondary">
+                  <button class="btn btn-sm mr-2 btn-outline-secondary">
                     <i class="fas fa-thumbs-up"></i> Unfavorite
                   </button>
                   <% } else if (!isFavoriteUser) { %>
-                  <button class="btn btn-sm mr-2 btn-primary">
+                  <button class="btn btn-sm mr-2 btn-outline-primary">
                     <i class="fas fa-thumbs-up"></i> Favorite
                   </button>
                   <% } %>
@@ -61,12 +67,10 @@
 
                 <!-- School Edit -->
                 <% if (currentUser && currentUser._id.equals(school.user) || (currentUser && currentUser.isAdmin)) { %>
-                <a
-                  class="btn btn-sm btn-warning mr-2"
-                  href="/schools/<%= school.slug %>/edit"
-                  role="button"
-                >
-                  <i class="fas fa-edit"></i> EDIT
+                <a style="text-decoration: none;" href="/schools/<%= school.slug %>/edit">
+                  <button class="btn btn-sm mr-2 btn-outline-dark">
+                    <i class="fas fa-edit"></i> EDIT
+                  </button>
                 </a>
 
                 <!-- Delete School Modal-->

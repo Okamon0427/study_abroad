@@ -1,15 +1,20 @@
 body {
   padding-top: 59px; /* for fixed-top navbar */
   background: #f5f5f5;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 p {
   margin-bottom: 0;
 }
 
+hr {
+  border-top: 1px solid rgba(0,0,0,.5);
+}
+
 .navbar {
-  border-bottom: #6c757d 3px solid;
-  opacity: 0.9;
+  background-color: #171c61;
+  border-bottom: #171c61 3px solid;
 }
 
 .alert {
@@ -72,4 +77,11 @@ div.upwards {
 div.upwards:hover {
   opacity: 0.7;
   color: white;
+}
+
+.list-group-item.active {
+  z-index: 2;
+  color: #fff;
+  background-color: #171c61;
+  border-color: #171c61;
 }

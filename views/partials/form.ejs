@@ -1,5 +1,5 @@
 <div class="card bg-white">
-  <h5 class="card-header text-center bg-secondary text-light">
+  <h5 style="background-color: #fff;" class="card-header text-center">
     <% if (formContent === 'signup') { %> 
     <i class="fas fa-user-plus"></i> Signup
     <% } %>
@@ -123,11 +123,18 @@
       <% } %>
       
       <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
+        <button type="submit" class="btn btn-outline-success btn-block">SUBMIT</button>
       </div>
     </form>
     
-    <% if (formContent === 'login') { %> 
+    <% if (formContent === 'login') { %>
+    <form action="/login" method="POST">
+      <input type="hidden" name="email" value="test@test.com">
+      <input type="hidden" name="password" value="password">
+      <button type="submit" class="btn btn-link pl-0">
+        Login with Test Account
+      </button>
+    </form>
     <p>	Forgot Password? <a href="/forgot">Reset Password</a></p>
     <% } %>
 
