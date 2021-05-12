@@ -8,10 +8,7 @@ const SchoolSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  address: {
-    type: String,
-    required: true
-  },
+  address: String,
   location: {
     coordinates: {
       type: [Number]
@@ -56,8 +53,8 @@ const SchoolSchema = new mongoose.Schema({
   },
   likes: [
     {
-      type: mongoose.Schema.ObjectId,
-      ref: "User"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     }
   ],
   user: {
@@ -75,8 +72,7 @@ const SchoolSchema = new mongoose.Schema({
 });
 
 SchoolSchema.pre('save', function(next) {
-  this.slug = slugify(this.name,
-    {
+  this.slug = slugify(this.name, {
       replacement: '-',
       lower: true
     }

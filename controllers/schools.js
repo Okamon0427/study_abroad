@@ -192,7 +192,7 @@ exports.deleteSchool = async (req, res, next) => {
   try {
     const school = await School.findOne({ slug: req.params.slug });
     
-    if (school.image.url !== 'uploads\\no-photo.jpg') {
+    if (school.image.url !== '../uploads/no-photo-school.jpg') {
       await cloudinary.uploader.destroy(school.image.filename);
     }
 
@@ -221,6 +221,9 @@ exports.favoriteSchool = async (req, res, next) => {
     } else {
       school.likes.push(req.user);
     }
+
+    // Address field is required for the School Model
+    school.address = school.location.formattedAddress
 
     await school.save();
 

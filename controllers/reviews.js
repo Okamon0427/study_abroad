@@ -40,8 +40,7 @@ exports.createReview = async (req, res, next) => {
 
     // calculate average rating and save it in School Model
     const updatedReviews = await Review.find({ school: school._id });
-    school.averageRating = getAverageRating(updatedReviews);
-    await school.save();
+    await getAverageRating(updatedReviews);
 
     req.flash('success', 'Created new review!');
     res.redirect(`/schools/${req.params.slug}`);
@@ -108,8 +107,7 @@ exports.updateReview = async (req, res, next) => {
 
     // calculate average rating and save it in School Model
     const updatedReviews = await Review.find({ school: school._id });
-    school.averageRating = getAverageRating(updatedReviews);
-    await school.save();
+    await getAverageRating(updatedReviews);
 
     req.flash('success', 'Editted review!');
     res.redirect(`/schools/${req.params.slug}`);
@@ -126,8 +124,7 @@ exports.deleteReview = async (req, res, next) => {
 
     // calculate average rating and save it in School Model
     const updatedReviews = await Review.find({ school: school._id });
-    school.averageRating = getAverageRating(updatedReviews);
-    await school.save();
+    await getAverageRating(updatedReviews);
 
     req.flash('success', 'Deleted review!');
     res.redirect(`/schools/${req.params.slug}`);

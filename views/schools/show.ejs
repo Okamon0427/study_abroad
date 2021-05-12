@@ -54,7 +54,7 @@
                 <!-- Favorite -->
                 <form class="mb-2" action="/schools/<%= school.slug %>/favorite" method="POST">
                   <% if (isFavoriteUser) { %>
-                  <button class="btn btn-sm mr-2 btn-outline-secondary">
+                  <button class="btn btn-sm mr-2 btn-outline-dark">
                     <i class="fas fa-thumbs-up"></i> Unfavorite
                   </button>
                   <% } else if (!isFavoriteUser) { %>
