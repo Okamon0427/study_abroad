@@ -26,7 +26,7 @@ hr {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  min-height: 400px;
+  min-height: 450px;
 }
 
 #landing-top .dark-overlay {
@@ -34,7 +34,7 @@ hr {
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 459px;
+  min-height: 509px;
   background: rgba(0, 0, 0, 0.3);
 }
 
@@ -80,8 +80,26 @@ div.upwards:hover {
 }
 
 .list-group-item.active {
-  z-index: 2;
-  color: #fff;
   background-color: #171c61;
   border-color: #171c61;
+}
+
+.btn-outline-success {
+  color: #1B6117;
+  border-color: #1B6117;
+}
+
+.btn-outline-success:hover {
+  background-color: #1B6117;
+  border-color: #1B6117;
+}
+
+.btn-outline-danger {
+  color: #e4606d;
+  border-color: #e4606d;
+}
+
+.btn-outline-danger:hover {
+  background-color: #e4606d;
+  border-color: #e4606d;
 }

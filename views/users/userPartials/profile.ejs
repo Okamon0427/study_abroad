@@ -65,14 +65,14 @@
 
     <!-- Follow -->
     <% if (!mypage) { %> 
-    <form action="/users/<%= user.slug %>/follow" method="POST">
+    <form class="mt-2" action="/users/<%= user.slug %>/follow" method="POST">
       <div class="text-center">
         <% if (isFollowing) { %>
         <button class="btn btn-sm btn-outline-secondary">
           Unfollow
         </button>
         <% } else { %>
-        <button class="btn btn-sm btn-outline-primary">
+        <button class="btn btn-sm btn-outline-success">
           Follow
         </button>
         <% } %>
