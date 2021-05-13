@@ -53,7 +53,7 @@
         <ul class="navbar-nav">
           <% if(!currentUser) { %>
           <!-- delete later -->
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <form action="/login" method="POST">
               <input type="hidden" name="email" value="admin@admin.com">
               <input type="hidden" name="password" value="password">
@@ -61,7 +61,7 @@
                 Admin Login
               </button> 
             </form>
-          </li>
+          </li> -->
           <li class="nav-item <%= typeof title !== 'undefined' && title === 'Login' ? 'active' : '' %>">
             <a class="nav-link" href="/login">
               <i class="fas fa-sign-in-alt"></i> Login
