@@ -103,3 +103,8 @@ div.upwards:hover {
   background-color: #e4606d;
   border-color: #e4606d;
 }
+
+.btn:focus {
+  text-decoration: none;
+  box-shadow: none;
+}
