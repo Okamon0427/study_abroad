@@ -1,3 +1,9 @@
+:root {
+  --main: #E5E338;
+  --success: #4EC5C1;
+  --danger: #EC576B;
+}
+
 body {
   padding-top: 59px; /* for fixed-top navbar */
   background: #f5f5f5;
@@ -13,8 +19,10 @@ hr {
 }
 
 .navbar {
-  background-color: #171c61;
-  border-bottom: #171c61 3px solid;
+  /* background-color: #171c61;
+  border-bottom: #171c61 3px solid; */
+  background-color: var(--main);
+  border-bottom: var(--main) 3px solid;
 }
 
 .alert {
@@ -26,6 +34,7 @@ hr {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  background-position: top center;
   height: 450px;
 }
 
@@ -80,28 +89,28 @@ div.upwards:hover {
 }
 
 .list-group-item.active {
-  background-color: #171c61;
-  border-color: #171c61;
+  background-color: var(--main);
+  border-color: var(--main);
 }
 
 .btn-outline-success {
-  color: #1B6117;
-  border-color: #1B6117;
+  color: var(--success);
+  border-color: var(--success);
 }
 
 .btn-outline-success:hover {
-  background-color: #1B6117;
-  border-color: #1B6117;
+  background-color: var(--success);
+  border-color: var(--success);
 }
 
 .btn-outline-danger {
-  color: #e4606d;
-  border-color: #e4606d;
+  color: var(--danger);
+  border-color: var(--danger);
 }
 
 .btn-outline-danger:hover {
-  background-color: #e4606d;
-  border-color: #e4606d;
+  background-color: var(--danger);
+  border-color: var(--danger);
 }
 
 .btn:focus {
